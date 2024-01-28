@@ -1,10 +1,7 @@
 package sgu.hrm.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
@@ -13,9 +10,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import sgu.hrm.module_soyeulylich.SoYeuLyLich;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 @Entity
 @Table(name = "chuyen_mon_syll")

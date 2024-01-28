@@ -13,8 +13,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-
-import java.time.LocalDateTime;
+import sgu.hrm.module_soyeulylich.SoYeuLyLich;
 
 @Entity
 @Table(name = "quan_he_gia_dinh_ruot")

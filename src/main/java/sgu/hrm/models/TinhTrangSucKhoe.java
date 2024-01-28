@@ -22,6 +22,7 @@ public class TinhTrangSucKhoe extends  DateTimeObject{
     @Id
     @Column(columnDefinition = "INTEGER AUTO_INCREMENT")
     int id;
+
     @Column(length = 15, unique = true)
     String title;
 }

@@ -1,11 +1,11 @@
-package sgu.hrm.controller;
+package sgu.hrm.module_taikhoan;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import sgu.hrm.models.TaiKhoan;
-import sgu.hrm.repository.TaiKhoanRepository;
 
 import java.util.List;
 
@@ -14,11 +14,16 @@ import java.util.List;
 public class TaiKhoanController {
 
     @Autowired
-    private TaiKhoanRepository taiKhoanRepository;
+    private ITaiKhoanService taiKhoanService;
 
     @GetMapping("/all")
     public List<TaiKhoan> getAllTaiKhoan() {
-        return taiKhoanRepository.findAll();
+        return taiKhoanService.xemTaiKhoan();
+    }
+
+    @PostMapping("/them")
+    public void themTaiKhoan(@RequestBody TaiKhoanDTO taiKhoanDTO){
+        taiKhoanService.themTaiKhoan(taiKhoanDTO);
     }
 
 }

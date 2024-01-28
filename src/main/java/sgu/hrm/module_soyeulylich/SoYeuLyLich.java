@@ -1,4 +1,4 @@
-package sgu.hrm.models;
+package sgu.hrm.module_soyeulylich;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -15,10 +15,39 @@ import jakarta.persistence.Table;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import sgu.hrm.models.BacLuong;
+import sgu.hrm.models.BanThanCoLamViecChoCheDoCu;
+import sgu.hrm.models.CapBacLoaiQuanHamQuanDoi;
+import sgu.hrm.models.CoQuanToChucDonViTuyenDung;
+import sgu.hrm.models.DanToc;
+import sgu.hrm.models.DanhHieuNhaNuocPhongTang;
+import sgu.hrm.models.DateTimeObject;
+import sgu.hrm.models.DoiTuongChinhSach;
+import sgu.hrm.models.GioiTinh;
+import sgu.hrm.models.HocHam;
+import sgu.hrm.models.KhenThuong;
+import sgu.hrm.models.KienThucAnNinhQuocPhong;
+import sgu.hrm.models.KyLuat;
+import sgu.hrm.models.LamViecONuocNgoai;
+import sgu.hrm.models.LuongBanThan;
+import sgu.hrm.models.LyLuanChinhTri;
+import sgu.hrm.models.NghiepVuChuyenNganh;
+import sgu.hrm.models.NgoaiNgu;
+import sgu.hrm.models.NhomMau;
+import sgu.hrm.models.PhuCapKhac;
+import sgu.hrm.models.QuaTrinhCongTac;
+import sgu.hrm.models.QuanHeGiaDinhRuot;
+import sgu.hrm.models.QuanHeGiaDinhRuotBenVoHoacChong;
+import sgu.hrm.models.ThanhPhanGiaDinh;
+import sgu.hrm.models.TinHoc;
+import sgu.hrm.models.TinhTrangSucKhoe;
+import sgu.hrm.models.TrinhDoChuyenMon;
+import sgu.hrm.models.TrinhDoGiaoDucPhoThong;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -33,6 +62,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "so_yeu_ly_lich")
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)

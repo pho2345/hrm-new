@@ -1,7 +1,9 @@
-package sgu.hrm.repository;
+package sgu.hrm.module_taikhoan;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import sgu.hrm.models.TaiKhoan;
+import org.springframework.stereotype.Repository;
+import sgu.hrm.module_taikhoan.TaiKhoan;
 
+@Repository
 public interface TaiKhoanRepository extends JpaRepository<TaiKhoan, Integer> {
 }

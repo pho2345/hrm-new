@@ -1,9 +1,11 @@
-package sgu.hrm.repository;
+package sgu.hrm.module_soyeulylich;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import sgu.hrm.models.SoYeuLyLich;
+import org.springframework.stereotype.Repository;
+import sgu.hrm.module_soyeulylich.SoYeuLyLich;
 
 import java.util.UUID;
 
+@Repository
 public interface SoYeuLyLichRepository extends JpaRepository<SoYeuLyLich, UUID> {
 }
