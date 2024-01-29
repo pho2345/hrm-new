@@ -3,20 +3,6 @@ package sgu.hrm.module_soyeulylich;
 
 import lombok.Builder;
 
-import sgu.hrm.models.BacLuong;
-import sgu.hrm.models.CapBacLoaiQuanHamQuanDoi;
-import sgu.hrm.models.CoQuanToChucDonViTuyenDung;
-import sgu.hrm.models.DanToc;
-import sgu.hrm.models.DanhHieuNhaNuocPhongTang;
-import sgu.hrm.models.DoiTuongChinhSach;
-import sgu.hrm.models.GioiTinh;
-import sgu.hrm.models.HocHam;
-import sgu.hrm.models.NhomMau;
-import sgu.hrm.models.ThanhPhanGiaDinh;
-import sgu.hrm.models.TinhTrangSucKhoe;
-import sgu.hrm.models.TrinhDoChuyenMon;
-import sgu.hrm.models.TrinhDoGiaoDucPhoThong;
-
 import java.time.LocalDateTime;
 
 @Builder

@@ -4,32 +4,32 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
-import sgu.hrm.models.BacLuong;
-import sgu.hrm.models.CapBacLoaiQuanHamQuanDoi;
+import sgu.hrm.module_bacluong.BacLuong;
+import sgu.hrm.module_utilities.models.CapBacLoaiQuanHamQuanDoi;
 import sgu.hrm.models.CoQuanToChucDonViTuyenDung;
-import sgu.hrm.models.DanToc;
-import sgu.hrm.models.DanhHieuNhaNuocPhongTang;
-import sgu.hrm.models.DoiTuongChinhSach;
-import sgu.hrm.models.GioiTinh;
-import sgu.hrm.models.HocHam;
-import sgu.hrm.models.NhomMau;
-import sgu.hrm.models.ThanhPhanGiaDinh;
-import sgu.hrm.models.TinhTrangSucKhoe;
-import sgu.hrm.models.TrinhDoChuyenMon;
-import sgu.hrm.models.TrinhDoGiaoDucPhoThong;
-import sgu.hrm.repository.BacLuongRepository;
-import sgu.hrm.repository.CapBacLoaiQuanHamQuanDoiRepository;
+import sgu.hrm.module_utilities.models.DanToc;
+import sgu.hrm.module_utilities.models.DanhHieuNhaNuocPhongTang;
+import sgu.hrm.module_utilities.models.DoiTuongChinhSach;
+import sgu.hrm.module_utilities.models.GioiTinh;
+import sgu.hrm.module_utilities.models.HocHam;
+import sgu.hrm.module_utilities.models.NhomMau;
+import sgu.hrm.module_utilities.models.ThanhPhanGiaDinh;
+import sgu.hrm.module_utilities.models.TinhTrangSucKhoe;
+import sgu.hrm.module_utilities.models.TrinhDoChuyenMon;
+import sgu.hrm.module_utilities.models.TrinhDoGiaoDucPhoThong;
+import sgu.hrm.module_bacluong.BacLuongRepository;
+import sgu.hrm.module_utilities.repositories.CapBacLoaiQuanHamQuanDoiRepository;
 import sgu.hrm.repository.CoQuanToChucDonViTuyenDungRepository;
-import sgu.hrm.repository.DanTocRepository;
-import sgu.hrm.repository.DanhHieuNhaNuocPhongTangRepository;
-import sgu.hrm.repository.DoiTuongChinhSachRepository;
-import sgu.hrm.repository.GioiTinhRepository;
-import sgu.hrm.repository.HocHamRepository;
-import sgu.hrm.repository.NhomMauRepository;
-import sgu.hrm.repository.ThanhPhanGiaDinhRepository;
-import sgu.hrm.repository.TinhTrangSucKhoeRepository;
-import sgu.hrm.repository.TrinhDoChuyenMonRepository;
-import sgu.hrm.repository.TrinhDoGiaoDucPhoThongRepository;
+import sgu.hrm.module_utilities.repositories.DanTocRepository;
+import sgu.hrm.module_utilities.repositories.DanhHieuNhaNuocPhongTangRepository;
+import sgu.hrm.module_utilities.repositories.DoiTuongChinhSachRepository;
+import sgu.hrm.module_utilities.repositories.GioiTinhRepository;
+import sgu.hrm.module_utilities.repositories.HocHamRepository;
+import sgu.hrm.module_utilities.repositories.NhomMauRepository;
+import sgu.hrm.module_utilities.repositories.ThanhPhanGiaDinhRepository;
+import sgu.hrm.module_utilities.repositories.TinhTrangSucKhoeRepository;
+import sgu.hrm.module_utilities.repositories.TrinhDoChuyenMonRepository;
+import sgu.hrm.module_utilities.repositories.TrinhDoGiaoDucPhoThongRepository;
 
 import java.util.List;
 
@@ -140,6 +140,8 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
                 .canNang(soYeuLyLichDTO.canNang())
                 .nhomMau(nhomMau)
                 .build();
+        //save
+        soYeuLyLichRepository.save(soYeuLyLich);
 
 //        SoYeuLyLich soYeuLyLich = SoYeuLyLich.builder()
 //                .hovaten(soYeuLyLichDTO.hovaten())
