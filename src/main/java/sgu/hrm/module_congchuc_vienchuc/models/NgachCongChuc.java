@@ -1,4 +1,4 @@
-package sgu.hrm.models;
+package sgu.hrm.module_congchuc_vienchuc.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,23 +12,25 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import sgu.hrm.models.DateTimeObject;
+import sgu.hrm.module_congchuc_vienchuc.models.BacNgachCongChuc;
 
 @Entity
-@Table(name = "ngach_vien_chuc")
+@Table(name = "ngach_cong_chuc")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class NgachVienChuc extends DateTimeObject{
+public class NgachCongChuc extends DateTimeObject {
     @Id
-    @Column(columnDefinition = "varchar(10)")
+    @Column(columnDefinition = "varchar(6)")
     String id;
 
     @Column(length = 100, unique = true)
     String name;
 
     @ManyToOne
-    @JoinColumn(name = "bac_ngach_vien_chuc", referencedColumnName = "id", columnDefinition = "TINYINT")
-    BacNgachVienChuc bacNgachVienChuc;
+    @JoinColumn(name = "bac_ngach_cong_chuc", referencedColumnName = "id", columnDefinition = "TINYINT")
+    BacNgachCongChuc bacNgachCongChuc;
 }

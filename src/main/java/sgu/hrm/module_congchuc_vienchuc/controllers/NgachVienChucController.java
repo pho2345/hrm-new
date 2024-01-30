@@ -1,11 +1,11 @@
-package sgu.hrm.controller;
+package sgu.hrm.module_congchuc_vienchuc.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import sgu.hrm.models.NgachVienChuc;
-import sgu.hrm.repository.NgachVienChucRepository;
+import sgu.hrm.module_congchuc_vienchuc.models.NgachVienChuc;
+import sgu.hrm.module_congchuc_vienchuc.repositories.NgachVienChucRepository;
 
 import java.util.List;
 

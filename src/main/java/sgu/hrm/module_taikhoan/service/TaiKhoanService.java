@@ -1,9 +1,13 @@
-package sgu.hrm.module_taikhoan;
+package sgu.hrm.module_taikhoan.service;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import sgu.hrm.enums.NotificationsServer;
+import sgu.hrm.module_taikhoan.models.TaiKhoan;
+import sgu.hrm.module_taikhoan.models.dto.TaiKhoanDTO;
+import sgu.hrm.module_taikhoan.repository.TaiKhoanRepository;
 
 import java.text.Normalizer;
 import java.util.List;
@@ -45,7 +49,7 @@ public class TaiKhoanService implements ITaiKhoanService {
         }
         //check trung username, co thi2 them so dang truoc
         int checkUsername = taiKhoanRepository.findAll().stream().filter(taiKhoan -> taiKhoan.getUsername().contentEquals(newS)).toList().size();
-        if(checkUsername > 0){
+        if (checkUsername > 0) {
             newS.append(checkUsername);
         }
         TaiKhoan taiKhoan = TaiKhoan.builder()
@@ -55,6 +59,7 @@ public class TaiKhoanService implements ITaiKhoanService {
                 .password(taiKhoanDTO.soCCCD())
                 .status(true)
                 .build();
+//        return (taiKhoan != null) ? NotificationsServer.TAIKHOAN_CREATED : NotificationsServer.valueOf("huhuu");
     }
 
     @Override

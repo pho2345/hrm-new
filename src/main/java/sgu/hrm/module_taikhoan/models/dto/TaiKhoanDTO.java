@@ -1,4 +1,4 @@
-package sgu.hrm.module_taikhoan;
+package sgu.hrm.module_taikhoan.models.dto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,7 +17,7 @@ import sgu.hrm.models.DateTimeObject;
 import sgu.hrm.models.RoleTaiKhoan;
 
 @Builder
-public record TaiKhoanDTO(String hoVaTen, String soCCCD) {
+public record TaiKhoanDTO(String hoVaTen, String soCCCD, String email) {
     @Override
     public String hoVaTen() {
         return hoVaTen;
@@ -26,6 +26,11 @@ public record TaiKhoanDTO(String hoVaTen, String soCCCD) {
     @Override
     public String soCCCD() {
         return soCCCD;
+    }
+
+    @Override
+    public String email() {
+        return email;
     }
 }
 

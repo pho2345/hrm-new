@@ -1,4 +1,4 @@
-package sgu.hrm.module_taikhoan;
+package sgu.hrm.module_taikhoan.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

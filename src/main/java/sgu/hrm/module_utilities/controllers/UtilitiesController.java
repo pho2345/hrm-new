@@ -1,4 +1,4 @@
-package sgu.hrm.module_utilities;
+package sgu.hrm.module_utilities.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

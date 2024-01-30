@@ -1,4 +1,4 @@
-package sgu.hrm.models;
+package sgu.hrm.module_congchuc_vienchuc.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,6 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import sgu.hrm.models.DateTimeObject;
 
 
 @Entity
@@ -19,7 +20,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class BacNgachCongChuc extends DateTimeObject{
+public class BacNgachCongChuc extends DateTimeObject {
     @Id
     @Column(columnDefinition = "tinyint")
     int id;

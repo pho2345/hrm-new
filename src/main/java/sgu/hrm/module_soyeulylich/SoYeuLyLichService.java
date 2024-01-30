@@ -32,12 +32,13 @@ import sgu.hrm.module_utilities.repositories.TrinhDoChuyenMonRepository;
 import sgu.hrm.module_utilities.repositories.TrinhDoGiaoDucPhoThongRepository;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor // tự tạo constructor với filed là final hoặc annotation not null
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SoYeuLyLichService implements ISoYeuLyLichService {
-
     final SoYeuLyLichRepository soYeuLyLichRepository;
     final GioiTinhRepository gioiTinhRepository;
     final DanTocRepository danTocRepository;
@@ -58,8 +59,7 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
         return soYeuLyLichRepository.findAll();
     }
 
-    @Override
-    public void themSoYeuLyLich(SoYeuLyLichDTO soYeuLyLichDTO) {
+    private SoYeuLyLich soYeuLyLichObject(SoYeuLyLichDTO soYeuLyLichDTO) {
         GioiTinh gioiTinh = gioiTinhRepository.findByName(soYeuLyLichDTO.gioiTinh());
         DanToc danToc = danTocRepository.findByName(soYeuLyLichDTO.danToc());
         ThanhPhanGiaDinh thanhPhanGiaDinh = thanhPhanGiaDinhRepository.findByName(soYeuLyLichDTO.thanhPhanGiaDinh());
@@ -73,7 +73,6 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
         BacLuong bacLuong = bacLuongRepository.findByName(soYeuLyLichDTO.bacLuong());
         TinhTrangSucKhoe tinhTrangSucKhoe = tinhTrangSucKhoeRepository.findByTitle(soYeuLyLichDTO.tinhTrangSucKhoe());
         NhomMau nhomMau = nhomMauRepository.findByName(soYeuLyLichDTO.nhomMau());
-
         SoYeuLyLich soYeuLyLich = SoYeuLyLich.builder()
                 .hovaten(soYeuLyLichDTO.hovaten())
                 .gioiTinh(gioiTinh)
@@ -140,8 +139,14 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
                 .canNang(soYeuLyLichDTO.canNang())
                 .nhomMau(nhomMau)
                 .build();
+        return soYeuLyLich;
+    }
+
+    @Override
+    public void themSoYeuLyLich(SoYeuLyLichDTO soYeuLyLichDTO) {
+        SoYeuLyLich soYeuLyLich = soYeuLyLichObject(soYeuLyLichDTO);
         //save
-        soYeuLyLichRepository.save(soYeuLyLich);
+        //soYeuLyLichRepository.save(soYeuLyLich);
 
 //        SoYeuLyLich soYeuLyLich = SoYeuLyLich.builder()
 //                .hovaten(soYeuLyLichDTO.hovaten())
@@ -209,5 +214,14 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
 //                .canNang(soYeuLyLichDTO.canNang())
 //                .nhomMau(soYeuLyLichDTO.nhomMau())
 //                .build();
+    }
+
+    @Override
+    public void suaSoYeuLyLich(UUID uuidSoYeuLyLich) {
+        Optional<SoYeuLyLich> soYeuLyLichCheck = soYeuLyLichRepository.findById(uuidSoYeuLyLich);
+        if (soYeuLyLichCheck.isPresent()) {
+
+        }
+
     }
 }
