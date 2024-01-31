@@ -10,6 +10,7 @@ import sgu.hrm.module_congchuc_vienchuc.models.CongChucVienChucDTO;
 import sgu.hrm.module_congchuc_vienchuc.models.NgachCongChuc;
 import sgu.hrm.module_congchuc_vienchuc.models.NgachVienChuc;
 import sgu.hrm.module_congchuc_vienchuc.services.ICongChucVienChucService;
+import sgu.hrm.module_response.ResDTO;
 
 import java.util.List;
 
@@ -23,22 +24,22 @@ public class CongChucVienChucControllers {
     private final ICongChucVienChucService.INgachVienChucService ngachVienChucService;
 
     @GetMapping("/bac-ngach-cong-chuc")
-    public List<BacNgachCongChuc> getAllBacNgachCongChuc() {
+    public ResDTO<List<BacNgachCongChuc>> getAllBacNgachCongChuc() {
         return bacNgachCongChucService.xemBacNgachCongChuc();
     }
 
     @GetMapping("/bac-ngach-vien-chuc")
-    public List<BacNgachVienChuc> getAllBacNgachVienChuc() {
+    public ResDTO<List<BacNgachVienChuc>> getAllBacNgachVienChuc() {
         return bacNgachVienChucService.xemBacNgachVienChuc();
     }
 
     @GetMapping("/ngach-cong-chuc")
-    public List<NgachCongChuc> getAllNgachCongChuc() {
+    public ResDTO<List<NgachCongChuc>> getAllNgachCongChuc() {
         return ngachCongChucService.xemNgachCongChuc();
     }
 
     @GetMapping("/ngach-vien-chuc")
-    public List<NgachVienChuc> getAllNgachVienChuc() {
+    public ResDTO<List<NgachVienChuc>> getAllNgachVienChuc() {
         return ngachVienChucService.xemNgachVienChuc();
     }
 }

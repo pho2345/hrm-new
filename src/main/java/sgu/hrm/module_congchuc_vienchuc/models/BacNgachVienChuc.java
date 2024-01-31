@@ -3,6 +3,7 @@ package sgu.hrm.module_congchuc_vienchuc.models;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import sgu.hrm.models.DateTimeObject;
+
+import java.util.List;
 
 @Entity
 @Table(name = "bac_ngach_vien_chuc")
@@ -26,4 +29,7 @@ public class BacNgachVienChuc extends DateTimeObject {
 
     @Column(length = 100, unique = true)
     String name;
+
+    @OneToMany(mappedBy = "bacNgachVienChuc")
+    List<NgachVienChuc> ngachVienChucs;
 }

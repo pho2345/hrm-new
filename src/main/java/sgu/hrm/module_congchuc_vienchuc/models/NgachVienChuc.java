@@ -1,5 +1,6 @@
 package sgu.hrm.module_congchuc_vienchuc.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -22,6 +23,7 @@ import sgu.hrm.module_congchuc_vienchuc.models.BacNgachVienChuc;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@JsonIgnoreProperties({"bacNgachVienChuc", "create_at", "update_at"}) // an thuoc tinh nay di
 public class NgachVienChuc extends DateTimeObject {
     @Id
     @Column(columnDefinition = "varchar(10)")

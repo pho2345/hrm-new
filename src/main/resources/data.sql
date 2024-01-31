@@ -111,10 +111,23 @@ insert into gioi_tinh (id, name)
 VALUES (0, 'Nam'),
        (1, 'Nữ');
 -- tôn giáo
-insert into ton_giao (id, name)
+INSERT INTO ton_giao (id, name)
 VALUES (0, 'Phật giáo'),
        (1, 'Công giáo'),
-       (3, 'Tin Lành');
+       (2, 'Tin Lành'),
+       (3, 'Cao Đài'),
+       (4, 'Phật giáo Hòa Hảo'),
+       (5, 'Hồi giáo'),
+       (6, 'Tôn giáo Baha`i'),
+       (7, 'Tịnh độ Cư sỹ Phật hội'),
+       (8, 'Cơ đốc Phục lâm'),
+       (9, 'Phật giáo Tứ Ân Hiếu nghĩa'),
+       (10, 'Minh Sư đạo'),
+       (11, 'Ba-la-môn giáo'),
+       (12, 'Mặc môn'),
+       (13, 'Phật giáo Hiếu Nghĩa Tà Lơn'),
+       (14, 'Bửu Sơn Kỳ Hương');
+
 -- thành phần gia đình
 insert into thanh_phan_gia_dinh (id, name)
 VALUES (0, 'Cố nông'),

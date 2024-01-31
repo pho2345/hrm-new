@@ -25,7 +25,10 @@ public enum NotificationsServer {
     TAIKHOAN_SUSPENDED("Tài khoản bị tạm ngưng"),
 
     /*** Tài khoản được tiếp tục hoạt động*/
-    TAIKHOAN_UNSUSPENDED("Tài khoản được tiếp tục hoạt động");
+    TAIKHOAN_UNSUSPENDED("Tài khoản được tiếp tục hoạt động"),
+
+    TAIKHOAN_NOTFOUND("Tài khoản không tìm thấy");
+
     String name;
 
     NotificationsServer(String name) {

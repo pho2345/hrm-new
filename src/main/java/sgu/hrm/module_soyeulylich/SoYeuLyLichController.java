@@ -19,7 +19,7 @@ public class SoYeuLyLichController {
     }
 
     @GetMapping("")
-    public List<SoYeuLyLich> getAllSoYeuLyLich() {
+    public List<SoYeuLyLichDTO> getAllSoYeuLyLich() {
         return soYeuLyLichService.xemSoYeuLyLich();
     }
 

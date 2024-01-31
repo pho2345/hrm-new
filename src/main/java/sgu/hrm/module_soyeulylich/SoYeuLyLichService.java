@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
-import sgu.hrm.module_bacluong.BacLuong;
+import sgu.hrm.module_utilities.models.BacLuong;
 import sgu.hrm.module_utilities.models.CapBacLoaiQuanHamQuanDoi;
 import sgu.hrm.models.CoQuanToChucDonViTuyenDung;
 import sgu.hrm.module_utilities.models.DanToc;
@@ -17,7 +17,7 @@ import sgu.hrm.module_utilities.models.ThanhPhanGiaDinh;
 import sgu.hrm.module_utilities.models.TinhTrangSucKhoe;
 import sgu.hrm.module_utilities.models.TrinhDoChuyenMon;
 import sgu.hrm.module_utilities.models.TrinhDoGiaoDucPhoThong;
-import sgu.hrm.module_bacluong.BacLuongRepository;
+import sgu.hrm.module_utilities.repositories.BacLuongRepository;
 import sgu.hrm.module_utilities.repositories.CapBacLoaiQuanHamQuanDoiRepository;
 import sgu.hrm.repository.CoQuanToChucDonViTuyenDungRepository;
 import sgu.hrm.module_utilities.repositories.DanTocRepository;
@@ -55,8 +55,75 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
     final NhomMauRepository nhomMauRepository;
 
     @Override
-    public List<SoYeuLyLich> xemSoYeuLyLich() {
-        return soYeuLyLichRepository.findAll();
+    public List<SoYeuLyLichDTO> xemSoYeuLyLich() {
+        return soYeuLyLichRepository.findAll().stream().map(soYeuLyLich ->
+                SoYeuLyLichDTO.builder()
+                        .hovaten(soYeuLyLich.getHovaten())
+                        .gioiTinh(soYeuLyLich.getGioiTinh().getName())
+                        .cacTenGoiKhac(soYeuLyLich.getCacTenGoiKhac())
+                        .sinhNgay(soYeuLyLich.getSinhNgay())
+                        .noiSinh(soYeuLyLich.getNoiSinh())
+                        .queQuan(soYeuLyLich.getQueQuan())
+                        .danToc(soYeuLyLich.getDanToc().getName())
+                        .soCCCD(soYeuLyLich.getSoCCCD())
+                        .ngayCapCCCD(soYeuLyLich.getNgayCapCCCD())
+                        .soDienThoai(soYeuLyLich.getSoDienThoai())
+                        .soBHXH(soYeuLyLich.getSoBHXH())
+                        .soBHYT(soYeuLyLich.getSoBHYT())
+                        .noiOHienNay(soYeuLyLich.getNoiOHienNay())
+                        .thanhPhanGiaDinh(soYeuLyLich.getThanhPhanGiaDinh().getName())
+                        .ngheNghiepTruocKhiTuyenDung(soYeuLyLich.getNgheNghiepTruocKhiTuyenDung())
+                        .ngayDuocTuyenDungLanDau(soYeuLyLich.getNgayDuocTuyenDungLanDau())
+                        .coQuanToChucDonViTuyenDung(soYeuLyLich.getCoQuanToChucDonViTuyenDung() != null ? soYeuLyLich.getCoQuanToChucDonViTuyenDung().getName() : "")
+                        .ngayVaoCoQuanHienDangCongTac(soYeuLyLich.getNgayVaoCoQuanHienDangCongTac())
+                        .ngayVaoDangCongSanVietNam(soYeuLyLich.getNgayVaoDangCongSanVietNam())
+                        .ngayChinhThuc(soYeuLyLich.getNgayChinhThuc())
+                        .ngayThamGiaToChucChinhTriXaHoiDauTien(soYeuLyLich.getNgayThamGiaToChucChinhTriXaHoiDauTien())
+                        .ngayNhapNgu(soYeuLyLich.getNgayXuatNgu())
+                        .ngayXuatNgu(soYeuLyLich.getNgayNhapNgu())
+                        .capBacLoaiQuanHamQuanDoi(soYeuLyLich.getCapBacLoaiQuanHamQuanDoi().getName())
+                        .doiTuongChinhSach(soYeuLyLich.getDoiTuongChinhSach().getName())
+                        .trinhDoGiaoDucPhoThong(soYeuLyLich.getTrinhDoGiaoDucPhoThong().getName())
+                        .trinhDoChuyenMon(soYeuLyLich.getTrinhDoChuyenMon().getName())
+                        .hocHam(soYeuLyLich.getHocHam().getName())
+                        .danhHieuNhaNuocPhongTang(soYeuLyLich.getDanhHieuNhaNuocPhongTang().getName())
+                        .chucVuHienTai(soYeuLyLich.getChucVuHienTai())
+                        .ngayBoNhiem(soYeuLyLich.getNgayBoNhiem())
+                        .ngayBoNhiemLai(soYeuLyLich.getNgayBoNhiemLai())
+                        .duocQuyHoacChucDanh(soYeuLyLich.getDuocQuyHoacChucDanh())
+                        .chucVuKiemNhiem(soYeuLyLich.getChucVuKiemNhiem())
+                        .chucVuDangHienTai(soYeuLyLich.getChucVuDangHienTai())
+                        .chucVuDangKiemNhiem(soYeuLyLich.getChucVuDangKiemNhiem())
+                        .congVienChinhDuocGiao(soYeuLyLich.getCongVienChinhDuocGiao())
+                        .soTruongCongTac(soYeuLyLich.getSoTruongCongTac())
+                        .congViecLamLauNhat(soYeuLyLich.getCongViecLamLauNhat())
+                        .tienLuong(soYeuLyLich.getTienLuong())
+                        .ngachNgheNghiep(soYeuLyLich.getNgachNgheNghiep())
+                        .maSoNgachNgheNghiep(soYeuLyLich.getMaSoNgachNgheNghiep())
+                        .ngayBoNhiemNgachNgheNghiep(soYeuLyLich.getNgayBoNhiemNgachNgheNghiep())
+                        .bacLuong(soYeuLyLich.getBacLuong().getName())
+                        .heSoLuongNgachNgheNghiep(soYeuLyLich.getHeSoLuongNgachNgheNghiep())
+                        .ngayHuongLuongNgachNgheNghiep(soYeuLyLich.getNgayHuongLuongNgachNgheNghiep())
+                        .phanTramHuongLuongNgachNgheNghiep(soYeuLyLich.getPhanTramHuongLuongNgachNgheNghiep())
+                        .phuCapThamNienVuotKhungNgachNgheNghiep(soYeuLyLich.getPhuCapThamNienVuotKhungNgachNgheNghiep())
+                        .ngayHuongPCTNVKNgachNgheNghiep(soYeuLyLich.getNgayHuongPCTNVKNgachNgheNghiep())
+                        .phuCapChucVu(soYeuLyLich.getPhuCapChucVu())
+                        .phuCapKiemNhiem(soYeuLyLich.getPhuCapKiemNhiem())
+                        .phuCapKhac(soYeuLyLich.getPhuCapKhac())
+                        .viTriViecLam(soYeuLyLich.getViTriViecLam())
+                        .maSoViTriViecLam(soYeuLyLich.getMaSoViTriViecLam())
+                        .bacLuongTriViecLam(soYeuLyLich.getBacLuongTriViecLam())
+                        .luongTheoMucTien(soYeuLyLich.getLuongTheoMucTien())
+                        .ngayHuongLuongTheoViTriViecLam(soYeuLyLich.getNgayHuongLuongTheoViTriViecLam())
+                        .phamTramHuongLuong(soYeuLyLich.getPhamTramHuongLuong())
+                        .phuCapThamNienVuotKhung(soYeuLyLich.getPhuCapThamNienVuotKhung())
+                        .ngayHuongPCTNVK(soYeuLyLich.getNgayHuongPCTNVK())
+                        .tinhTrangSucKhoe(soYeuLyLich.getTinhTrangSucKhoe().getTitle())
+                        .chieuCao(soYeuLyLich.getChieuCao())
+                        .canNang(soYeuLyLich.getCanNang())
+                        .nhomMau(soYeuLyLich.getNhomMau().getName())
+                        .build()
+                ).toList();
     }
 
     private SoYeuLyLich soYeuLyLichObject(SoYeuLyLichDTO soYeuLyLichDTO) {

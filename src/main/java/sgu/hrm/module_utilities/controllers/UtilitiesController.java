@@ -3,12 +3,16 @@ package sgu.hrm.module_utilities.controllers;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import sgu.hrm.module_response.ResDTO;
+import sgu.hrm.module_utilities.models.BacLuong;
+import sgu.hrm.module_utilities.models.resopnse.UtilitiesResponse;
 import sgu.hrm.module_utilities.models.CapBacLoaiQuanHamQuanDoi;
 import sgu.hrm.module_utilities.models.DanToc;
 import sgu.hrm.module_utilities.models.DanhHieuNhaNuocPhongTang;
 import sgu.hrm.module_utilities.models.DoiTuongChinhSach;
 import sgu.hrm.module_utilities.models.GioiTinh;
 import sgu.hrm.module_utilities.models.HocHam;
+import sgu.hrm.module_utilities.models.LoaiQuanHamQuanDoi;
 import sgu.hrm.module_utilities.models.NhomMau;
 import sgu.hrm.module_utilities.models.ThanhPhanGiaDinh;
 import sgu.hrm.module_utilities.models.TinhTrangSucKhoe;
@@ -16,13 +20,14 @@ import sgu.hrm.module_utilities.models.TonGiao;
 import sgu.hrm.module_utilities.models.TrinhDoChuyenMon;
 import sgu.hrm.module_utilities.models.TrinhDoGiaoDucPhoThong;
 import sgu.hrm.module_utilities.services.IUtilitiesService;
-import sgu.hrm.module_utilities.services.UtilitiesService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/utilities")
 public class UtilitiesController {
+    private final IUtilitiesService.IBacLuongService bacLuongService;
+    private final IUtilitiesService.ILoaiQuanHamQuanDoiService loaiQuanHamQuanDoiService;
     private final IUtilitiesService.ICapBacLoaiQuanHamQuanDoiService capBacLoaiQuanHamQuanDoiService;
     private final IUtilitiesService.IDanhHieuNhaNuocPhongTangService danhHieuNhaNuocPhongTangService;
     private final IUtilitiesService.IDanTocService danTocService;
@@ -36,13 +41,18 @@ public class UtilitiesController {
     private final IUtilitiesService.ITrinhDoChuyenMonService trinhDoChuyenMonService;
     private final IUtilitiesService.ITrinhDoGiaoDucPhoThongService trinhDoGiaoDucPhoThongService;
 
-    public UtilitiesController(IUtilitiesService.ICapBacLoaiQuanHamQuanDoiService capBacLoaiQuanHamQuanDoiService,
-                               IUtilitiesService.IDanhHieuNhaNuocPhongTangService danhHieuNhaNuocPhongTangService,
-                               IUtilitiesService.IDanTocService danTocService, IUtilitiesService.IDoiTuongChinhSachService doiTuongChinhSachService,
-                               IUtilitiesService.IGioiTinhService gioiTinhService, IUtilitiesService.IHocHamService hocHamService,
-                               IUtilitiesService.INhomMauService nhomMauService, IUtilitiesService.IThanhPhanGiaDinhService thanhPhanGiaDinhService,
-                               IUtilitiesService.ITinhTrangSucKhoeService tinhTrangSucKhoeService, IUtilitiesService.ITonGiaoService tonGiaoService,
-                               IUtilitiesService.ITrinhDoChuyenMonService trinhDoChuyenMonService, IUtilitiesService.ITrinhDoGiaoDucPhoThongService trinhDoGiaoDucPhoThongService) {
+    public UtilitiesController(
+            IUtilitiesService.IBacLuongService bacLuongService,
+            IUtilitiesService.ILoaiQuanHamQuanDoiService loaiQuanHamQuanDoiService,
+            IUtilitiesService.ICapBacLoaiQuanHamQuanDoiService capBacLoaiQuanHamQuanDoiService,
+            IUtilitiesService.IDanhHieuNhaNuocPhongTangService danhHieuNhaNuocPhongTangService,
+            IUtilitiesService.IDanTocService danTocService, IUtilitiesService.IDoiTuongChinhSachService doiTuongChinhSachService,
+            IUtilitiesService.IGioiTinhService gioiTinhService, IUtilitiesService.IHocHamService hocHamService,
+            IUtilitiesService.INhomMauService nhomMauService, IUtilitiesService.IThanhPhanGiaDinhService thanhPhanGiaDinhService,
+            IUtilitiesService.ITinhTrangSucKhoeService tinhTrangSucKhoeService, IUtilitiesService.ITonGiaoService tonGiaoService,
+            IUtilitiesService.ITrinhDoChuyenMonService trinhDoChuyenMonService, IUtilitiesService.ITrinhDoGiaoDucPhoThongService trinhDoGiaoDucPhoThongService) {
+        this.bacLuongService = bacLuongService;
+        this.loaiQuanHamQuanDoiService = loaiQuanHamQuanDoiService;
         this.capBacLoaiQuanHamQuanDoiService = capBacLoaiQuanHamQuanDoiService;
         this.danhHieuNhaNuocPhongTangService = danhHieuNhaNuocPhongTangService;
         this.danTocService = danTocService;
@@ -57,63 +67,73 @@ public class UtilitiesController {
         this.trinhDoGiaoDucPhoThongService = trinhDoGiaoDucPhoThongService;
     }
 
+    @GetMapping("/bac-luong")
+    public ResDTO<List<BacLuong>> getAllBacLuong() {
+        return bacLuongService.xemBacLuong();
+    }
+
+    @GetMapping("/loai-quan-ham-quan-doi")
+    public ResDTO<List<LoaiQuanHamQuanDoi>> getAllLoaiQuanHamQuanDoi() {
+        return loaiQuanHamQuanDoiService.xemLoaiQuanHamQuanDoi();
+    }
+
     @GetMapping("/cap-bac-loai-quan-ham-quan-doi")
-    public List<CapBacLoaiQuanHamQuanDoi> getAllCapBacLoaiQuanHamQuanDoi() {
+    public ResDTO<List<CapBacLoaiQuanHamQuanDoi>> getAllCapBacLoaiQuanHamQuanDoi() {
         return capBacLoaiQuanHamQuanDoiService.xemCapBacLoaiQuanHamQuanDoi();
     }
 
     @GetMapping("/danh-hieu-nha-nuoc-phong")
-    public List<DanhHieuNhaNuocPhongTang> getAllDanhHieuNhaNuocPhongTang() {
+    public ResDTO<List<DanhHieuNhaNuocPhongTang>> getAllDanhHieuNhaNuocPhongTang() {
         return danhHieuNhaNuocPhongTangService.xemDanhHieuNhaNuocPhongTang();
     }
 
     @GetMapping("/dan-toc")
-    public List<DanToc> getAllDanToc() {
+    public ResDTO<List<DanToc>> getAllDanToc() {
         return danTocService.xemDanToc();
     }
 
     @GetMapping("/doi-tuong-chinh-sach")
-    public List<DoiTuongChinhSach> getAllDoiTuongChinhSach() {
+    public ResDTO<List<DoiTuongChinhSach>> getAllDoiTuongChinhSach() {
         return doiTuongChinhSachService.xemDoiTuongChinhSach();
     }
 
     @GetMapping("/gioi-tinh")
-    public List<GioiTinh> getAllGioiTinh() {
+    public ResDTO<List<GioiTinh>> getAllGioiTinh() {
         return gioiTinhService.xemGioiTinh();
     }
 
     @GetMapping("/hoc-ham")
-    public List<HocHam> getAllHocHam() {
+    public ResDTO<List<HocHam>> getAllHocHam() {
         return hocHamService.xemHocHam();
     }
 
     @GetMapping("/nhom-mau")
-    public List<NhomMau> getAllNhomMau() {
+    public ResDTO<List<NhomMau>> getAllNhomMau() {
         return nhomMauService.xemNhomMau();
     }
 
     @GetMapping("/thanh-phan-gia-dinh")
-    public List<ThanhPhanGiaDinh> getAllThanhPhanGiaDinh() {
+    public ResDTO<List<ThanhPhanGiaDinh>> getAllThanhPhanGiaDinh() {
         return thanhPhanGiaDinhService.xemThanhPhanGiaDinh();
     }
 
     @GetMapping("/tinh-trang-suc-khoe")
-    public List<TinhTrangSucKhoe> getAllTinhTrangSucKhoe() {
+    public ResDTO<List<TinhTrangSucKhoe>> getAllTinhTrangSucKhoe() {
         return tinhTrangSucKhoeService.xemTinhTrangSucKhoe();
     }
 
     @GetMapping("/ton-giao")
-    public List<TonGiao> getAllTonGiao() {
+    public ResDTO<List<TonGiao>> getAllTonGiao() {
         return tonGiaoService.xemTonGiao();
     }
 
     @GetMapping("/trinh-do-chuyen-mon")
-    public List<TrinhDoChuyenMon> getAllTrinhDoChuyenMon() {
+    public ResDTO<List<TrinhDoChuyenMon>> getAllTrinhDoChuyenMon() {
         return trinhDoChuyenMonService.xemTrinhDoChuyenMon();
     }
 
     @GetMapping("/trinh-do-giao-duc-pho-thong")
-    public List<TrinhDoGiaoDucPhoThong> getAllTrinhDoGiaoDucPhoThong() {
+    public ResDTO<List<TrinhDoGiaoDucPhoThong>> getAllTrinhDoGiaoDucPhoThong() {
         return trinhDoGiaoDucPhoThongService.xemTrinhDoGiaoDucPhoThong();
     }
     //    @RestController

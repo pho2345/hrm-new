@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public interface ISoYeuLyLichService {
 
-    public List<SoYeuLyLich> xemSoYeuLyLich();
+    public List<SoYeuLyLichDTO> xemSoYeuLyLich();
     public void themSoYeuLyLich(SoYeuLyLichDTO soYeuLyLichDTO);
 
     public void suaSoYeuLyLich(UUID uuidSoYeuLyLich);

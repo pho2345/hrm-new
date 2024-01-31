@@ -12,7 +12,7 @@
 //import lombok.NoArgsConstructor;
 //import lombok.experimental.FieldDefaults;
 //import sgu.hrm.models.DateTimeObject;
-//import sgu.hrm.models.LoaiQuanHamQuanDoi;
+//import sgu.hrm.module_utilities.models.LoaiQuanHamQuanDoi;
 //
 //@Entity
 //@Table(name = "cap_bac_loai_quan_ham_quan_doi")

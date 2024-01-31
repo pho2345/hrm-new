@@ -1,11 +1,14 @@
 package sgu.hrm.module_utilities.services;
 
+import sgu.hrm.module_response.ResDTO;
+import sgu.hrm.module_utilities.models.BacLuong;
 import sgu.hrm.module_utilities.models.CapBacLoaiQuanHamQuanDoi;
 import sgu.hrm.module_utilities.models.DanToc;
 import sgu.hrm.module_utilities.models.DanhHieuNhaNuocPhongTang;
 import sgu.hrm.module_utilities.models.DoiTuongChinhSach;
 import sgu.hrm.module_utilities.models.GioiTinh;
 import sgu.hrm.module_utilities.models.HocHam;
+import sgu.hrm.module_utilities.models.LoaiQuanHamQuanDoi;
 import sgu.hrm.module_utilities.models.NhomMau;
 import sgu.hrm.module_utilities.models.ThanhPhanGiaDinh;
 import sgu.hrm.module_utilities.models.TinhTrangSucKhoe;
@@ -16,41 +19,46 @@ import sgu.hrm.module_utilities.models.TrinhDoGiaoDucPhoThong;
 import java.util.List;
 
 public interface IUtilitiesService {
-
+    interface IBacLuongService{
+        ResDTO<List<BacLuong>> xemBacLuong();
+    }
+    interface ILoaiQuanHamQuanDoiService{
+        ResDTO<List<LoaiQuanHamQuanDoi>> xemLoaiQuanHamQuanDoi();
+    }
     interface ICapBacLoaiQuanHamQuanDoiService{
-        List<CapBacLoaiQuanHamQuanDoi> xemCapBacLoaiQuanHamQuanDoi();
+        ResDTO<List<CapBacLoaiQuanHamQuanDoi>> xemCapBacLoaiQuanHamQuanDoi();
     }
     interface IDanhHieuNhaNuocPhongTangService {
-        List<DanhHieuNhaNuocPhongTang> xemDanhHieuNhaNuocPhongTang();
+        ResDTO<List<DanhHieuNhaNuocPhongTang>> xemDanhHieuNhaNuocPhongTang();
     }
     interface IDanTocService {
-        List<DanToc> xemDanToc();
+        ResDTO<List<DanToc>> xemDanToc();
     }
     interface IDoiTuongChinhSachService {
-        List<DoiTuongChinhSach> xemDoiTuongChinhSach();
+        ResDTO<List<DoiTuongChinhSach>> xemDoiTuongChinhSach();
     }
     interface IGioiTinhService {
-        List<GioiTinh> xemGioiTinh();
+        ResDTO<List<GioiTinh>> xemGioiTinh();
     }
     interface IHocHamService {
-        List<HocHam> xemHocHam();
+        ResDTO<List<HocHam>> xemHocHam();
     }
     interface INhomMauService {
-        List<NhomMau> xemNhomMau();
+        ResDTO<List<NhomMau>> xemNhomMau();
     }
     interface IThanhPhanGiaDinhService {
-        List<ThanhPhanGiaDinh> xemThanhPhanGiaDinh();
+        ResDTO<List<ThanhPhanGiaDinh>> xemThanhPhanGiaDinh();
     }
     interface ITinhTrangSucKhoeService {
-        List<TinhTrangSucKhoe> xemTinhTrangSucKhoe();
+        ResDTO<List<TinhTrangSucKhoe>> xemTinhTrangSucKhoe();
     }
     interface ITonGiaoService {
-        List<TonGiao> xemTonGiao();
+        ResDTO<List<TonGiao>> xemTonGiao();
     }
     interface ITrinhDoChuyenMonService {
-        List<TrinhDoChuyenMon> xemTrinhDoChuyenMon();
+        ResDTO<List<TrinhDoChuyenMon>> xemTrinhDoChuyenMon();
     }
     interface ITrinhDoGiaoDucPhoThongService {
-        List<TrinhDoGiaoDucPhoThong> xemTrinhDoGiaoDucPhoThong();
+        ResDTO<List<TrinhDoGiaoDucPhoThong>> xemTrinhDoGiaoDucPhoThong();
     }
 }

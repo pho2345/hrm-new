@@ -11,7 +11,8 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import sgu.hrm.module_bacluong.BacLuong;
+import sgu.hrm.module_utilities.models.BacLuong;
+import sgu.hrm.module_utilities.models.DanToc;
 
 @Entity
 @Table(name = "he_so_luong_vien_chuc")

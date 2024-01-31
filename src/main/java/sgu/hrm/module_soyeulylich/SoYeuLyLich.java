@@ -19,8 +19,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import sgu.hrm.module_bacluong.BacLuong;
-import sgu.hrm.models.BanThanCoLamViecChoCheDoCu;
+import sgu.hrm.module_soyeulylich_chitiet.models.BanThanCoLamViecChoCheDoCu;
+import sgu.hrm.module_utilities.models.BacLuong;
 import sgu.hrm.module_utilities.models.CapBacLoaiQuanHamQuanDoi;
 import sgu.hrm.models.CoQuanToChucDonViTuyenDung;
 import sgu.hrm.module_utilities.models.DanToc;
@@ -29,21 +29,21 @@ import sgu.hrm.models.DateTimeObject;
 import sgu.hrm.module_utilities.models.DoiTuongChinhSach;
 import sgu.hrm.module_utilities.models.GioiTinh;
 import sgu.hrm.module_utilities.models.HocHam;
-import sgu.hrm.models.KhenThuong;
-import sgu.hrm.models.KienThucAnNinhQuocPhong;
-import sgu.hrm.models.KyLuat;
-import sgu.hrm.models.LamViecONuocNgoai;
-import sgu.hrm.models.LuongBanThan;
-import sgu.hrm.models.LyLuanChinhTri;
-import sgu.hrm.models.NghiepVuChuyenNganh;
-import sgu.hrm.models.NgoaiNgu;
+import sgu.hrm.module_soyeulylich_chitiet.models.KhenThuong;
+import sgu.hrm.module_soyeulylich_chitiet.models.KienThucAnNinhQuocPhong;
+import sgu.hrm.module_soyeulylich_chitiet.models.KyLuat;
+import sgu.hrm.module_soyeulylich_chitiet.models.LamViecONuocNgoai;
+import sgu.hrm.module_soyeulylich_chitiet.models.LuongBanThan;
+import sgu.hrm.module_soyeulylich_chitiet.models.LyLuanChinhTri;
+import sgu.hrm.module_soyeulylich_chitiet.models.NghiepVuChuyenNganh;
+import sgu.hrm.module_soyeulylich_chitiet.models.NgoaiNgu;
 import sgu.hrm.module_utilities.models.NhomMau;
-import sgu.hrm.models.PhuCapKhac;
-import sgu.hrm.models.QuaTrinhCongTac;
-import sgu.hrm.models.QuanHeGiaDinhRuot;
-import sgu.hrm.models.QuanHeGiaDinhRuotBenVoHoacChong;
+import sgu.hrm.module_soyeulylich_chitiet.models.PhuCapKhac;
+import sgu.hrm.module_soyeulylich_chitiet.models.QuaTrinhCongTac;
+import sgu.hrm.module_soyeulylich_chitiet.models.QuanHeGiaDinh;
+//import sgu.hrm.models.QuanHeGiaDinhRuotBenVoHoacChong;
 import sgu.hrm.module_utilities.models.ThanhPhanGiaDinh;
-import sgu.hrm.models.TinHoc;
+import sgu.hrm.module_soyeulylich_chitiet.models.TinHoc;
 import sgu.hrm.module_utilities.models.TinhTrangSucKhoe;
 import sgu.hrm.module_utilities.models.TrinhDoChuyenMon;
 import sgu.hrm.module_utilities.models.TrinhDoGiaoDucPhoThong;
@@ -315,14 +315,18 @@ public class SoYeuLyLich extends DateTimeObject {
     Set<KyLuat> kyLuats;
 
     @OneToMany(mappedBy = "soYeuLyLich", cascade = CascadeType.ALL, orphanRemoval = true)
-    Set<QuanHeGiaDinhRuot> quanHeGiaDinhRuots;
+    Set<QuanHeGiaDinh> quanHeGiaDinhs;
 
-    @OneToMany(mappedBy = "soYeuLyLich", cascade = CascadeType.ALL, orphanRemoval = true)
-    Set<QuanHeGiaDinhRuotBenVoHoacChong> quanHeGiaDinhRuotBenVoHoacChongs;
+//    @OneToMany(mappedBy = "soYeuLyLich", cascade = CascadeType.ALL, orphanRemoval = true)
+//    Set<QuanHeGiaDinhRuotBenVoHoacChong> quanHeGiaDinhRuotBenVoHoacChongs;
 
     @OneToMany(mappedBy = "soYeuLyLich", cascade = CascadeType.ALL, orphanRemoval = true)
     Set<LuongBanThan> luongBanThans;
 
     @OneToMany(mappedBy = "soYeuLyLich", cascade = CascadeType.ALL, orphanRemoval = true)
     Set<PhuCapKhac> phuCapKhacs;
+
+//    @OneToOne()
+//    @JoinColumn(name="taikhoan", columnDefinition = "DEFAULT 1")
+//    TaiKhoan taiKhoan;
 }
