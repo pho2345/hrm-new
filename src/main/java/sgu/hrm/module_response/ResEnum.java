@@ -1,7 +1,10 @@
 package sgu.hrm.module_response;
 
 public enum ResEnum {
-    THANH_CONG(201),
+    THANH_CONG(200),
+    TAO_THANH_CONG(201),
+    CAP_NHAT_THANH_CONG(204),
+    XOA_THANH_CONG(202),
     KHONG_HOP_LE(400),
     KHONG_DUOC_UY_QUYEN(401),
     TRUY_CAP_BI_CAM(403),

@@ -26,4 +26,8 @@ public class DanToc extends DateTimeObject {
 
     @Column(length = 30, unique = true)
     String name;
+
+    public DanToc(String name) {
+        this.name = name;
+    }
 }

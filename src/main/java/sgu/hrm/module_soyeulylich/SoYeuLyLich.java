@@ -18,7 +18,9 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 import sgu.hrm.module_soyeulylich_chitiet.models.BanThanCoLamViecChoCheDoCu;
 import sgu.hrm.module_utilities.models.BacLuong;
 import sgu.hrm.module_utilities.models.CapBacLoaiQuanHamQuanDoi;
@@ -61,6 +63,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "so_yeu_ly_lich")
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

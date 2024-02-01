@@ -34,4 +34,9 @@ public class CapBacLoaiQuanHamQuanDoi extends DateTimeObject {
     @JsonIgnore // khi goi thì sẽ không hiện trường này
     @JoinColumn(name = "loai_quan_ham_quan_doi", referencedColumnName = "id", columnDefinition = "tinyint")
     LoaiQuanHamQuanDoi loaiQuanHamQuanDoi;
+
+    public CapBacLoaiQuanHamQuanDoi(String name, LoaiQuanHamQuanDoi loaiQuanHamQuanDoi) {
+        this.name = name;
+        this.loaiQuanHamQuanDoi = loaiQuanHamQuanDoi;
+    }
 }

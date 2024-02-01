@@ -37,4 +37,8 @@ public class LoaiQuanHamQuanDoi extends DateTimeObject {
     @OneToMany(mappedBy = "loaiQuanHamQuanDoi")
     @JsonProperty(value = "capBac")
     List<CapBacLoaiQuanHamQuanDoi> capBacLoaiQuanHamQuanDois;
+
+    public LoaiQuanHamQuanDoi(String name) {
+        this.name = name;
+    }
 }

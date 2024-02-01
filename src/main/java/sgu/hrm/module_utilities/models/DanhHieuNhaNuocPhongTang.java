@@ -26,4 +26,8 @@ public class DanhHieuNhaNuocPhongTang extends DateTimeObject {
 
     @Column(length = 50, unique = true)
     String name;
+
+    public DanhHieuNhaNuocPhongTang(String name) {
+        this.name = name;
+    }
 }

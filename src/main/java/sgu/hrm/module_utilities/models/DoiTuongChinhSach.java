@@ -26,4 +26,8 @@ public class DoiTuongChinhSach extends DateTimeObject {
 
     @Column(length = 100, unique = true)
     String name;
+
+    public DoiTuongChinhSach(String name) {
+        this.name = name;
+    }
 }

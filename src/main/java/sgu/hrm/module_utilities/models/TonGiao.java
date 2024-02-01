@@ -26,4 +26,8 @@ public class TonGiao extends DateTimeObject {
 
     @Column(length = 50, unique = true)
     String name;
+
+    public TonGiao(String name) {
+        this.name = name;
+    }
 }

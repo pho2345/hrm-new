@@ -26,4 +26,8 @@ public class HocHam extends DateTimeObject {
 
     @Column(length = 15, unique = true)
     String name;
+
+    public HocHam(String namr) {
+        this.name = name;
+    }
 }

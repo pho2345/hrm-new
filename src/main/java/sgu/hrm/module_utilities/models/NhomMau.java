@@ -26,4 +26,8 @@ public class NhomMau extends DateTimeObject {
 
     @Column(length = 10, unique = true)
     String name;
+
+    public NhomMau(String name) {
+        this.name = name;
+    }
 }

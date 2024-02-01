@@ -4,6 +4,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import sgu.hrm.module_response.ResDTO;
+import sgu.hrm.module_response.ResEnum;
 import sgu.hrm.module_utilities.models.BacLuong;
 import sgu.hrm.module_utilities.models.CapBacLoaiQuanHamQuanDoi;
 import sgu.hrm.models.CoQuanToChucDonViTuyenDung;
@@ -123,7 +125,7 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
                         .canNang(soYeuLyLich.getCanNang())
                         .nhomMau(soYeuLyLich.getNhomMau().getName())
                         .build()
-                ).toList();
+        ).toList();
     }
 
     private SoYeuLyLich soYeuLyLichObject(SoYeuLyLichDTO soYeuLyLichDTO) {
@@ -281,6 +283,23 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
 //                .canNang(soYeuLyLichDTO.canNang())
 //                .nhomMau(soYeuLyLichDTO.nhomMau())
 //                .build();
+    }
+
+    @Override
+    public ResDTO<SoYeuLyLich> xemSoYeuLyLichSoCCCD(UUID uuid) {
+        Optional<SoYeuLyLich> soYeuLyLich = soYeuLyLichRepository.findById(uuid);
+        if (soYeuLyLich.isPresent()) {
+            return new ResDTO<>(
+                    ResEnum.THANH_CONG.getStatusCode(),
+                    ResEnum.THANH_CONG,
+                    soYeuLyLich.get()
+            );
+        }
+        return new ResDTO<>(
+                ResEnum.THANH_CONG.getStatusCode(),
+                ResEnum.THANH_CONG,
+                soYeuLyLich.orElse(new SoYeuLyLich())
+        );
     }
 
     @Override

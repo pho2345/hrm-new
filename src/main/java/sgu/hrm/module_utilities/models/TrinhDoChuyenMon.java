@@ -26,4 +26,8 @@ public class TrinhDoChuyenMon extends DateTimeObject {
 
     @Column(length = 15, unique = true)
     String name;
+
+    public TrinhDoChuyenMon(String name) {
+        this.name = name;
+    }
 }

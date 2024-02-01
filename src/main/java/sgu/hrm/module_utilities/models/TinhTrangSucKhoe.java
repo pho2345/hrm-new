@@ -26,4 +26,8 @@ public class TinhTrangSucKhoe extends DateTimeObject {
 
     @Column(length = 15, unique = true)
     String title;
+
+    public TinhTrangSucKhoe(String title) {
+        this.title = title;
+    }
 }

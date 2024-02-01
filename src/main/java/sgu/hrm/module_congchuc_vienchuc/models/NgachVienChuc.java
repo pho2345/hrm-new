@@ -23,7 +23,7 @@ import sgu.hrm.module_congchuc_vienchuc.models.BacNgachVienChuc;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@JsonIgnoreProperties({"bacNgachVienChuc", "create_at", "update_at"}) // an thuoc tinh nay di
+@JsonIgnoreProperties({"bacNgachVienChuc"}) // an thuoc tinh nay di
 public class NgachVienChuc extends DateTimeObject {
     @Id
     @Column(columnDefinition = "varchar(10)")
