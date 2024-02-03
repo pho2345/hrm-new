@@ -1,5 +1,6 @@
 package sgu.hrm.module_response;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;

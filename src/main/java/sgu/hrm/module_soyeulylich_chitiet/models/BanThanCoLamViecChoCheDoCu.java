@@ -12,15 +12,19 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 import sgu.hrm.models.DateTimeObject;
-import sgu.hrm.module_soyeulylich.SoYeuLyLich;
+import sgu.hrm.module_soyeulylich.models.SoYeuLyLich;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "ban_than_co_lam_viec_cho_che_do_cu")
 @Getter
+@Setter
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -46,4 +50,21 @@ public class BanThanCoLamViecChoCheDoCu extends DateTimeObject {
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "so_yeu_ly_lich_btclvccdc_fk"), name = "so_yeu_ly_lich", referencedColumnName = "id", columnDefinition = "binary(16)")
     SoYeuLyLich soYeuLyLich;
+
+    public BanThanCoLamViecChoCheDoCu(LocalDateTime batDau, LocalDateTime ketThuc, String chucDanhDonViDiaDiem, LoaiSoYeuLyLichChiTiet loaiSoYeuLyLichChiTiet, SoYeuLyLich soYeuLyLich) {
+        super();
+        this.batDau = batDau;
+        this.ketThuc = ketThuc;
+        this.chucDanhDonViDiaDiem = chucDanhDonViDiaDiem;
+        this.loaiSoYeuLyLichChiTiet = loaiSoYeuLyLichChiTiet;
+        this.soYeuLyLich = soYeuLyLich;
+    }
+
+    public BanThanCoLamViecChoCheDoCu(LocalDateTime batDau, LocalDateTime ketThuc, String chucDanhDonViDiaDiem, SoYeuLyLich soYeuLyLich) {
+        super();
+        this.batDau = batDau;
+        this.ketThuc = ketThuc;
+        this.chucDanhDonViDiaDiem = chucDanhDonViDiaDiem;
+        this.soYeuLyLich = soYeuLyLich;
+    }
 }

@@ -2,8 +2,12 @@ package sgu.hrm.module_soyeulylich_chitiet.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import sgu.hrm.module_response.ResDTO;
 import sgu.hrm.module_soyeulylich_chitiet.models.BanThanCoLamViecChoCheDoCu;
 import sgu.hrm.module_soyeulylich_chitiet.models.KienThucAnNinhQuocPhong;
 import sgu.hrm.module_soyeulylich_chitiet.models.KyLuat;
@@ -18,13 +22,16 @@ import sgu.hrm.module_soyeulylich_chitiet.models.QuaTrinhCongTac;
 import sgu.hrm.module_soyeulylich_chitiet.models.QuanHeGiaDinh;
 import sgu.hrm.module_soyeulylich_chitiet.models.TinHoc;
 import sgu.hrm.module_soyeulylich_chitiet.models.KhenThuong;
+import sgu.hrm.module_soyeulylich_chitiet.models.dto.ReqLoaiSoYeuLyLichChiTiet;
+import sgu.hrm.module_soyeulylich_chitiet.models.dto.ReqQuanHeGiaDinh;
 import sgu.hrm.module_soyeulylich_chitiet.services.ISoYeuLyLichChiTietServices;
+import sgu.hrm.module_soyeulylich_chitiet.services.SoYeuLyLichChiTietServices;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor // create constructor if field set final or @not null
-@RequestMapping(value = "/api/v1/so-yeu-ly-lich-chi-tiet")
+@RequestMapping(value = "/api/v1")
 public class SoYeuLyLichChiTietController {
     private final ISoYeuLyLichChiTietServices.ILoaiSoYeuLyLichChiTietSefvice loaiSoYeuLyLichChiTietSefvice;
     private final ISoYeuLyLichChiTietServices.IBanThanCoLamViecChoCheDoCuSefvice banThanCoLamViecChoCheDoCuSefvice;
@@ -41,62 +48,35 @@ public class SoYeuLyLichChiTietController {
     private final ISoYeuLyLichChiTietServices.IQuaTrinhCongTacSefvice quaTrinhCongTacSefvice;
     private final ISoYeuLyLichChiTietServices.ITinHocSefvice tinHocSefvice;
 
+
     @GetMapping("/loai-so-yeu-ly-lich-chi-tiet")
-    public List<LoaiSoYeuLyLichChiTiet> getAllLoaiSoYeuLyLichChiTiet() {
+    public ResDTO<List<LoaiSoYeuLyLichChiTiet>> xemLoaiSoYeuLyLichChiTiet() {
         return loaiSoYeuLyLichChiTietSefvice.xemLoaiSoYeuLyLichChiTiet();
     }
 
-    @GetMapping("/ban-than-co-lam-viec-cho-che-do-cu")
-    public List<BanThanCoLamViecChoCheDoCu> getAllBanThanCoLamViecChoCheDoCu() {
-        return banThanCoLamViecChoCheDoCuSefvice.xemBanThanCoLamViecChoCheDoCu();
+    @PostMapping("/loai-so-yeu-ly-lich-chi-tiet/them")
+    public ResDTO<LoaiSoYeuLyLichChiTiet> addLoaiSoYeuLyLichChiTiet(@RequestBody ReqLoaiSoYeuLyLichChiTiet chiTiet) {
+        return loaiSoYeuLyLichChiTietSefvice.themLoaiSoYeuLyLichChiTiet(chiTiet);
     }
-    @GetMapping("/khen-thuong")
-    public List<KhenThuong> getAllKhenThuong() {
-        return khenThuongSefvice.xemKhenThuong();
+
+    @PatchMapping("/loai-so-yeu-ly-lich-chi-tiet/sua")
+    public ResDTO<LoaiSoYeuLyLichChiTiet> editLoaiSoYeuLyLichChiTiet(@RequestBody LoaiSoYeuLyLichChiTiet chiTiet) {
+        return loaiSoYeuLyLichChiTietSefvice.suaLoaiSoYeuLyLichChiTiet(chiTiet);
     }
-    @GetMapping("/kien-thuc-an-ninh-quoc-phong")
-    public List<KienThucAnNinhQuocPhong> getAllKienThucAnNinhQuocPhong() {
-        return kienThucAnNinhQuocPhongSefvice.xemKienThucAnNinhQuocPhong();
-    }
-    @GetMapping("/ky-luat")
-    public List<KyLuat> getAllKyLuat() {
-        return kyLuatSefvice.xemKyLuat();
-    }
-    @GetMapping("/lam-viec-o-nuoc-ngoai")
-    public List<LamViecONuocNgoai> getAllLamViecONuocNgoai() {
-        return lamViecONuocNgoaiSefvice.xemLamViecONuocNgoai();
-    }
-    @GetMapping("/luong-ban-than")
-    public List<LuongBanThan> getAllLuongBanThan() {
-        return luongBanThanSefvice.xemLuongBanThan();
-    }
-    @GetMapping("/ly-luan-chinh-tri")
-    public List<LyLuanChinhTri> getAllLyLuanChinhTri() {
-        return lyLuanChinhTriSefvice.xemLyLuanChinhTri();
-    }
-    @GetMapping("/nghiep-vu-chuyen-nganh")
-    public List<NghiepVuChuyenNganh> getAllNghiepVuChuyenNganh() {
-        return nghiepVuChuyenNganhSefvice.xemNghiepVuChuyenNganh();
-    }
-    @GetMapping("/ngoai-ngu")
-    public List<NgoaiNgu> getAllNgoaiNgu() {
-        return ngoaiNguSefvice.xemNgoaiNgu();
-    }
-    @GetMapping("/phu-cap-khac")
-    public List<PhuCapKhac> getAllPhuCapKhac() {
-        return phuCapKhacSefvice.xemPhuCapKhac();
-    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @GetMapping("/quan-he-gia-dinh")
-    public List<QuanHeGiaDinh> getAllQuanHeGiaDinh() {
+    public ResDTO<List<QuanHeGiaDinh>> xemQuanHeGiaDinh() {
         return quanHeGiaDinhSefvice.xemQuanHeGiaDinh();
     }
 
-    @GetMapping("/qua-trinh-cong-tac")
-    public List<QuaTrinhCongTac> getAllQuaTrinhCongTac() {
-        return quaTrinhCongTacSefvice.xemQuaTrinhCongTac();
+    @PostMapping("/quan-he-gia-dinh/{loai-syll}/them")
+    public ResDTO<List<QuanHeGiaDinh>> addQuanHeGiaDinh(@RequestBody List<ReqQuanHeGiaDinh> giaDinh) {
+        return quanHeGiaDinhSefvice.themPQuanHeGiaDinh(giaDinh.get(0).loaiSoYeuLyLichChiTiet(), giaDinh.get(0).soYeuLyLich(), giaDinh);
     }
-    @GetMapping("/tin-hoc")
-    public List<TinHoc> getAllTinHoc() {
-        return tinHocSefvice.xemTinHoc();
-    }
+
+//    @PatchMapping("/quan-he-gia-dinh/sua")
+//    public ResDTO<QuanHeGiaDinh> editQuanHeGiaDinh(@RequestBody ReqQuanHeGiaDinh giaDinh) {
+//        return quanHeGiaDinhSefvice.suaQuanHeGiaDinh(chiTiet);
+//    }
 }

@@ -10,7 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import sgu.hrm.module_soyeulylich.SoYeuLyLich;
+import sgu.hrm.module_soyeulylich.models.SoYeuLyLich;
 
 import java.io.Serializable;
 

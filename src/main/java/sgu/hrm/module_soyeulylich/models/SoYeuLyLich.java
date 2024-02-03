@@ -1,5 +1,8 @@
-package sgu.hrm.module_soyeulylich;
+package sgu.hrm.module_soyeulylich.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 import lombok.AccessLevel;
@@ -22,6 +26,7 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import sgu.hrm.module_soyeulylich_chitiet.models.BanThanCoLamViecChoCheDoCu;
+import sgu.hrm.module_taikhoan.models.TaiKhoan;
 import sgu.hrm.module_utilities.models.BacLuong;
 import sgu.hrm.module_utilities.models.CapBacLoaiQuanHamQuanDoi;
 import sgu.hrm.models.CoQuanToChucDonViTuyenDung;
@@ -63,15 +68,16 @@ import java.util.UUID;
 @Entity
 @Table(name = "so_yeu_ly_lich")
 @Getter
-@Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@JsonInclude(JsonInclude.Include.ALWAYS)
 public class SoYeuLyLich extends DateTimeObject {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id", columnDefinition = "BINARY(16)")
     UUID id;
 
     @Column(name = "ho_va_ten", columnDefinition = "varchar(50)")
@@ -268,7 +274,7 @@ public class SoYeuLyLich extends DateTimeObject {
     LocalDateTime ngayHuongPCTNVK;
 
     @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name="tinh_trang_suc_khoe_fk"), name = "tinh_trang_suc_khoe", columnDefinition = "INTEGER")
+    @JoinColumn(foreignKey = @ForeignKey(name = "tinh_trang_suc_khoe_fk"), name = "tinh_trang_suc_khoe", columnDefinition = "INTEGER")
     TinhTrangSucKhoe tinhTrangSucKhoe;
 
     @Column(name = "chieu_cao", columnDefinition = "float")
@@ -278,7 +284,7 @@ public class SoYeuLyLich extends DateTimeObject {
     double canNang;
 
     @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name="nhom_mau_fk"), name = "nhom_mau", columnDefinition = "tinyint")
+    @JoinColumn(foreignKey = @ForeignKey(name = "nhom_mau_fk"), name = "nhom_mau", columnDefinition = "tinyint")
     NhomMau nhomMau;
 
     // có chuyện môn nhưng tui làm bảng trung gian
@@ -293,43 +299,44 @@ public class SoYeuLyLich extends DateTimeObject {
     @OneToMany(mappedBy = "soYeuLyLich")
     Set<NghiepVuChuyenNganh> nghiepVuChuyenNganhs;
 
-    @OneToMany(mappedBy = "soYeuLyLich", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "soYeuLyLich")
     Set<KienThucAnNinhQuocPhong> kienThucAnNinhQuocPhongs;
 
-    @OneToMany(mappedBy = "soYeuLyLich", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "soYeuLyLich")
     Set<TinHoc> tinHocs;
 
-    @OneToMany(mappedBy = "soYeuLyLich", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "soYeuLyLich")
     Set<NgoaiNgu> ngoaiNgus;
 
-    @OneToMany(mappedBy = "soYeuLyLich", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "soYeuLyLich")
     Set<QuaTrinhCongTac> quaTrinhCongTacs;
 
-    @OneToMany(mappedBy = "soYeuLyLich", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "soYeuLyLich")
     Set<BanThanCoLamViecChoCheDoCu> banThanCoLamViecChoCheDoCus;
 
-    @OneToMany(mappedBy = "soYeuLyLich", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "soYeuLyLich")
     Set<LamViecONuocNgoai> lamViecONuocNgoais;
 
-    @OneToMany(mappedBy = "soYeuLyLich", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "soYeuLyLich")
     Set<KhenThuong> khenThuongs;
 
-    @OneToMany(mappedBy = "soYeuLyLich", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "soYeuLyLich")
     Set<KyLuat> kyLuats;
 
-    @OneToMany(mappedBy = "soYeuLyLich", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "soYeuLyLich")
     Set<QuanHeGiaDinh> quanHeGiaDinhs;
 
 //    @OneToMany(mappedBy = "soYeuLyLich", cascade = CascadeType.ALL, orphanRemoval = true)
 //    Set<QuanHeGiaDinhRuotBenVoHoacChong> quanHeGiaDinhRuotBenVoHoacChongs;
 
-    @OneToMany(mappedBy = "soYeuLyLich", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "soYeuLyLich")
     Set<LuongBanThan> luongBanThans;
 
-    @OneToMany(mappedBy = "soYeuLyLich", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "soYeuLyLich")
     Set<PhuCapKhac> phuCapKhacs;
 
-//    @OneToOne()
-//    @JoinColumn(name="taikhoan", columnDefinition = "DEFAULT 1")
-//    TaiKhoan taiKhoan;
+    @OneToOne()
+    @JoinColumn(name = "taikhoan", columnDefinition = "INTEGER")
+    @JsonIgnore
+    TaiKhoan taiKhoan;
 }

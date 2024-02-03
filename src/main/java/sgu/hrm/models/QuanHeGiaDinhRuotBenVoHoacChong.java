@@ -13,7 +13,7 @@
 //import lombok.Getter;
 //import lombok.NoArgsConstructor;
 //import lombok.experimental.FieldDefaults;
-//import sgu.hrm.module_soyeulylich.SoYeuLyLich;
+//import sgu.hrm.module_soyeulylich.models.SoYeuLyLich;
 //
 //@Entity
 //@Table(name = "quan_he_gia_dinh_ruot_ben_vo_hoac_chong")

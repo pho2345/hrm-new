@@ -10,6 +10,9 @@ public interface TaiKhoanRepository extends JpaRepository<TaiKhoan, Integer> {
     @Query
     TaiKhoan findBySoCCCD(String soCCCD);
 
+    @Query
+    TaiKhoan findByUsername(String username);
+
 //    @Query
 //    TaiKhoan updateTaiKhoanStatusWhere(boolean soCCCD);
 }

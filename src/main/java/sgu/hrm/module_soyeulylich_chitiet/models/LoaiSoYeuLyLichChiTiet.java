@@ -12,6 +12,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 import sgu.hrm.models.DateTimeObject;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
 @Entity
 @Table(name = "loai_so_yeu_ly_lich_chitiet")
 @Getter
+//@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -30,6 +32,11 @@ public class LoaiSoYeuLyLichChiTiet extends DateTimeObject {
 
     @Column(length = 65, unique = true)
     String name;
+
+    public LoaiSoYeuLyLichChiTiet(String name) {
+        super();
+        this.name = name;
+    }
 
     @OneToMany(mappedBy = "loaiSoYeuLyLichChiTiet")
     List<BanThanCoLamViecChoCheDoCu> banThanCoLamViecChoCheDoCus;

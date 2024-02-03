@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@SuperBuilder
 @AllArgsConstructor
 @MappedSuperclass //class cha không phải là entity
 //@JsonIgnoreProperties({"create_at", "update_at"}) //ân 2 thuộc tính này trên toàn bộ class
@@ -32,9 +33,9 @@ public class DateTimeObject {
     public DateTimeObject(LocalDateTime create_at, LocalDateTime update_at) {
         this.create_at = create_at;
         this.update_at = update_at;
-        this.trangThai = trangThai;
     }
 
+    //
     public DateTimeObject() {
         this.create_at = LocalDateTime.now();
         this.trangThai = true;

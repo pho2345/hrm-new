@@ -1,13 +1,14 @@
-package sgu.hrm.module_taikhoan.models.dto;
+package sgu.hrm.module_taikhoan.models.resopnse;
 
 import java.util.UUID;
 
-public record ResTaiKhoanDTO(
+public record ResTaiKhoan(
         int id,
         String hoVaten,
+        String soCCCD,
         String username,
-//            String password,
         UUID maSoYeuLyLich,
+        String role,
         boolean trangThai
 ) {
 }

@@ -13,13 +13,15 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 import sgu.hrm.models.DateTimeObject;
-import sgu.hrm.module_soyeulylich.SoYeuLyLich;
+import sgu.hrm.module_soyeulylich.models.SoYeuLyLich;
 
 //gia dinh bao gom ruot va ben vo hoac chong luon
 @Entity
 @Table(name = "quan_he_gia_dinh_ruot")
 @Getter
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -48,4 +50,19 @@ public class QuanHeGiaDinh extends DateTimeObject {
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "so_yeu_ly_lich_qhgdr_fk"), name = "so_yeu_ly_lich", referencedColumnName = "id", columnDefinition = "binary(16)")
     SoYeuLyLich soYeuLyLich;
+
+    @Override
+    public void setUpdate_at() {
+        super.setUpdate_at();
+    }
+
+    public QuanHeGiaDinh(String moiQuanHe, String hoVaTen, short namSinh, String thongTinThanNhan, LoaiSoYeuLyLichChiTiet loaiSoYeuLyLichChiTiet, SoYeuLyLich soYeuLyLich) {
+        super();
+        this.moiQuanHe = moiQuanHe;
+        this.hoVaTen = hoVaTen;
+        this.namSinh = namSinh;
+        this.thongTinThanNhan = thongTinThanNhan;
+        this.loaiSoYeuLyLichChiTiet = loaiSoYeuLyLichChiTiet;
+        this.soYeuLyLich = soYeuLyLich;
+    }
 }

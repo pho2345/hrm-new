@@ -13,14 +13,16 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 import sgu.hrm.models.DateTimeObject;
-import sgu.hrm.module_soyeulylich.SoYeuLyLich;
+import sgu.hrm.module_soyeulylich.models.SoYeuLyLich;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "kien_thuc_anninh_quocphong")
 @Getter
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -49,4 +51,14 @@ public class KienThucAnNinhQuocPhong extends DateTimeObject {
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "so_yeu_ly_lich_ktanqp_fk"), name = "so_yeu_ly_lich", referencedColumnName = "id", columnDefinition = "binary(16)")
     SoYeuLyLich soYeuLyLich;
+
+    public KienThucAnNinhQuocPhong(LocalDateTime batDau, LocalDateTime ketThuc, String tenCoSoDaoTao, String chungChiDuocCap, LoaiSoYeuLyLichChiTiet loaiSoYeuLyLichChiTiet, SoYeuLyLich soYeuLyLich) {
+        super();
+        this.batDau = batDau;
+        this.ketThuc = ketThuc;
+        this.tenCoSoDaoTao = tenCoSoDaoTao;
+        this.chungChiDuocCap = chungChiDuocCap;
+        this.loaiSoYeuLyLichChiTiet = loaiSoYeuLyLichChiTiet;
+        this.soYeuLyLich = soYeuLyLich;
+    }
 }

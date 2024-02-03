@@ -13,14 +13,16 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 import sgu.hrm.models.DateTimeObject;
-import sgu.hrm.module_soyeulylich.SoYeuLyLich;
+import sgu.hrm.module_soyeulylich.models.SoYeuLyLich;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "ngoai_ngu")
 @Getter
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -55,4 +57,21 @@ public class NgoaiNgu extends DateTimeObject {
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "so_yeu_ly_lich_ngoaingu_fk"), name = "so_yeu_ly_lich", referencedColumnName = "id", columnDefinition = "binary(16)")
     SoYeuLyLich soYeuLyLich;
+
+    @Override
+    public void setUpdate_at() {
+        super.setUpdate_at();
+    }
+
+    public NgoaiNgu(LocalDateTime batDau, LocalDateTime ketThuc, String tenCoSoDaoTao, String tenNgoaiNgu, String chungChiDuocCap, float diemSo, LoaiSoYeuLyLichChiTiet loaiSoYeuLyLichChiTiet, SoYeuLyLich soYeuLyLich) {
+        super();
+        this.batDau = batDau;
+        this.ketThuc = ketThuc;
+        this.tenCoSoDaoTao = tenCoSoDaoTao;
+        this.tenNgoaiNgu = tenNgoaiNgu;
+        this.chungChiDuocCap = chungChiDuocCap;
+        this.diemSo = diemSo;
+        this.loaiSoYeuLyLichChiTiet = loaiSoYeuLyLichChiTiet;
+        this.soYeuLyLich = soYeuLyLich;
+    }
 }

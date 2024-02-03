@@ -13,14 +13,16 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 import sgu.hrm.models.DateTimeObject;
-import sgu.hrm.module_soyeulylich.SoYeuLyLich;
+import sgu.hrm.module_soyeulylich.models.SoYeuLyLich;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "khen_thuong")
 @Getter
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -31,7 +33,7 @@ public class KhenThuong extends DateTimeObject {
     int id;
 
     @Column(name = "nam", columnDefinition = "datetime")
-    LocalDateTime name;
+    LocalDateTime nam;
 
     @Column(name = "xep_loai_chuyen_mon", columnDefinition = "varchar(20)")
     String xepLoaiChuyenMon;
@@ -49,4 +51,14 @@ public class KhenThuong extends DateTimeObject {
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "so_yeu_ly_lich_khthuong_fk"), name = "so_yeu_ly_lich", referencedColumnName = "id", columnDefinition = "binary(16)")
     SoYeuLyLich soYeuLyLich;
+
+    public KhenThuong(LocalDateTime nam, String xepLoaiChuyenMon, String xepLoaiThiDua, String hinhThucKhenThuong, LoaiSoYeuLyLichChiTiet loaiSoYeuLyLichChiTiet, SoYeuLyLich soYeuLyLich) {
+        super();
+        this.nam = nam;
+        this.xepLoaiChuyenMon = xepLoaiChuyenMon;
+        this.xepLoaiThiDua = xepLoaiThiDua;
+        this.hinhThucKhenThuong = hinhThucKhenThuong;
+        this.loaiSoYeuLyLichChiTiet = loaiSoYeuLyLichChiTiet;
+        this.soYeuLyLich = soYeuLyLich;
+    }
 }

@@ -60,36 +60,9 @@ public class UtilitiesService {
 //    public UtilitiesService() {
 //    }
 
-//    public UtilitiesService(
-//            BacLuongRepository bacLuongRepository, LoaiQuanHamQuanDoiRepository loaiQuanHamQuanDoiRepository,
-//            CapBacLoaiQuanHamQuanDoiRepository capBacLoaiQuanHamQuanDoiRepository,
-//            DanhHieuNhaNuocPhongTangRepository danhHieuNhaNuocPhongTangRepository,
-//            DanTocRepository danTocRepository, DoiTuongChinhSachRepository doiTuongChinhSachRepository,
-//            GioiTinhRepository gioiTinhRepository, HocHamRepository hocHamRepository,
-//            NhomMauRepository nhomMauRepository, ThanhPhanGiaDinhRepository thanhPhanGiaDinhRepository,
-//            TinhTrangSucKhoeRepository tinhTrangSucKhoeRepository, TonGiaoRepository tonGiaoRepository,
-//            TrinhDoChuyenMonRepository trinhDoChuyenMonRepository,
-//            TrinhDoGiaoDucPhoThongRepository trinhDoGiaoDucPhoThongRepository) {
-//        this.bacLuongRepository = bacLuongRepository;
-//        this.loaiQuanHamQuanDoiRepository = loaiQuanHamQuanDoiRepository;
-//        this.capBacLoaiQuanHamQuanDoiRepository = capBacLoaiQuanHamQuanDoiRepository;
-//        this.danhHieuNhaNuocPhongTangRepository = danhHieuNhaNuocPhongTangRepository;
-//        this.danTocRepository = danTocRepository;
-//        this.doiTuongChinhSachRepository = doiTuongChinhSachRepository;
-//        this.gioiTinhRepository = gioiTinhRepository;
-//        this.hocHamRepository = hocHamRepository;
-//        this.nhomMauRepository = nhomMauRepository;
-//        this.thanhPhanGiaDinhRepository = thanhPhanGiaDinhRepository;
-//        this.tinhTrangSucKhoeRepository = tinhTrangSucKhoeRepository;
-//        this.tonGiaoRepository = tonGiaoRepository;
-//        this.trinhDoChuyenMonRepository = trinhDoChuyenMonRepository;
-//        this.trinhDoGiaoDucPhoThongRepository = trinhDoGiaoDucPhoThongRepository;
-//    }
-
     @Service
     public class BacLuongService implements IUtilitiesService.IBacLuongService {
         public ResDTO<List<BacLuong>> xemBacLuong() {
-            //        return capBacLoaiQuanHamQuanDoiRepository.findAll();
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,

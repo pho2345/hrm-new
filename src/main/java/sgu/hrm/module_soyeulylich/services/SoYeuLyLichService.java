@@ -1,4 +1,4 @@
-package sgu.hrm.module_soyeulylich;
+package sgu.hrm.module_soyeulylich.services;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -6,6 +6,24 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import sgu.hrm.module_response.ResDTO;
 import sgu.hrm.module_response.ResEnum;
+import sgu.hrm.module_soyeulylich.models.ReqSoYeuLyLich;
+import sgu.hrm.module_soyeulylich.repository.SoYeuLyLichRepository;
+import sgu.hrm.module_soyeulylich.models.SoYeuLyLich;
+import sgu.hrm.module_soyeulylich.models.SoYeuLyLichDTO;
+import sgu.hrm.module_soyeulylich_chitiet.models.BanThanCoLamViecChoCheDoCu;
+import sgu.hrm.module_soyeulylich_chitiet.models.dto.ReqBanThanCoLamViecChoCheDoCu;
+import sgu.hrm.module_soyeulylich_chitiet.models.dto.ReqKhenThuong;
+import sgu.hrm.module_soyeulylich_chitiet.models.dto.ReqKienThucAnNinhQuocPhong;
+import sgu.hrm.module_soyeulylich_chitiet.models.dto.ReqKyLuat;
+import sgu.hrm.module_soyeulylich_chitiet.models.dto.ReqLamViecONuocNgoai;
+import sgu.hrm.module_soyeulylich_chitiet.models.dto.ReqLuongBanThan;
+import sgu.hrm.module_soyeulylich_chitiet.models.dto.ReqLyLuanChinhTri;
+import sgu.hrm.module_soyeulylich_chitiet.models.dto.ReqNghiepVuChuyenNganh;
+import sgu.hrm.module_soyeulylich_chitiet.models.dto.ReqNgoaiNgu;
+import sgu.hrm.module_soyeulylich_chitiet.models.dto.ReqPhuCapKhac;
+import sgu.hrm.module_soyeulylich_chitiet.models.dto.ReqQuaTrinhCongTac;
+import sgu.hrm.module_soyeulylich_chitiet.models.dto.ReqQuanHeGiaDinh;
+import sgu.hrm.module_soyeulylich_chitiet.models.dto.ReqTinHoc;
 import sgu.hrm.module_utilities.models.BacLuong;
 import sgu.hrm.module_utilities.models.CapBacLoaiQuanHamQuanDoi;
 import sgu.hrm.models.CoQuanToChucDonViTuyenDung;
@@ -57,75 +75,89 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
     final NhomMauRepository nhomMauRepository;
 
     @Override
-    public List<SoYeuLyLichDTO> xemSoYeuLyLich() {
-        return soYeuLyLichRepository.findAll().stream().map(soYeuLyLich ->
-                SoYeuLyLichDTO.builder()
-                        .hovaten(soYeuLyLich.getHovaten())
-                        .gioiTinh(soYeuLyLich.getGioiTinh().getName())
-                        .cacTenGoiKhac(soYeuLyLich.getCacTenGoiKhac())
-                        .sinhNgay(soYeuLyLich.getSinhNgay())
-                        .noiSinh(soYeuLyLich.getNoiSinh())
-                        .queQuan(soYeuLyLich.getQueQuan())
-                        .danToc(soYeuLyLich.getDanToc().getName())
-                        .soCCCD(soYeuLyLich.getSoCCCD())
-                        .ngayCapCCCD(soYeuLyLich.getNgayCapCCCD())
-                        .soDienThoai(soYeuLyLich.getSoDienThoai())
-                        .soBHXH(soYeuLyLich.getSoBHXH())
-                        .soBHYT(soYeuLyLich.getSoBHYT())
-                        .noiOHienNay(soYeuLyLich.getNoiOHienNay())
-                        .thanhPhanGiaDinh(soYeuLyLich.getThanhPhanGiaDinh().getName())
-                        .ngheNghiepTruocKhiTuyenDung(soYeuLyLich.getNgheNghiepTruocKhiTuyenDung())
-                        .ngayDuocTuyenDungLanDau(soYeuLyLich.getNgayDuocTuyenDungLanDau())
-                        .coQuanToChucDonViTuyenDung(soYeuLyLich.getCoQuanToChucDonViTuyenDung() != null ? soYeuLyLich.getCoQuanToChucDonViTuyenDung().getName() : "")
-                        .ngayVaoCoQuanHienDangCongTac(soYeuLyLich.getNgayVaoCoQuanHienDangCongTac())
-                        .ngayVaoDangCongSanVietNam(soYeuLyLich.getNgayVaoDangCongSanVietNam())
-                        .ngayChinhThuc(soYeuLyLich.getNgayChinhThuc())
-                        .ngayThamGiaToChucChinhTriXaHoiDauTien(soYeuLyLich.getNgayThamGiaToChucChinhTriXaHoiDauTien())
-                        .ngayNhapNgu(soYeuLyLich.getNgayXuatNgu())
-                        .ngayXuatNgu(soYeuLyLich.getNgayNhapNgu())
-                        .capBacLoaiQuanHamQuanDoi(soYeuLyLich.getCapBacLoaiQuanHamQuanDoi().getName())
-                        .doiTuongChinhSach(soYeuLyLich.getDoiTuongChinhSach().getName())
-                        .trinhDoGiaoDucPhoThong(soYeuLyLich.getTrinhDoGiaoDucPhoThong().getName())
-                        .trinhDoChuyenMon(soYeuLyLich.getTrinhDoChuyenMon().getName())
-                        .hocHam(soYeuLyLich.getHocHam().getName())
-                        .danhHieuNhaNuocPhongTang(soYeuLyLich.getDanhHieuNhaNuocPhongTang().getName())
-                        .chucVuHienTai(soYeuLyLich.getChucVuHienTai())
-                        .ngayBoNhiem(soYeuLyLich.getNgayBoNhiem())
-                        .ngayBoNhiemLai(soYeuLyLich.getNgayBoNhiemLai())
-                        .duocQuyHoacChucDanh(soYeuLyLich.getDuocQuyHoacChucDanh())
-                        .chucVuKiemNhiem(soYeuLyLich.getChucVuKiemNhiem())
-                        .chucVuDangHienTai(soYeuLyLich.getChucVuDangHienTai())
-                        .chucVuDangKiemNhiem(soYeuLyLich.getChucVuDangKiemNhiem())
-                        .congVienChinhDuocGiao(soYeuLyLich.getCongVienChinhDuocGiao())
-                        .soTruongCongTac(soYeuLyLich.getSoTruongCongTac())
-                        .congViecLamLauNhat(soYeuLyLich.getCongViecLamLauNhat())
-                        .tienLuong(soYeuLyLich.getTienLuong())
-                        .ngachNgheNghiep(soYeuLyLich.getNgachNgheNghiep())
-                        .maSoNgachNgheNghiep(soYeuLyLich.getMaSoNgachNgheNghiep())
-                        .ngayBoNhiemNgachNgheNghiep(soYeuLyLich.getNgayBoNhiemNgachNgheNghiep())
-                        .bacLuong(soYeuLyLich.getBacLuong().getName())
-                        .heSoLuongNgachNgheNghiep(soYeuLyLich.getHeSoLuongNgachNgheNghiep())
-                        .ngayHuongLuongNgachNgheNghiep(soYeuLyLich.getNgayHuongLuongNgachNgheNghiep())
-                        .phanTramHuongLuongNgachNgheNghiep(soYeuLyLich.getPhanTramHuongLuongNgachNgheNghiep())
-                        .phuCapThamNienVuotKhungNgachNgheNghiep(soYeuLyLich.getPhuCapThamNienVuotKhungNgachNgheNghiep())
-                        .ngayHuongPCTNVKNgachNgheNghiep(soYeuLyLich.getNgayHuongPCTNVKNgachNgheNghiep())
-                        .phuCapChucVu(soYeuLyLich.getPhuCapChucVu())
-                        .phuCapKiemNhiem(soYeuLyLich.getPhuCapKiemNhiem())
-                        .phuCapKhac(soYeuLyLich.getPhuCapKhac())
-                        .viTriViecLam(soYeuLyLich.getViTriViecLam())
-                        .maSoViTriViecLam(soYeuLyLich.getMaSoViTriViecLam())
-                        .bacLuongTriViecLam(soYeuLyLich.getBacLuongTriViecLam())
-                        .luongTheoMucTien(soYeuLyLich.getLuongTheoMucTien())
-                        .ngayHuongLuongTheoViTriViecLam(soYeuLyLich.getNgayHuongLuongTheoViTriViecLam())
-                        .phamTramHuongLuong(soYeuLyLich.getPhamTramHuongLuong())
-                        .phuCapThamNienVuotKhung(soYeuLyLich.getPhuCapThamNienVuotKhung())
-                        .ngayHuongPCTNVK(soYeuLyLich.getNgayHuongPCTNVK())
-                        .tinhTrangSucKhoe(soYeuLyLich.getTinhTrangSucKhoe().getTitle())
-                        .chieuCao(soYeuLyLich.getChieuCao())
-                        .canNang(soYeuLyLich.getCanNang())
-                        .nhomMau(soYeuLyLich.getNhomMau().getName())
-                        .build()
-        ).toList();
+    public ResDTO<List<SoYeuLyLich>> xemSoYeuLyLich() {
+        try {
+//            List<SoYeuLyLichDTO> soYeuLyLichDTOS = soYeuLyLichRepository.findAll().stream().map(soYeuLyLich ->
+//                    SoYeuLyLichDTO.builder()
+//                            .hovaten(soYeuLyLich.getHovaten())
+//                            .gioiTinh(Optional.ofNullable(soYeuLyLich.getGioiTinh()).map(GioiTinh::getName).orElse(""))
+//                            .cacTenGoiKhac(soYeuLyLich.getCacTenGoiKhac())
+//                            .sinhNgay(soYeuLyLich.getSinhNgay())
+//                            .noiSinh(soYeuLyLich.getNoiSinh())
+//                            .queQuan(soYeuLyLich.getQueQuan())
+//                            .danToc(Optional.ofNullable(soYeuLyLich.getDanToc()).map(toc -> toc.getName()).orElse(""))
+//                            .soCCCD(soYeuLyLich.getSoCCCD())
+//                            .ngayCapCCCD(soYeuLyLich.getNgayCapCCCD())
+//                            .soDienThoai(soYeuLyLich.getSoDienThoai())
+//                            .soBHXH(soYeuLyLich.getSoBHXH())
+//                            .soBHYT(soYeuLyLich.getSoBHYT())
+//                            .noiOHienNay(soYeuLyLich.getNoiOHienNay())
+//                            .thanhPhanGiaDinh(Optional.ofNullable(soYeuLyLich.getThanhPhanGiaDinh()).map(ThanhPhanGiaDinh::getName).orElse(""))
+//                            .ngheNghiepTruocKhiTuyenDung(soYeuLyLich.getNgheNghiepTruocKhiTuyenDung())
+//                            .ngayDuocTuyenDungLanDau(soYeuLyLich.getNgayDuocTuyenDungLanDau())
+//                            .coQuanToChucDonViTuyenDung(soYeuLyLich.getCoQuanToChucDonViTuyenDung() != null ? soYeuLyLich.getCoQuanToChucDonViTuyenDung().getName() : "")
+//                            .ngayVaoCoQuanHienDangCongTac(soYeuLyLich.getNgayVaoCoQuanHienDangCongTac())
+//                            .ngayVaoDangCongSanVietNam(soYeuLyLich.getNgayVaoDangCongSanVietNam())
+//                            .ngayChinhThuc(soYeuLyLich.getNgayChinhThuc())
+//                            .ngayThamGiaToChucChinhTriXaHoiDauTien(soYeuLyLich.getNgayThamGiaToChucChinhTriXaHoiDauTien())
+//                            .ngayNhapNgu(soYeuLyLich.getNgayXuatNgu())
+//                            .ngayXuatNgu(soYeuLyLich.getNgayNhapNgu())
+//                            .capBacLoaiQuanHamQuanDoi(Optional.ofNullable(soYeuLyLich.getCapBacLoaiQuanHamQuanDoi()).map(CapBacLoaiQuanHamQuanDoi::getName).orElse(""))
+//                            .doiTuongChinhSach(Optional.ofNullable(soYeuLyLich.getDoiTuongChinhSach()).map(DoiTuongChinhSach::getName).orElse(""))
+//                            .trinhDoGiaoDucPhoThong(Optional.ofNullable(soYeuLyLich.getTrinhDoGiaoDucPhoThong()).map(TrinhDoGiaoDucPhoThong::getName).orElse(""))
+//                            .trinhDoChuyenMon(Optional.ofNullable(soYeuLyLich.getTrinhDoChuyenMon()).map(TrinhDoChuyenMon::getName).orElse(""))
+//                            .hocHam(Optional.ofNullable(soYeuLyLich.getHocHam()).map(HocHam::getName).orElse(""))
+//                            .danhHieuNhaNuocPhongTang(Optional.ofNullable(soYeuLyLich.getDanhHieuNhaNuocPhongTang()).map(DanhHieuNhaNuocPhongTang::getName).orElse(""))
+//                            .chucVuHienTai(soYeuLyLich.getChucVuHienTai())
+//                            .ngayBoNhiem(soYeuLyLich.getNgayBoNhiem())
+//                            .ngayBoNhiemLai(soYeuLyLich.getNgayBoNhiemLai())
+//                            .duocQuyHoacChucDanh(soYeuLyLich.getDuocQuyHoacChucDanh())
+//                            .chucVuKiemNhiem(soYeuLyLich.getChucVuKiemNhiem())
+//                            .chucVuDangHienTai(soYeuLyLich.getChucVuDangHienTai())
+//                            .chucVuDangKiemNhiem(soYeuLyLich.getChucVuDangKiemNhiem())
+//                            .congVienChinhDuocGiao(soYeuLyLich.getCongVienChinhDuocGiao())
+//                            .soTruongCongTac(soYeuLyLich.getSoTruongCongTac())
+//                            .congViecLamLauNhat(soYeuLyLich.getCongViecLamLauNhat())
+//                            .tienLuong(soYeuLyLich.getTienLuong())
+//                            .ngachNgheNghiep(soYeuLyLich.getNgachNgheNghiep())
+//                            .maSoNgachNgheNghiep(soYeuLyLich.getMaSoNgachNgheNghiep())
+//                            .ngayBoNhiemNgachNgheNghiep(soYeuLyLich.getNgayBoNhiemNgachNgheNghiep())
+//                            .bacLuong(Optional.ofNullable(soYeuLyLich.getBacLuong()).map(BacLuong::getName).orElse(""))
+//                            .heSoLuongNgachNgheNghiep(soYeuLyLich.getHeSoLuongNgachNgheNghiep())
+//                            .ngayHuongLuongNgachNgheNghiep(soYeuLyLich.getNgayHuongLuongNgachNgheNghiep())
+//                            .phanTramHuongLuongNgachNgheNghiep(soYeuLyLich.getPhanTramHuongLuongNgachNgheNghiep())
+//                            .phuCapThamNienVuotKhungNgachNgheNghiep(soYeuLyLich.getPhuCapThamNienVuotKhungNgachNgheNghiep())
+//                            .ngayHuongPCTNVKNgachNgheNghiep(soYeuLyLich.getNgayHuongPCTNVKNgachNgheNghiep())
+//                            .phuCapChucVu(soYeuLyLich.getPhuCapChucVu())
+//                            .phuCapKiemNhiem(soYeuLyLich.getPhuCapKiemNhiem())
+//                            .phuCapKhac(soYeuLyLich.getPhuCapKhac())
+//                            .viTriViecLam(soYeuLyLich.getViTriViecLam())
+//                            .maSoViTriViecLam(soYeuLyLich.getMaSoViTriViecLam())
+//                            .bacLuongTriViecLam(soYeuLyLich.getBacLuongTriViecLam())
+//                            .luongTheoMucTien(soYeuLyLich.getLuongTheoMucTien())
+//                            .ngayHuongLuongTheoViTriViecLam(soYeuLyLich.getNgayHuongLuongTheoViTriViecLam())
+//                            .phamTramHuongLuong(soYeuLyLich.getPhamTramHuongLuong())
+//                            .phuCapThamNienVuotKhung(soYeuLyLich.getPhuCapThamNienVuotKhung())
+//                            .ngayHuongPCTNVK(soYeuLyLich.getNgayHuongPCTNVK())
+//                            .tinhTrangSucKhoe(Optional.ofNullable(soYeuLyLich.getTinhTrangSucKhoe()).map(TinhTrangSucKhoe::getTitle).orElse(""))
+//                            .chieuCao(soYeuLyLich.getChieuCao())
+//                            .canNang(soYeuLyLich.getCanNang())
+//                            .nhomMau(Optional.ofNullable(soYeuLyLich.getNhomMau()).map(NhomMau::getName).orElse(""))
+//                            .build()
+//            ).collect(Collectors.toList());
+            return new ResDTO<>(
+                    ResEnum.THANH_CONG.getStatusCode(),
+                    ResEnum.THANH_CONG,
+                    soYeuLyLichRepository.findAll()
+            );
+        } catch (RuntimeException e) {
+            System.err.println(e.getLocalizedMessage());
+            return new ResDTO<>(
+                    ResEnum.KHONG_HOP_LE.getStatusCode(),
+                    ResEnum.KHONG_HOP_LE,
+                    null
+            );
+        }
     }
 
     private SoYeuLyLich soYeuLyLichObject(SoYeuLyLichDTO soYeuLyLichDTO) {
@@ -208,14 +240,15 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
                 .canNang(soYeuLyLichDTO.canNang())
                 .nhomMau(nhomMau)
                 .build();
+        soYeuLyLich.setUpdate_at();
         return soYeuLyLich;
     }
 
-    @Override
-    public void themSoYeuLyLich(SoYeuLyLichDTO soYeuLyLichDTO) {
-        SoYeuLyLich soYeuLyLich = soYeuLyLichObject(soYeuLyLichDTO);
-        //save
-        //soYeuLyLichRepository.save(soYeuLyLich);
+//    @Override
+//    public void themSoYeuLyLich(SoYeuLyLichDTO soYeuLyLichDTO) {
+//        SoYeuLyLich soYeuLyLich = soYeuLyLichObject(soYeuLyLichDTO);
+    //save
+    //soYeuLyLichRepository.save(soYeuLyLich);
 
 //        SoYeuLyLich soYeuLyLich = SoYeuLyLich.builder()
 //                .hovaten(soYeuLyLichDTO.hovaten())
@@ -283,31 +316,72 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
 //                .canNang(soYeuLyLichDTO.canNang())
 //                .nhomMau(soYeuLyLichDTO.nhomMau())
 //                .build();
-    }
+//    }
 
     @Override
-    public ResDTO<SoYeuLyLich> xemSoYeuLyLichSoCCCD(UUID uuid) {
-        Optional<SoYeuLyLich> soYeuLyLich = soYeuLyLichRepository.findById(uuid);
-        if (soYeuLyLich.isPresent()) {
+    public ResDTO<SoYeuLyLich> xemSoYeuLyLichTheoSoCCCDHoacID(String q) {
+        SoYeuLyLich soYeuLyLichSoCCCD = soYeuLyLichRepository.findFirstBySoCCCD(q);
+        if (soYeuLyLichSoCCCD != null) {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
-                    soYeuLyLich.get()
+                    soYeuLyLichSoCCCD
+            );
+        }
+        Optional<SoYeuLyLich> soYeuLyLichID = soYeuLyLichRepository.findById(UUID.fromString(q));
+        if (soYeuLyLichID.isPresent()) {
+            return new ResDTO<>(
+                    ResEnum.THANH_CONG.getStatusCode(),
+                    ResEnum.THANH_CONG,
+                    soYeuLyLichID.get()
             );
         }
         return new ResDTO<>(
                 ResEnum.THANH_CONG.getStatusCode(),
                 ResEnum.THANH_CONG,
-                soYeuLyLich.orElse(new SoYeuLyLich())
+                null
         );
     }
 
     @Override
-    public void suaSoYeuLyLich(UUID uuidSoYeuLyLich) {
-        Optional<SoYeuLyLich> soYeuLyLichCheck = soYeuLyLichRepository.findById(uuidSoYeuLyLich);
-        if (soYeuLyLichCheck.isPresent()) {
-
+    public ResDTO<SoYeuLyLich> xemSoYeuLyLichTheoId(UUID id) {
+        try {
+            Optional<SoYeuLyLich> soYeuLyLich = soYeuLyLichRepository.findById(id);
+            return soYeuLyLich.map(lyLich -> new ResDTO<>(
+                    ResEnum.THANH_CONG.getStatusCode(),
+                    ResEnum.THANH_CONG,
+                    lyLich
+            )).orElseGet(() -> new ResDTO<>(
+                    ResEnum.HONG_TIM_THAY.getStatusCode(),
+                    ResEnum.HONG_TIM_THAY,
+                    null
+            ));
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e.getCause());
         }
+    }
 
+    @Override
+    public ResDTO<SoYeuLyLich> capNhatSoYeuLyLich(UUID id, SoYeuLyLichDTO soYeuLyLichDTO) {
+        try {
+            Optional<SoYeuLyLich> soYeuLyLich = soYeuLyLichRepository.findById(id);
+            if (soYeuLyLich.isPresent()) {
+                SoYeuLyLich lyLichNew = soYeuLyLichObject(soYeuLyLichDTO);
+                lyLichNew.setCreate_at(soYeuLyLich.get().getCreate_at());
+                lyLichNew.setId(soYeuLyLich.get().getId());
+                soYeuLyLichRepository.save(lyLichNew);
+                return new ResDTO<>(
+                        ResEnum.THANH_CONG.getStatusCode(),
+                        ResEnum.THANH_CONG,
+                        lyLichNew
+                );
+            } else return new ResDTO<>(
+                    ResEnum.HONG_TIM_THAY.getStatusCode(),
+                    ResEnum.HONG_TIM_THAY,
+                    null
+            );
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e.getCause());
+        }
     }
 }
