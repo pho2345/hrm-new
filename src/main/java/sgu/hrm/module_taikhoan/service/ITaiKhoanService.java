@@ -15,7 +15,6 @@ public interface ITaiKhoanService {
     ResDTO<TaiKhoan> xemTaiKhoanTheoId(int id); //admin user
     ResDTO<TaiKhoan> themTaiKhoan(ReqTaiKhoan taiKhoan);
 
-
 //    void suaTrangThaiTaiKhoan(int id); //admin
 //    public ResDTO<TaiKhoan> suaMathauTaiKhosn(int id, String matKhau);
 //    public void xoaTaiKhoan();

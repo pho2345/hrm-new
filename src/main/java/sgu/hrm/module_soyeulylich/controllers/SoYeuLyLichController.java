@@ -57,6 +57,11 @@ public class SoYeuLyLichController {
         return soYeuLyLichService.xemSoYeuLyLichTheoId(id);
     }
 
+    @PatchMapping("/{id}/phe-duyet")
+    public ResDTO<SoYeuLyLich> updateTrangThaiSoYeuLyLich(@PathVariable(name = "id") UUID id) {
+        return soYeuLyLichService.xemSoYeuLyLichTheoId(id);
+    }
+
     @PatchMapping("/{id}/cap-nhat")
     @Transactional
     public ResDTO<SoYeuLyLich> editSoYeuLyLich(@PathVariable(name = "id") UUID id,

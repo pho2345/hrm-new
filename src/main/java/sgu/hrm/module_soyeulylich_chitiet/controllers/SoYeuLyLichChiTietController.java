@@ -3,6 +3,7 @@ package sgu.hrm.module_soyeulylich_chitiet.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,7 @@ import sgu.hrm.module_soyeulylich_chitiet.services.ISoYeuLyLichChiTietServices;
 import sgu.hrm.module_soyeulylich_chitiet.services.SoYeuLyLichChiTietServices;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor // create constructor if field set final or @not null
@@ -70,12 +72,12 @@ public class SoYeuLyLichChiTietController {
         return quanHeGiaDinhSefvice.xemQuanHeGiaDinh();
     }
 
-    @PostMapping("/quan-he-gia-dinh/{loai-syll}/them")
-    public ResDTO<List<QuanHeGiaDinh>> addQuanHeGiaDinh(@RequestBody List<ReqQuanHeGiaDinh> giaDinh) {
-        return quanHeGiaDinhSefvice.themPQuanHeGiaDinh(giaDinh.get(0).loaiSoYeuLyLichChiTiet(), giaDinh.get(0).soYeuLyLich(), giaDinh);
+    @PostMapping("/quan-he-gia-dinh/{id-syll}/them")
+    public ResDTO<List<QuanHeGiaDinh>> addQuanHeGiaDinh(@PathVariable(name = "id-syll") UUID idSYLL, @RequestBody List<ReqQuanHeGiaDinh> giaDinh) {
+        return quanHeGiaDinhSefvice.themPQuanHeGiaDinh(giaDinh.get(0).loaiSoYeuLyLichChiTiet(), idSYLL, giaDinh);
     }
 
-//    @PatchMapping("/quan-he-gia-dinh/sua")
+//    @PatchMapping("/quan-he-gia-dinh/babac3ce-895e-4790-a397-b8fca6d2d897/cap-nhat")
 //    public ResDTO<QuanHeGiaDinh> editQuanHeGiaDinh(@RequestBody ReqQuanHeGiaDinh giaDinh) {
 //        return quanHeGiaDinhSefvice.suaQuanHeGiaDinh(chiTiet);
 //    }

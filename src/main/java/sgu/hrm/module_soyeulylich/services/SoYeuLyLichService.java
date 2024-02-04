@@ -151,12 +151,9 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
                     soYeuLyLichRepository.findAll()
             );
         } catch (RuntimeException e) {
-            System.err.println(e.getLocalizedMessage());
-            return new ResDTO<>(
-                    ResEnum.KHONG_HOP_LE.getStatusCode(),
-                    ResEnum.KHONG_HOP_LE,
-                    null
-            );
+//            System.err.println(e.getLocalizedMessage());
+            e.printStackTrace();
+            throw new RuntimeException(e.getCause());
         }
     }
 
@@ -347,15 +344,39 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
     public ResDTO<SoYeuLyLich> xemSoYeuLyLichTheoId(UUID id) {
         try {
             Optional<SoYeuLyLich> soYeuLyLich = soYeuLyLichRepository.findById(id);
-            return soYeuLyLich.map(lyLich -> new ResDTO<>(
-                    ResEnum.THANH_CONG.getStatusCode(),
-                    ResEnum.THANH_CONG,
-                    lyLich
-            )).orElseGet(() -> new ResDTO<>(
+            if (soYeuLyLich.isPresent()) {
+//                SoYeuLyLich yeuLyLich = soYeuLyLichObject();
+                return new ResDTO<>(
+                        ResEnum.THANH_CONG.getStatusCode(),
+                        ResEnum.THANH_CONG,
+                        soYeuLyLich.get());
+            } else return new ResDTO<>(
                     ResEnum.HONG_TIM_THAY.getStatusCode(),
                     ResEnum.HONG_TIM_THAY,
                     null
-            ));
+            );
+        } catch (RuntimeException e) {
+            System.out.println(e.getLocalizedMessage());
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public ResDTO<SoYeuLyLich> capNhatTrangThaiSoYeuLyLich(boolean check, UUID id) {
+        try {
+            Optional<SoYeuLyLich> soYeuLyLich = soYeuLyLichRepository.findById(id);
+            if (soYeuLyLich.isPresent()) {
+                soYeuLyLich.get().setTrangThai(check);
+                return new ResDTO<>(
+                        ResEnum.THANH_CONG.getStatusCode(),
+                        ResEnum.THANH_CONG,
+                        soYeuLyLich.get()
+                );
+            } else return new ResDTO<>(
+                    ResEnum.HONG_TIM_THAY.getStatusCode(),
+                    ResEnum.HONG_TIM_THAY,
+                    null
+            );
         } catch (RuntimeException e) {
             throw new RuntimeException(e.getCause());
         }

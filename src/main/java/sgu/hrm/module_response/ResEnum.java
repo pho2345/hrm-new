@@ -8,7 +8,7 @@ public enum ResEnum {
     KHONG_HOP_LE(400),
     KHONG_DUOC_UY_QUYEN(401),
     TRUY_CAP_BI_CAM(403),
-    HONG_TIM_THAY(403);
+    HONG_TIM_THAY(404);
     private int statusCode;
 
     ResEnum(int statusCode) {

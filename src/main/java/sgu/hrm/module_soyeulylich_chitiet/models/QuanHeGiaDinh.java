@@ -1,5 +1,7 @@
 package sgu.hrm.module_soyeulylich_chitiet.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
@@ -19,13 +21,14 @@ import sgu.hrm.module_soyeulylich.models.SoYeuLyLich;
 
 //gia dinh bao gom ruot va ben vo hoac chong luon
 @Entity
-@Table(name = "quan_he_gia_dinh_ruot")
+@Table(name = "quan_he_gia_dinh")
 @Getter
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@JsonIgnoreProperties({"soYeuLyLich"}) //error field SoYeuLyLich soYeuLyLich;
 public class QuanHeGiaDinh extends DateTimeObject {
     @Id
     @Column(columnDefinition = "INTEGER AUTO_INCREMENT")
@@ -48,6 +51,7 @@ public class QuanHeGiaDinh extends DateTimeObject {
     LoaiSoYeuLyLichChiTiet loaiSoYeuLyLichChiTiet;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(foreignKey = @ForeignKey(name = "so_yeu_ly_lich_qhgdr_fk"), name = "so_yeu_ly_lich", referencedColumnName = "id", columnDefinition = "binary(16)")
     SoYeuLyLich soYeuLyLich;
 

@@ -11,4 +11,8 @@ import java.util.UUID;
 public interface SoYeuLyLichRepository extends JpaRepository<SoYeuLyLich, UUID> {
     @Query
     SoYeuLyLich findFirstBySoCCCD(String soCCCD);
+
+    //using JPQL
+    @Query(value = "UPDATE SoYeuLyLich syll SET syll.trangThai = ?1 WHERE syll.id = ?2")
+    abstract SoYeuLyLich updateTrangThaiSoYeuLyLich(boolean check, UUID id);
 }

@@ -3,7 +3,16 @@ package sgu.hrm.module_taikhoan.service;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
+
 import sgu.hrm.module_response.ResDTO;
 import sgu.hrm.module_response.ResEnum;
 import sgu.hrm.module_soyeulylich.models.SoYeuLyLich;
@@ -15,7 +24,9 @@ import sgu.hrm.module_taikhoan.repository.TaiKhoanRepository;
 import sgu.hrm.repository.RoleTaiKhoanRepository;
 
 import java.text.Normalizer;
+
 import java.time.LocalDateTime;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -23,13 +34,17 @@ import java.util.regex.Pattern;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class TaiKhoanService implements ITaiKhoanService {
+public class TaiKhoanService implements ITaiKhoanService
+//        , UserDetailsService
+{
 
     final TaiKhoanRepository taiKhoanRepository;
+
     final RoleTaiKhoanRepository roleTaiKhoanRepository;
+
     final SoYeuLyLichRepository soYeuLyLichRepository;
 
-//    final SoYeuLyLichService soYeuLyLichService;
+    final JavaMailSender javaMailSender;
 
     @Override
     public ResDTO<List<ResTaiKhoan>> xemDanhSachTaiKhoan() {
@@ -96,10 +111,10 @@ public class TaiKhoanService implements ITaiKhoanService {
             Optional<TaiKhoan> taiKhoan = taiKhoanRepository.findById(id);
             return taiKhoan.map(
                     khoan -> new ResDTO<>(
-                    ResEnum.THANH_CONG.getStatusCode(),
-                    ResEnum.THANH_CONG,
-                    khoan
-            )).orElseGet(() -> new ResDTO<>(
+                            ResEnum.THANH_CONG.getStatusCode(),
+                            ResEnum.THANH_CONG,
+                            khoan
+                    )).orElseGet(() -> new ResDTO<>(
                     ResEnum.HONG_TIM_THAY.getStatusCode(),
                     ResEnum.HONG_TIM_THAY,
                     null
@@ -112,6 +127,8 @@ public class TaiKhoanService implements ITaiKhoanService {
 
     @Override
     public ResDTO<TaiKhoan> themTaiKhoan(ReqTaiKhoan reqTaiKhoan) {
+        TaiKhoan taiKhoan = null;
+        SoYeuLyLich soYeuLyLich = null;
         try {
             //tạo username
             String hoVaTen = reqTaiKhoan.hoVaTen();
@@ -134,12 +151,12 @@ public class TaiKhoanService implements ITaiKhoanService {
                 newS.append(sSplit[i].charAt(0));
             }
             //check trung username, co thi2 them so dang truoc
-            int checkUsername = taiKhoanRepository.findAll().stream().filter(taiKhoan -> taiKhoan.getUsername().contentEquals(newS)).toList().size();
+            int checkUsername = taiKhoanRepository.findAll().stream().filter(tKhoan -> tKhoan.getUsername().contentEquals(newS)).toList().size();
             if (checkUsername > 0) {
                 newS.append(checkUsername);
             }
 
-            TaiKhoan taiKhoan = TaiKhoan.builder()
+            taiKhoan = TaiKhoan.builder()
                     .hoVaTen(reqTaiKhoan.hoVaTen())
                     .soCCCD(reqTaiKhoan.soCCCD())
                     .username(newS.toString())
@@ -149,7 +166,7 @@ public class TaiKhoanService implements ITaiKhoanService {
                     .create_at(LocalDateTime.now())
                     .build();
             if (taiKhoan != null) {
-                SoYeuLyLich soYeuLyLich = SoYeuLyLich.builder()
+                soYeuLyLich = SoYeuLyLich.builder()
                         .hovaten(reqTaiKhoan.hoVaTen())
                         .soCCCD(reqTaiKhoan.soCCCD())
                         .create_at(taiKhoan.getCreate_at())
@@ -173,6 +190,20 @@ public class TaiKhoanService implements ITaiKhoanService {
             }
         } catch (RuntimeException e) {
             throw new RuntimeException(e.getCause());
+        } finally {
+            if (taiKhoan != null && soYeuLyLich != null) {
+                SimpleMailMessage message = new SimpleMailMessage();
+                message.setFrom("noreply-chinhphu@gmail.com");
+                message.setTo(reqTaiKhoan.email());
+                message.setSubject("CHÀO MỪNG NHÂN VIÊN CHÍNH PHỦ");
+                message.setText(String.format("%s\n%s\n%s\n%s",
+                        "THÔNG TIN TÀI KHOẢN",
+                        "Tên đăng nhập: " + taiKhoan.getUsername(),
+                        "Mật khẩu: " + taiKhoan.getPassword(),
+                        "Mã sơ yếu lý lịch: " + soYeuLyLich.getId()
+                ));
+                javaMailSender.send(message);
+            }
         }
         return new ResDTO<>(
                 ResEnum.KHONG_HOP_LE.getStatusCode(),
@@ -180,6 +211,20 @@ public class TaiKhoanService implements ITaiKhoanService {
                 null
         );
     }
+
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        TaiKhoan taiKhoan = taiKhoanRepository.findByUsername(username);
+//        if (taiKhoan == null) {
+//            throw new UsernameNotFoundException("User not found with username: " + username);
+//        }
+//        return User
+//                .withUsername(username)
+//                .password(taiKhoan.getPassword())
+//                .roles(taiKhoan.getRoleTaiKhoan().getTitle())
+//                .build();
+//    }
+
 //
 //    @Override
 //    public TaiKhoanRes.ThgBaoTaiKhoan suaMathauTaiKhosn(int id, String matKhau) {

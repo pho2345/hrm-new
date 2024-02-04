@@ -111,676 +111,677 @@ public class UtilitiesService {
                 );
             }
         }
+    }
 
-        @Service
-        public class LoaiQuanHamQuanDoiService implements IUtilitiesService.ILoaiQuanHamQuanDoiService {
-            @Override
-            public ResDTO<List<LoaiQuanHamQuanDoi>> xemLoaiQuanHamQuanDoi() {
+    @Service
+    public class LoaiQuanHamQuanDoiService implements IUtilitiesService.ILoaiQuanHamQuanDoiService {
+        @Override
+        public ResDTO<List<LoaiQuanHamQuanDoi>> xemLoaiQuanHamQuanDoi() {
+            return new ResDTO<>(
+                    ResEnum.THANH_CONG.getStatusCode(),
+                    ResEnum.THANH_CONG,
+                    loaiQuanHamQuanDoiRepository.findAll()
+            );
+        }
+
+        @Override
+        public ResDTO<LoaiQuanHamQuanDoi> themLoaiQuanHamQuanDoi(String name) {
+            LoaiQuanHamQuanDoi loaiQuanHamQuanDoi = new LoaiQuanHamQuanDoi(name);
+            try {
                 return new ResDTO<>(
-                        ResEnum.THANH_CONG.getStatusCode(),
-                        ResEnum.THANH_CONG,
-                        loaiQuanHamQuanDoiRepository.findAll()
+                        ResEnum.TAO_THANH_CONG.getStatusCode(),
+                        ResEnum.TAO_THANH_CONG,
+                        loaiQuanHamQuanDoiRepository.save(loaiQuanHamQuanDoi)
                 );
-            }
-
-            @Override
-            public ResDTO<LoaiQuanHamQuanDoi> themLoaiQuanHamQuanDoi(String name) {
-                LoaiQuanHamQuanDoi loaiQuanHamQuanDoi = new LoaiQuanHamQuanDoi(name);
-                try {
-                    return new ResDTO<>(
-                            ResEnum.TAO_THANH_CONG.getStatusCode(),
-                            ResEnum.TAO_THANH_CONG,
-                            loaiQuanHamQuanDoiRepository.save(loaiQuanHamQuanDoi)
-                    );
-                } catch (RuntimeException e) {
-                    return new ResDTO<>(
-                            ResEnum.KHONG_HOP_LE.getStatusCode(),
-                            ResEnum.KHONG_HOP_LE,
-                            null
-                    );
-                }
-            }
-
-            @Override
-            public ResDTO<LoaiQuanHamQuanDoi> suaLoaiQuanHamQuanDoi(LoaiQuanHamQuanDoi loaiQuanHamQuanDoi) {
-                Optional<LoaiQuanHamQuanDoi> loaiQuanHamQuanDoi1 = loaiQuanHamQuanDoiRepository.findById(loaiQuanHamQuanDoi.getId());
-                try {
-                    if (loaiQuanHamQuanDoi1.isPresent()) {
-                        loaiQuanHamQuanDoi.setUpdate_at();
-                        return new ResDTO<>(
-                                ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
-                                ResEnum.CAP_NHAT_THANH_CONG,
-                                loaiQuanHamQuanDoiRepository.save(loaiQuanHamQuanDoi));
-                    }
-                    return new ResDTO<>(
-                            ResEnum.HONG_TIM_THAY.getStatusCode(),
-                            ResEnum.HONG_TIM_THAY,
-                            null);
-                } catch (RuntimeException e) {
-                    return new ResDTO<>(
-                            ResEnum.KHONG_HOP_LE.getStatusCode(),
-                            ResEnum.KHONG_HOP_LE,
-                            null
-                    );
-                }
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
+                );
             }
         }
 
-        @Service
-        public class CapBacLoaiQuanHamQuanDoiService implements IUtilitiesService.ICapBacLoaiQuanHamQuanDoiService {
-            @Override
-            public ResDTO<List<CapBacLoaiQuanHamQuanDoi>> xemCapBacLoaiQuanHamQuanDoi() {
+        @Override
+        public ResDTO<LoaiQuanHamQuanDoi> suaLoaiQuanHamQuanDoi(LoaiQuanHamQuanDoi loaiQuanHamQuanDoi) {
+            Optional<LoaiQuanHamQuanDoi> loaiQuanHamQuanDoi1 = loaiQuanHamQuanDoiRepository.findById(loaiQuanHamQuanDoi.getId());
+            try {
+                if (loaiQuanHamQuanDoi1.isPresent()) {
+                    loaiQuanHamQuanDoi.setUpdate_at();
+                    return new ResDTO<>(
+                            ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
+                            ResEnum.CAP_NHAT_THANH_CONG,
+                            loaiQuanHamQuanDoiRepository.save(loaiQuanHamQuanDoi));
+                }
+                return new ResDTO<>(
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null);
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
+                );
+            }
+        }
+    }
+
+    @Service
+    public class CapBacLoaiQuanHamQuanDoiService implements IUtilitiesService.ICapBacLoaiQuanHamQuanDoiService {
+        @Override
+        public ResDTO<List<CapBacLoaiQuanHamQuanDoi>> xemCapBacLoaiQuanHamQuanDoi() {
+            return new ResDTO<>(
+                    ResEnum.THANH_CONG.getStatusCode(),
+                    ResEnum.THANH_CONG,
+                    capBacLoaiQuanHamQuanDoiRepository.findAll()
+            );
+        }
+
+        @Override
+        public ResDTO<CapBacLoaiQuanHamQuanDoi> themCapBacLoaiQuanHamQuanDoi(String name, String loaiQuanHamName) {
+            LoaiQuanHamQuanDoi loaiQuanHamQuanDoi = loaiQuanHamQuanDoiRepository.findByName(loaiQuanHamName);
+            CapBacLoaiQuanHamQuanDoi capBacLoaiQuanHamQuanDoi = new CapBacLoaiQuanHamQuanDoi(name, loaiQuanHamQuanDoi);
+            try {
                 return new ResDTO<>(
                         ResEnum.THANH_CONG.getStatusCode(),
                         ResEnum.THANH_CONG,
-                        capBacLoaiQuanHamQuanDoiRepository.findAll()
+                        capBacLoaiQuanHamQuanDoiRepository.save(capBacLoaiQuanHamQuanDoi)
                 );
-            }
-
-            @Override
-            public ResDTO<CapBacLoaiQuanHamQuanDoi> themCapBacLoaiQuanHamQuanDoi(String name, String loaiQuanHamName) {
-                LoaiQuanHamQuanDoi loaiQuanHamQuanDoi = loaiQuanHamQuanDoiRepository.findByName(loaiQuanHamName);
-                CapBacLoaiQuanHamQuanDoi capBacLoaiQuanHamQuanDoi = new CapBacLoaiQuanHamQuanDoi(name, loaiQuanHamQuanDoi);
-                try {
-                    return new ResDTO<>(
-                            ResEnum.THANH_CONG.getStatusCode(),
-                            ResEnum.THANH_CONG,
-                            capBacLoaiQuanHamQuanDoiRepository.save(capBacLoaiQuanHamQuanDoi)
-                    );
-                } catch (RuntimeException e) {
-                    return new ResDTO<>(
-                            ResEnum.THANH_CONG.getStatusCode(),
-                            ResEnum.THANH_CONG,
-                            null
-                    );
-                }
-            }
-
-            @Override
-            public ResDTO<CapBacLoaiQuanHamQuanDoi> suaCapBacLoaiQuanHamQuanDoi(CapBacLoaiQuanHamQuanDoi capBacLoaiQuanHamQuanDoi) {
-                Optional<CapBacLoaiQuanHamQuanDoi> capBacLoaiQuanHamQuanDoi1 = capBacLoaiQuanHamQuanDoiRepository.findById(capBacLoaiQuanHamQuanDoi.getId());
-                try {
-                    if (capBacLoaiQuanHamQuanDoi1.isPresent()) {
-                        capBacLoaiQuanHamQuanDoi.setUpdate_at();
-                        return new ResDTO<>(
-                                ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
-                                ResEnum.CAP_NHAT_THANH_CONG,
-                                capBacLoaiQuanHamQuanDoiRepository.save(capBacLoaiQuanHamQuanDoi));
-                    }
-                    return new ResDTO<>(
-                            ResEnum.HONG_TIM_THAY.getStatusCode(),
-                            ResEnum.HONG_TIM_THAY,
-                            null);
-                } catch (RuntimeException e) {
-                    return new ResDTO<>(
-                            ResEnum.KHONG_HOP_LE.getStatusCode(),
-                            ResEnum.KHONG_HOP_LE,
-                            null
-                    );
-                }
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.THANH_CONG.getStatusCode(),
+                        ResEnum.THANH_CONG,
+                        null
+                );
             }
         }
 
-        @Service
-        public class DanhHieuNhaNuocPhongTangService implements IUtilitiesService.IDanhHieuNhaNuocPhongTangService {
-            @Override
-            public ResDTO<List<DanhHieuNhaNuocPhongTang>> xemDanhHieuNhaNuocPhongTang() {
+        @Override
+        public ResDTO<CapBacLoaiQuanHamQuanDoi> suaCapBacLoaiQuanHamQuanDoi(CapBacLoaiQuanHamQuanDoi capBacLoaiQuanHamQuanDoi) {
+            Optional<CapBacLoaiQuanHamQuanDoi> capBacLoaiQuanHamQuanDoi1 = capBacLoaiQuanHamQuanDoiRepository.findById(capBacLoaiQuanHamQuanDoi.getId());
+            try {
+                if (capBacLoaiQuanHamQuanDoi1.isPresent()) {
+                    capBacLoaiQuanHamQuanDoi.setUpdate_at();
+                    return new ResDTO<>(
+                            ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
+                            ResEnum.CAP_NHAT_THANH_CONG,
+                            capBacLoaiQuanHamQuanDoiRepository.save(capBacLoaiQuanHamQuanDoi));
+                }
+                return new ResDTO<>(
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null);
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
+                );
+            }
+        }
+    }
+
+    @Service
+    public class DanhHieuNhaNuocPhongTangService implements IUtilitiesService.IDanhHieuNhaNuocPhongTangService {
+        @Override
+        public ResDTO<List<DanhHieuNhaNuocPhongTang>> xemDanhHieuNhaNuocPhongTang() {
 //        return danhHieuNhaNuocPhongTangRepository.findAll();
 //        return new UtilitiesResponse<>(UtilitiesResponse.UtilitiesNotification.UTILITIES_SUCCESS,
 //                200,
 //                danhHieuNhaNuocPhongTangRepository.findAll()
 //        );
+            return new ResDTO<>(
+                    ResEnum.THANH_CONG.getStatusCode(),
+                    ResEnum.THANH_CONG,
+                    danhHieuNhaNuocPhongTangRepository.findAll()
+            );
+        }
+
+        @Override
+        public ResDTO<DanhHieuNhaNuocPhongTang> themDanhHieuNhaNuocPhongTang(String name) {
+            DanhHieuNhaNuocPhongTang danhHieuNhaNuocPhongTang = new DanhHieuNhaNuocPhongTang(name);
+            try {
                 return new ResDTO<>(
-                        ResEnum.THANH_CONG.getStatusCode(),
-                        ResEnum.THANH_CONG,
-                        danhHieuNhaNuocPhongTangRepository.findAll()
+                        ResEnum.TAO_THANH_CONG.getStatusCode(),
+                        ResEnum.TAO_THANH_CONG,
+                        danhHieuNhaNuocPhongTangRepository.save(danhHieuNhaNuocPhongTang)
                 );
-            }
-
-            @Override
-            public ResDTO<DanhHieuNhaNuocPhongTang> themDanhHieuNhaNuocPhongTang(String name) {
-                DanhHieuNhaNuocPhongTang danhHieuNhaNuocPhongTang = new DanhHieuNhaNuocPhongTang(name);
-                try {
-                    return new ResDTO<>(
-                            ResEnum.TAO_THANH_CONG.getStatusCode(),
-                            ResEnum.TAO_THANH_CONG,
-                            danhHieuNhaNuocPhongTangRepository.save(danhHieuNhaNuocPhongTang)
-                    );
-                } catch (RuntimeException e) {
-                    return new ResDTO<>(
-                            ResEnum.KHONG_HOP_LE.getStatusCode(),
-                            ResEnum.KHONG_HOP_LE,
-                            null
-                    );
-                }
-            }
-
-            @Override
-            public ResDTO<DanhHieuNhaNuocPhongTang> suaDanhHieuNhaNuocPhongTang(DanhHieuNhaNuocPhongTang danhHieuNhaNuocPhongTang) {
-                Optional<DanhHieuNhaNuocPhongTang> danhHieuNhaNuocPhongTang1 = danhHieuNhaNuocPhongTangRepository.findById(danhHieuNhaNuocPhongTang.getId());
-                try {
-                    if (danhHieuNhaNuocPhongTang1.isPresent()) {
-                        danhHieuNhaNuocPhongTang.setUpdate_at();
-                        return new ResDTO<>(
-                                ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
-                                ResEnum.CAP_NHAT_THANH_CONG,
-                                danhHieuNhaNuocPhongTangRepository.save(danhHieuNhaNuocPhongTang));
-                    }
-                    return new ResDTO<>(
-                            ResEnum.HONG_TIM_THAY.getStatusCode(),
-                            ResEnum.HONG_TIM_THAY,
-                            null);
-                } catch (RuntimeException e) {
-                    return new ResDTO<>(
-                            ResEnum.KHONG_HOP_LE.getStatusCode(),
-                            ResEnum.KHONG_HOP_LE,
-                            null
-                    );
-                }
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
+                );
             }
         }
 
-        @Service
-        public class DanTocService implements IUtilitiesService.IDanTocService {
-            @Override
-            public ResDTO<List<DanToc>> xemDanToc() {
+        @Override
+        public ResDTO<DanhHieuNhaNuocPhongTang> suaDanhHieuNhaNuocPhongTang(DanhHieuNhaNuocPhongTang danhHieuNhaNuocPhongTang) {
+            Optional<DanhHieuNhaNuocPhongTang> danhHieuNhaNuocPhongTang1 = danhHieuNhaNuocPhongTangRepository.findById(danhHieuNhaNuocPhongTang.getId());
+            try {
+                if (danhHieuNhaNuocPhongTang1.isPresent()) {
+                    danhHieuNhaNuocPhongTang.setUpdate_at();
+                    return new ResDTO<>(
+                            ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
+                            ResEnum.CAP_NHAT_THANH_CONG,
+                            danhHieuNhaNuocPhongTangRepository.save(danhHieuNhaNuocPhongTang));
+                }
                 return new ResDTO<>(
-                        ResEnum.THANH_CONG.getStatusCode(),
-                        ResEnum.THANH_CONG,
-                        danTocRepository.findAll()
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null);
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
                 );
             }
+        }
+    }
 
-            @Override
-            public ResDTO<DanToc> themDanToc(String name) {
-                DanToc danToc = new DanToc();
-                try {
-                    return new ResDTO<>(
-                            ResEnum.TAO_THANH_CONG.getStatusCode(),
-                            ResEnum.TAO_THANH_CONG,
-                            danTocRepository.save(danToc)
-                    );
-                } catch (RuntimeException e) {
-                    return new ResDTO<>(
-                            ResEnum.KHONG_HOP_LE.getStatusCode(),
-                            ResEnum.KHONG_HOP_LE,
-                            null
-                    );
-                }
-            }
+    @Service
+    public class DanTocService implements IUtilitiesService.IDanTocService {
+        @Override
+        public ResDTO<List<DanToc>> xemDanToc() {
+            return new ResDTO<>(
+                    ResEnum.THANH_CONG.getStatusCode(),
+                    ResEnum.THANH_CONG,
+                    danTocRepository.findAll()
+            );
+        }
 
-            @Override
-            public ResDTO<DanToc> suaDanToc(DanToc toc) {
-                Optional<DanToc> danToc = danTocRepository.findById(toc.getId());
-                try {
-                    if (danToc.isPresent()) {
-                        toc.setUpdate_at();
-                        return new ResDTO<>(
-                                ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
-                                ResEnum.CAP_NHAT_THANH_CONG,
-                                danTocRepository.save(toc));
-                    }
-                    return new ResDTO<>(
-                            ResEnum.HONG_TIM_THAY.getStatusCode(),
-                            ResEnum.HONG_TIM_THAY,
-                            null);
-                } catch (RuntimeException e) {
-                    return new ResDTO<>(
-                            ResEnum.KHONG_HOP_LE.getStatusCode(),
-                            ResEnum.KHONG_HOP_LE,
-                            null
-                    );
-                }
+        @Override
+        public ResDTO<DanToc> themDanToc(String name) {
+            DanToc danToc = new DanToc();
+            try {
+                return new ResDTO<>(
+                        ResEnum.TAO_THANH_CONG.getStatusCode(),
+                        ResEnum.TAO_THANH_CONG,
+                        danTocRepository.save(danToc)
+                );
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
+                );
             }
         }
 
-        @Service
-        public class DoiTuongChinhSachService implements IUtilitiesService.IDoiTuongChinhSachService {
-            @Override
-            public ResDTO<List<DoiTuongChinhSach>> xemDoiTuongChinhSach() {
+        @Override
+        public ResDTO<DanToc> suaDanToc(DanToc toc) {
+            Optional<DanToc> danToc = danTocRepository.findById(toc.getId());
+            try {
+                if (danToc.isPresent()) {
+                    toc.setUpdate_at();
+                    return new ResDTO<>(
+                            ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
+                            ResEnum.CAP_NHAT_THANH_CONG,
+                            danTocRepository.save(toc));
+                }
+                return new ResDTO<>(
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null);
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
+                );
+            }
+        }
+    }
+
+    @Service
+    public class DoiTuongChinhSachService implements IUtilitiesService.IDoiTuongChinhSachService {
+        @Override
+        public ResDTO<List<DoiTuongChinhSach>> xemDoiTuongChinhSach() {
 //        return doiTuongChinhSachRepository.findAll();
 //        return new UtilitiesResponse<>(UtilitiesResponse.UtilitiesNotification.UTILITIES_SUCCESS,
 //                200,
 //                doiTuongChinhSachRepository.findAll()
 //        );
-                return new ResDTO<>(
-                        ResEnum.THANH_CONG.getStatusCode(),
-                        ResEnum.THANH_CONG,
-                        doiTuongChinhSachRepository.findAll()
-                );
-            }
-
-            @Override
-            public ResDTO<DoiTuongChinhSach> themDoiTuongChinhSach(String name) {
-                DoiTuongChinhSach doiTuongChinhSach = new DoiTuongChinhSach(name);
-                try {
-                    return new ResDTO<>(
-                            ResEnum.TAO_THANH_CONG.getStatusCode(),
-                            ResEnum.TAO_THANH_CONG,
-                            doiTuongChinhSachRepository.save(doiTuongChinhSach)
-                    );
-                } catch (RuntimeException e) {
-                    return new ResDTO<>(
-                            ResEnum.KHONG_HOP_LE.getStatusCode(),
-                            ResEnum.KHONG_HOP_LE,
-                            null
-                    );
-                }
-            }
-
-            @Override
-            public ResDTO<DoiTuongChinhSach> suaDoiTuongChinhSach(DoiTuongChinhSach doiTuongChinhSach) {
-                Optional<DoiTuongChinhSach> doiTuongChinhSach1 = doiTuongChinhSachRepository.findById(doiTuongChinhSach.getId());
-                try {
-                    if (doiTuongChinhSach1.isPresent()) {
-                        doiTuongChinhSach.setUpdate_at();
-                        return new ResDTO<>(
-                                ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
-                                ResEnum.CAP_NHAT_THANH_CONG,
-                                doiTuongChinhSachRepository.save(doiTuongChinhSach));
-                    }
-                    return new ResDTO<>(
-                            ResEnum.HONG_TIM_THAY.getStatusCode(),
-                            ResEnum.HONG_TIM_THAY,
-                            null);
-                } catch (RuntimeException e) {
-                    return new ResDTO<>(
-                            ResEnum.KHONG_HOP_LE.getStatusCode(),
-                            ResEnum.KHONG_HOP_LE,
-                            null
-                    );
-                }
-            }
+            return new ResDTO<>(
+                    ResEnum.THANH_CONG.getStatusCode(),
+                    ResEnum.THANH_CONG,
+                    doiTuongChinhSachRepository.findAll()
+            );
         }
 
-        @Service
-        public class GioiTinhService implements IUtilitiesService.IGioiTinhService {
-            @Override
-            public ResDTO<List<GioiTinh>> xemGioiTinh() {
+        @Override
+        public ResDTO<DoiTuongChinhSach> themDoiTuongChinhSach(String name) {
+            DoiTuongChinhSach doiTuongChinhSach = new DoiTuongChinhSach(name);
+            try {
                 return new ResDTO<>(
-                        ResEnum.THANH_CONG.getStatusCode(),
-                        ResEnum.THANH_CONG,
-                        gioiTinhRepository.findAll()
+                        ResEnum.TAO_THANH_CONG.getStatusCode(),
+                        ResEnum.TAO_THANH_CONG,
+                        doiTuongChinhSachRepository.save(doiTuongChinhSach)
+                );
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
                 );
             }
         }
 
-        @Service
-        public class HocHamService implements IUtilitiesService.IHocHamService {
-            @Override
-            public ResDTO<List<HocHam>> xemHocHam() {
+        @Override
+        public ResDTO<DoiTuongChinhSach> suaDoiTuongChinhSach(DoiTuongChinhSach doiTuongChinhSach) {
+            Optional<DoiTuongChinhSach> doiTuongChinhSach1 = doiTuongChinhSachRepository.findById(doiTuongChinhSach.getId());
+            try {
+                if (doiTuongChinhSach1.isPresent()) {
+                    doiTuongChinhSach.setUpdate_at();
+                    return new ResDTO<>(
+                            ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
+                            ResEnum.CAP_NHAT_THANH_CONG,
+                            doiTuongChinhSachRepository.save(doiTuongChinhSach));
+                }
                 return new ResDTO<>(
-                        ResEnum.THANH_CONG.getStatusCode(),
-                        ResEnum.THANH_CONG,
-                        hocHamRepository.findAll()
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null);
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
                 );
             }
+        }
+    }
 
-            @Override
-            public ResDTO<HocHam> themHocHam(String name) {
-                HocHam hocHam = new HocHam(name);
-                try {
-                    return new ResDTO<>(
-                            ResEnum.TAO_THANH_CONG.getStatusCode(),
-                            ResEnum.TAO_THANH_CONG,
-                            hocHamRepository.save(hocHam)
-                    );
-                } catch (RuntimeException e) {
-                    return new ResDTO<>(
-                            ResEnum.KHONG_HOP_LE.getStatusCode(),
-                            ResEnum.KHONG_HOP_LE,
-                            null
-                    );
-                }
-            }
+    @Service
+    public class GioiTinhService implements IUtilitiesService.IGioiTinhService {
+        @Override
+        public ResDTO<List<GioiTinh>> xemGioiTinh() {
+            return new ResDTO<>(
+                    ResEnum.THANH_CONG.getStatusCode(),
+                    ResEnum.THANH_CONG,
+                    gioiTinhRepository.findAll()
+            );
+        }
+    }
 
-            @Override
-            public ResDTO<HocHam> suaHocHam(HocHam hocHam) {
-                Optional<HocHam> hocHam1 = hocHamRepository.findById(hocHam.getId());
-                try {
-                    if (hocHam1.isPresent()) {
-                        hocHam.setUpdate_at();
-                        return new ResDTO<>(
-                                ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
-                                ResEnum.CAP_NHAT_THANH_CONG,
-                                hocHamRepository.save(hocHam));
-                    }
-                    return new ResDTO<>(
-                            ResEnum.HONG_TIM_THAY.getStatusCode(),
-                            ResEnum.HONG_TIM_THAY,
-                            null);
-                } catch (RuntimeException e) {
-                    return new ResDTO<>(
-                            ResEnum.KHONG_HOP_LE.getStatusCode(),
-                            ResEnum.KHONG_HOP_LE,
-                            null
-                    );
-                }
+    @Service
+    public class HocHamService implements IUtilitiesService.IHocHamService {
+        @Override
+        public ResDTO<List<HocHam>> xemHocHam() {
+            return new ResDTO<>(
+                    ResEnum.THANH_CONG.getStatusCode(),
+                    ResEnum.THANH_CONG,
+                    hocHamRepository.findAll()
+            );
+        }
+
+        @Override
+        public ResDTO<HocHam> themHocHam(String name) {
+            HocHam hocHam = new HocHam(name);
+            try {
+                return new ResDTO<>(
+                        ResEnum.TAO_THANH_CONG.getStatusCode(),
+                        ResEnum.TAO_THANH_CONG,
+                        hocHamRepository.save(hocHam)
+                );
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
+                );
             }
         }
 
-        @Service
-        public class NhomMauService implements IUtilitiesService.INhomMauService {
-            @Override
-            public ResDTO<List<NhomMau>> xemNhomMau() {
+        @Override
+        public ResDTO<HocHam> suaHocHam(HocHam hocHam) {
+            Optional<HocHam> hocHam1 = hocHamRepository.findById(hocHam.getId());
+            try {
+                if (hocHam1.isPresent()) {
+                    hocHam.setUpdate_at();
+                    return new ResDTO<>(
+                            ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
+                            ResEnum.CAP_NHAT_THANH_CONG,
+                            hocHamRepository.save(hocHam));
+                }
                 return new ResDTO<>(
-                        ResEnum.THANH_CONG.getStatusCode(),
-                        ResEnum.THANH_CONG,
-                        nhomMauRepository.findAll()
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null);
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
                 );
             }
+        }
+    }
 
-            @Override
-            public ResDTO<NhomMau> themNhomMau(String name) {
-                NhomMau nhomMau = new NhomMau();
-                try {
-                    return new ResDTO<>(
-                            ResEnum.TAO_THANH_CONG.getStatusCode(),
-                            ResEnum.TAO_THANH_CONG,
-                            nhomMauRepository.save(nhomMau)
-                    );
-                } catch (RuntimeException e) {
-                    return new ResDTO<>(
-                            ResEnum.KHONG_HOP_LE.getStatusCode(),
-                            ResEnum.KHONG_HOP_LE,
-                            null
-                    );
-                }
-            }
+    @Service
+    public class NhomMauService implements IUtilitiesService.INhomMauService {
+        @Override
+        public ResDTO<List<NhomMau>> xemNhomMau() {
+            return new ResDTO<>(
+                    ResEnum.THANH_CONG.getStatusCode(),
+                    ResEnum.THANH_CONG,
+                    nhomMauRepository.findAll()
+            );
+        }
 
-            @Override
-            public ResDTO<NhomMau> suaNhomMau(NhomMau nhomMau) {
-                Optional<NhomMau> nhomMau1 = nhomMauRepository.findById(nhomMau.getId());
-                try {
-                    if (nhomMau1.isPresent()) {
-                        nhomMau.setUpdate_at();
-                        return new ResDTO<>(
-                                ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
-                                ResEnum.CAP_NHAT_THANH_CONG,
-                                nhomMauRepository.save(nhomMau));
-                    }
-                    return new ResDTO<>(
-                            ResEnum.HONG_TIM_THAY.getStatusCode(),
-                            ResEnum.HONG_TIM_THAY,
-                            null);
-                } catch (RuntimeException e) {
-                    return new ResDTO<>(
-                            ResEnum.KHONG_HOP_LE.getStatusCode(),
-                            ResEnum.KHONG_HOP_LE,
-                            null
-                    );
-                }
+        @Override
+        public ResDTO<NhomMau> themNhomMau(String name) {
+            NhomMau nhomMau = new NhomMau();
+            try {
+                return new ResDTO<>(
+                        ResEnum.TAO_THANH_CONG.getStatusCode(),
+                        ResEnum.TAO_THANH_CONG,
+                        nhomMauRepository.save(nhomMau)
+                );
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
+                );
             }
         }
 
-        @Service
-        public class ThanhPhanGiaDinhService implements IUtilitiesService.IThanhPhanGiaDinhService {
-            @Override
-            public ResDTO<List<ThanhPhanGiaDinh>> xemThanhPhanGiaDinh() {
+        @Override
+        public ResDTO<NhomMau> suaNhomMau(NhomMau nhomMau) {
+            Optional<NhomMau> nhomMau1 = nhomMauRepository.findById(nhomMau.getId());
+            try {
+                if (nhomMau1.isPresent()) {
+                    nhomMau.setUpdate_at();
+                    return new ResDTO<>(
+                            ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
+                            ResEnum.CAP_NHAT_THANH_CONG,
+                            nhomMauRepository.save(nhomMau));
+                }
                 return new ResDTO<>(
-                        ResEnum.THANH_CONG.getStatusCode(),
-                        ResEnum.THANH_CONG,
-                        thanhPhanGiaDinhRepository.findAll()
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null);
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
                 );
             }
+        }
+    }
 
-            @Override
-            public ResDTO<ThanhPhanGiaDinh> themThanhPhanGiaDinh(String name) {
-                ThanhPhanGiaDinh thanhPhanGiaDinh = new ThanhPhanGiaDinh(name);
-                try {
-                    return new ResDTO<>(
-                            ResEnum.TAO_THANH_CONG.getStatusCode(),
-                            ResEnum.TAO_THANH_CONG,
-                            thanhPhanGiaDinhRepository.save(thanhPhanGiaDinh)
-                    );
-                } catch (RuntimeException e) {
-                    return new ResDTO<>(
-                            ResEnum.KHONG_HOP_LE.getStatusCode(),
-                            ResEnum.KHONG_HOP_LE,
-                            null
-                    );
-                }
-            }
+    @Service
+    public class ThanhPhanGiaDinhService implements IUtilitiesService.IThanhPhanGiaDinhService {
+        @Override
+        public ResDTO<List<ThanhPhanGiaDinh>> xemThanhPhanGiaDinh() {
+            return new ResDTO<>(
+                    ResEnum.THANH_CONG.getStatusCode(),
+                    ResEnum.THANH_CONG,
+                    thanhPhanGiaDinhRepository.findAll()
+            );
+        }
 
-            @Override
-            public ResDTO<ThanhPhanGiaDinh> suaThanhPhanGiaDinh(ThanhPhanGiaDinh thanhPhanGiaDinh) {
-                Optional<ThanhPhanGiaDinh> thanhPhanGiaDinh1 = thanhPhanGiaDinhRepository.findById(thanhPhanGiaDinh.getId());
-                try {
-                    if (thanhPhanGiaDinh1.isPresent()) {
-                        thanhPhanGiaDinh.setUpdate_at();
-                        return new ResDTO<>(
-                                ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
-                                ResEnum.CAP_NHAT_THANH_CONG,
-                                thanhPhanGiaDinhRepository.save(thanhPhanGiaDinh));
-                    }
-                    return new ResDTO<>(
-                            ResEnum.HONG_TIM_THAY.getStatusCode(),
-                            ResEnum.HONG_TIM_THAY,
-                            null);
-                } catch (RuntimeException e) {
-                    return new ResDTO<>(
-                            ResEnum.KHONG_HOP_LE.getStatusCode(),
-                            ResEnum.KHONG_HOP_LE,
-                            null
-                    );
-                }
+        @Override
+        public ResDTO<ThanhPhanGiaDinh> themThanhPhanGiaDinh(String name) {
+            ThanhPhanGiaDinh thanhPhanGiaDinh = new ThanhPhanGiaDinh(name);
+            try {
+                return new ResDTO<>(
+                        ResEnum.TAO_THANH_CONG.getStatusCode(),
+                        ResEnum.TAO_THANH_CONG,
+                        thanhPhanGiaDinhRepository.save(thanhPhanGiaDinh)
+                );
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
+                );
             }
         }
 
-        @Service
-        public class TinhTrangSucKhoeService implements IUtilitiesService.ITinhTrangSucKhoeService {
-            @Override
-            public ResDTO<List<TinhTrangSucKhoe>> xemTinhTrangSucKhoe() {
+        @Override
+        public ResDTO<ThanhPhanGiaDinh> suaThanhPhanGiaDinh(ThanhPhanGiaDinh thanhPhanGiaDinh) {
+            Optional<ThanhPhanGiaDinh> thanhPhanGiaDinh1 = thanhPhanGiaDinhRepository.findById(thanhPhanGiaDinh.getId());
+            try {
+                if (thanhPhanGiaDinh1.isPresent()) {
+                    thanhPhanGiaDinh.setUpdate_at();
+                    return new ResDTO<>(
+                            ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
+                            ResEnum.CAP_NHAT_THANH_CONG,
+                            thanhPhanGiaDinhRepository.save(thanhPhanGiaDinh));
+                }
                 return new ResDTO<>(
-                        ResEnum.THANH_CONG.getStatusCode(),
-                        ResEnum.THANH_CONG,
-                        tinhTrangSucKhoeRepository.findAll()
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null);
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
                 );
             }
+        }
+    }
 
-            @Override
-            public ResDTO<TinhTrangSucKhoe> themTinhTrangSucKhoe(String name) {
-                TinhTrangSucKhoe tinhTrangSucKhoe = new TinhTrangSucKhoe(name);
-                try {
-                    return new ResDTO<>(
-                            ResEnum.TAO_THANH_CONG.getStatusCode(),
-                            ResEnum.TAO_THANH_CONG,
-                            tinhTrangSucKhoeRepository.save(tinhTrangSucKhoe)
-                    );
-                } catch (RuntimeException e) {
-                    return new ResDTO<>(
-                            ResEnum.KHONG_HOP_LE.getStatusCode(),
-                            ResEnum.KHONG_HOP_LE,
-                            null
-                    );
-                }
-            }
+    @Service
+    public class TinhTrangSucKhoeService implements IUtilitiesService.ITinhTrangSucKhoeService {
+        @Override
+        public ResDTO<List<TinhTrangSucKhoe>> xemTinhTrangSucKhoe() {
+            return new ResDTO<>(
+                    ResEnum.THANH_CONG.getStatusCode(),
+                    ResEnum.THANH_CONG,
+                    tinhTrangSucKhoeRepository.findAll()
+            );
+        }
 
-            @Override
-            public ResDTO<TinhTrangSucKhoe> suaTinhTrangSucKhoe(TinhTrangSucKhoe tinhTrangSucKhoe) {
-                Optional<TinhTrangSucKhoe> tinhTrangSucKhoe1 = tinhTrangSucKhoeRepository.findById(tinhTrangSucKhoe.getId());
-                try {
-                    if (tinhTrangSucKhoe1.isPresent()) {
-                        tinhTrangSucKhoe.setUpdate_at();
-                        return new ResDTO<>(
-                                ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
-                                ResEnum.CAP_NHAT_THANH_CONG,
-                                tinhTrangSucKhoeRepository.save(tinhTrangSucKhoe));
-                    }
-                    return new ResDTO<>(
-                            ResEnum.HONG_TIM_THAY.getStatusCode(),
-                            ResEnum.HONG_TIM_THAY,
-                            null);
-                } catch (RuntimeException e) {
-                    return new ResDTO<>(
-                            ResEnum.KHONG_HOP_LE.getStatusCode(),
-                            ResEnum.KHONG_HOP_LE,
-                            null
-                    );
-                }
+        @Override
+        public ResDTO<TinhTrangSucKhoe> themTinhTrangSucKhoe(String name) {
+            TinhTrangSucKhoe tinhTrangSucKhoe = new TinhTrangSucKhoe(name);
+            try {
+                return new ResDTO<>(
+                        ResEnum.TAO_THANH_CONG.getStatusCode(),
+                        ResEnum.TAO_THANH_CONG,
+                        tinhTrangSucKhoeRepository.save(tinhTrangSucKhoe)
+                );
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
+                );
             }
         }
 
-        @Service
-        public class TonGiaoService implements IUtilitiesService.ITonGiaoService {
-            @Override
-            public ResDTO<List<TonGiao>> xemTonGiao() {
+        @Override
+        public ResDTO<TinhTrangSucKhoe> suaTinhTrangSucKhoe(TinhTrangSucKhoe tinhTrangSucKhoe) {
+            Optional<TinhTrangSucKhoe> tinhTrangSucKhoe1 = tinhTrangSucKhoeRepository.findById(tinhTrangSucKhoe.getId());
+            try {
+                if (tinhTrangSucKhoe1.isPresent()) {
+                    tinhTrangSucKhoe.setUpdate_at();
+                    return new ResDTO<>(
+                            ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
+                            ResEnum.CAP_NHAT_THANH_CONG,
+                            tinhTrangSucKhoeRepository.save(tinhTrangSucKhoe));
+                }
                 return new ResDTO<>(
-                        ResEnum.THANH_CONG.getStatusCode(),
-                        ResEnum.THANH_CONG,
-                        tonGiaoRepository.findAll()
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null);
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
                 );
             }
+        }
+    }
 
-            @Override
-            public ResDTO<TonGiao> themTonGiao(String name) {
-                TonGiao tonGiao = new TonGiao(name);
-                try {
-                    return new ResDTO<>(
-                            ResEnum.TAO_THANH_CONG.getStatusCode(),
-                            ResEnum.TAO_THANH_CONG,
-                            tonGiaoRepository.save(tonGiao)
-                    );
-                } catch (RuntimeException e) {
-                    return new ResDTO<>(
-                            ResEnum.KHONG_HOP_LE.getStatusCode(),
-                            ResEnum.KHONG_HOP_LE,
-                            null
-                    );
-                }
-            }
+    @Service
+    public class TonGiaoService implements IUtilitiesService.ITonGiaoService {
+        @Override
+        public ResDTO<List<TonGiao>> xemTonGiao() {
+            return new ResDTO<>(
+                    ResEnum.THANH_CONG.getStatusCode(),
+                    ResEnum.THANH_CONG,
+                    tonGiaoRepository.findAll()
+            );
+        }
 
-            @Override
-            public ResDTO<TonGiao> suaTonGiao(TonGiao tonGiao) {
-                Optional<TonGiao> tonGiao1 = tonGiaoRepository.findById(tonGiao.getId());
-                try {
-                    if (tonGiao1.isPresent()) {
-                        tonGiao.setUpdate_at();
-                        return new ResDTO<>(
-                                ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
-                                ResEnum.CAP_NHAT_THANH_CONG,
-                                tonGiaoRepository.save(tonGiao));
-                    }
-                    return new ResDTO<>(
-                            ResEnum.HONG_TIM_THAY.getStatusCode(),
-                            ResEnum.HONG_TIM_THAY,
-                            null);
-                } catch (RuntimeException e) {
-                    return new ResDTO<>(
-                            ResEnum.KHONG_HOP_LE.getStatusCode(),
-                            ResEnum.KHONG_HOP_LE,
-                            null
-                    );
-                }
+        @Override
+        public ResDTO<TonGiao> themTonGiao(String name) {
+            TonGiao tonGiao = new TonGiao(name);
+            try {
+                return new ResDTO<>(
+                        ResEnum.TAO_THANH_CONG.getStatusCode(),
+                        ResEnum.TAO_THANH_CONG,
+                        tonGiaoRepository.save(tonGiao)
+                );
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
+                );
             }
         }
 
-        @Service
-        public class TrinhDoChuyenMonService implements IUtilitiesService.ITrinhDoChuyenMonService {
-            @Override
-            public ResDTO<List<TrinhDoChuyenMon>> xemTrinhDoChuyenMon() {
+        @Override
+        public ResDTO<TonGiao> suaTonGiao(TonGiao tonGiao) {
+            Optional<TonGiao> tonGiao1 = tonGiaoRepository.findById(tonGiao.getId());
+            try {
+                if (tonGiao1.isPresent()) {
+                    tonGiao.setUpdate_at();
+                    return new ResDTO<>(
+                            ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
+                            ResEnum.CAP_NHAT_THANH_CONG,
+                            tonGiaoRepository.save(tonGiao));
+                }
                 return new ResDTO<>(
-                        ResEnum.THANH_CONG.getStatusCode(),
-                        ResEnum.THANH_CONG,
-                        trinhDoChuyenMonRepository.findAll()
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null);
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
                 );
             }
+        }
+    }
 
-            @Override
-            public ResDTO<TrinhDoChuyenMon> themTrinhDoChuyenMon(String name) {
-                TrinhDoChuyenMon trinhDoChuyenMon = new TrinhDoChuyenMon(name);
-                try {
-                    return new ResDTO<>(
-                            ResEnum.TAO_THANH_CONG.getStatusCode(),
-                            ResEnum.TAO_THANH_CONG,
-                            trinhDoChuyenMonRepository.save(trinhDoChuyenMon)
-                    );
-                } catch (RuntimeException e) {
-                    return new ResDTO<>(
-                            ResEnum.KHONG_HOP_LE.getStatusCode(),
-                            ResEnum.KHONG_HOP_LE,
-                            null
-                    );
-                }
-            }
+    @Service
+    public class TrinhDoChuyenMonService implements IUtilitiesService.ITrinhDoChuyenMonService {
+        @Override
+        public ResDTO<List<TrinhDoChuyenMon>> xemTrinhDoChuyenMon() {
+            return new ResDTO<>(
+                    ResEnum.THANH_CONG.getStatusCode(),
+                    ResEnum.THANH_CONG,
+                    trinhDoChuyenMonRepository.findAll()
+            );
+        }
 
-            @Override
-            public ResDTO<TrinhDoChuyenMon> suaTrinhDoChuyenMon(TrinhDoChuyenMon trinhDoChuyenMon) {
-                Optional<TrinhDoChuyenMon> trinhDoChuyenMon1 = trinhDoChuyenMonRepository.findById(trinhDoChuyenMon.getId());
-                try {
-                    if (trinhDoChuyenMon1.isPresent()) {
-                        trinhDoChuyenMon.setUpdate_at();
-                        return new ResDTO<>(
-                                ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
-                                ResEnum.CAP_NHAT_THANH_CONG,
-                                trinhDoChuyenMonRepository.save(trinhDoChuyenMon));
-                    }
-                    return new ResDTO<>(
-                            ResEnum.HONG_TIM_THAY.getStatusCode(),
-                            ResEnum.HONG_TIM_THAY,
-                            null);
-                } catch (RuntimeException e) {
-                    return new ResDTO<>(
-                            ResEnum.KHONG_HOP_LE.getStatusCode(),
-                            ResEnum.KHONG_HOP_LE,
-                            null
-                    );
-                }
+        @Override
+        public ResDTO<TrinhDoChuyenMon> themTrinhDoChuyenMon(String name) {
+            TrinhDoChuyenMon trinhDoChuyenMon = new TrinhDoChuyenMon(name);
+            try {
+                return new ResDTO<>(
+                        ResEnum.TAO_THANH_CONG.getStatusCode(),
+                        ResEnum.TAO_THANH_CONG,
+                        trinhDoChuyenMonRepository.save(trinhDoChuyenMon)
+                );
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
+                );
             }
         }
 
-        @Service
-        public class TrinhDoGiaoDucPhoThongService implements IUtilitiesService.ITrinhDoGiaoDucPhoThongService {
-            @Override
-            public ResDTO<List<TrinhDoGiaoDucPhoThong>> xemTrinhDoGiaoDucPhoThong() {
+        @Override
+        public ResDTO<TrinhDoChuyenMon> suaTrinhDoChuyenMon(TrinhDoChuyenMon trinhDoChuyenMon) {
+            Optional<TrinhDoChuyenMon> trinhDoChuyenMon1 = trinhDoChuyenMonRepository.findById(trinhDoChuyenMon.getId());
+            try {
+                if (trinhDoChuyenMon1.isPresent()) {
+                    trinhDoChuyenMon.setUpdate_at();
+                    return new ResDTO<>(
+                            ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
+                            ResEnum.CAP_NHAT_THANH_CONG,
+                            trinhDoChuyenMonRepository.save(trinhDoChuyenMon));
+                }
                 return new ResDTO<>(
-                        ResEnum.THANH_CONG.getStatusCode(),
-                        ResEnum.THANH_CONG,
-                        trinhDoGiaoDucPhoThongRepository.findAll()
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null);
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
                 );
             }
+        }
+    }
 
-            @Override
-            public ResDTO<TrinhDoGiaoDucPhoThong> themTrinhDoGiaoDucPhoThong(String name) {
-                TrinhDoGiaoDucPhoThong trinhDoGiaoDucPhoThong = new TrinhDoGiaoDucPhoThong(name);
-                try {
-                    return new ResDTO<>(
-                            ResEnum.TAO_THANH_CONG.getStatusCode(),
-                            ResEnum.TAO_THANH_CONG,
-                            trinhDoGiaoDucPhoThongRepository.save(trinhDoGiaoDucPhoThong)
-                    );
-                } catch (RuntimeException e) {
-                    return new ResDTO<>(
-                            ResEnum.KHONG_HOP_LE.getStatusCode(),
-                            ResEnum.KHONG_HOP_LE,
-                            null
-                    );
-                }
+    @Service
+    public class TrinhDoGiaoDucPhoThongService implements IUtilitiesService.ITrinhDoGiaoDucPhoThongService {
+        @Override
+        public ResDTO<List<TrinhDoGiaoDucPhoThong>> xemTrinhDoGiaoDucPhoThong() {
+            return new ResDTO<>(
+                    ResEnum.THANH_CONG.getStatusCode(),
+                    ResEnum.THANH_CONG,
+                    trinhDoGiaoDucPhoThongRepository.findAll()
+            );
+        }
+
+        @Override
+        public ResDTO<TrinhDoGiaoDucPhoThong> themTrinhDoGiaoDucPhoThong(String name) {
+            TrinhDoGiaoDucPhoThong trinhDoGiaoDucPhoThong = new TrinhDoGiaoDucPhoThong(name);
+            try {
+                return new ResDTO<>(
+                        ResEnum.TAO_THANH_CONG.getStatusCode(),
+                        ResEnum.TAO_THANH_CONG,
+                        trinhDoGiaoDucPhoThongRepository.save(trinhDoGiaoDucPhoThong)
+                );
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
+                );
             }
+        }
 
-            @Override
-            public ResDTO<TrinhDoGiaoDucPhoThong> suaTrinhDoGiaoDucPhoThong(TrinhDoGiaoDucPhoThong trinhDoGiaoDucPhoThong) {
-                Optional<TrinhDoGiaoDucPhoThong> trinhDoGiaoDucPhoThong1 = trinhDoGiaoDucPhoThongRepository.findById(trinhDoGiaoDucPhoThong.getId());
-                try {
-                    if (trinhDoGiaoDucPhoThong1.isPresent()) {
-                        trinhDoGiaoDucPhoThong.setUpdate_at();
-                        return new ResDTO<>(
-                                ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
-                                ResEnum.CAP_NHAT_THANH_CONG,
-                                trinhDoGiaoDucPhoThongRepository.save(trinhDoGiaoDucPhoThong));
-                    }
+        @Override
+        public ResDTO<TrinhDoGiaoDucPhoThong> suaTrinhDoGiaoDucPhoThong(TrinhDoGiaoDucPhoThong trinhDoGiaoDucPhoThong) {
+            Optional<TrinhDoGiaoDucPhoThong> trinhDoGiaoDucPhoThong1 = trinhDoGiaoDucPhoThongRepository.findById(trinhDoGiaoDucPhoThong.getId());
+            try {
+                if (trinhDoGiaoDucPhoThong1.isPresent()) {
+                    trinhDoGiaoDucPhoThong.setUpdate_at();
                     return new ResDTO<>(
-                            ResEnum.HONG_TIM_THAY.getStatusCode(),
-                            ResEnum.HONG_TIM_THAY,
-                            null);
-                } catch (RuntimeException e) {
-                    return new ResDTO<>(
-                            ResEnum.KHONG_HOP_LE.getStatusCode(),
-                            ResEnum.KHONG_HOP_LE,
-                            null
-                    );
+                            ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
+                            ResEnum.CAP_NHAT_THANH_CONG,
+                            trinhDoGiaoDucPhoThongRepository.save(trinhDoGiaoDucPhoThong));
                 }
+                return new ResDTO<>(
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null);
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
+                );
             }
         }
     }
 }
+

@@ -17,5 +17,7 @@ public interface ISoYeuLyLichService {
 
     ResDTO<SoYeuLyLich> xemSoYeuLyLichTheoId(UUID id);
 
+    ResDTO<SoYeuLyLich> capNhatTrangThaiSoYeuLyLich(boolean check, UUID id); //admin cahp nhan duyet syll
+
     public ResDTO<SoYeuLyLich> capNhatSoYeuLyLich(UUID id, SoYeuLyLichDTO soYeuLyLichDTO);
 }

@@ -1,6 +1,7 @@
 package sgu.hrm.module_soyeulylich.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.CascadeType;
@@ -68,12 +69,12 @@ import java.util.UUID;
 @Entity
 @Table(name = "so_yeu_ly_lich")
 @Getter
+@Setter
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@JsonInclude(JsonInclude.Include.ALWAYS)
 public class SoYeuLyLich extends DateTimeObject {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -324,7 +325,8 @@ public class SoYeuLyLich extends DateTimeObject {
     Set<KyLuat> kyLuats;
 
     @OneToMany(mappedBy = "soYeuLyLich")
-    Set<QuanHeGiaDinh> quanHeGiaDinhs;
+    @JsonIgnoreProperties({"loaiSoYeuLyLichChiTiet"})
+    List<QuanHeGiaDinh> quanHeGiaDinhs;
 
 //    @OneToMany(mappedBy = "soYeuLyLich", cascade = CascadeType.ALL, orphanRemoval = true)
 //    Set<QuanHeGiaDinhRuotBenVoHoacChong> quanHeGiaDinhRuotBenVoHoacChongs;

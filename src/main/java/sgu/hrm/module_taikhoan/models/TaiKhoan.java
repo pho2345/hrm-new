@@ -17,9 +17,15 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import sgu.hrm.models.DateTimeObject;
-import sgu.hrm.models.RoleTaiKhoan;
 import sgu.hrm.module_soyeulylich.models.SoYeuLyLich;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "taikhoan")
@@ -29,7 +35,9 @@ import sgu.hrm.module_soyeulylich.models.SoYeuLyLich;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class TaiKhoan extends DateTimeObject {
+public class TaiKhoan extends DateTimeObject
+//        implements UserDetails
+{
     @Id
     @Column(columnDefinition = "INTEGER AUTO_INCREMENT")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,7 +52,7 @@ public class TaiKhoan extends DateTimeObject {
     @Column(columnDefinition = "varchar(30) unique")
     String username;
 
-    @Column(columnDefinition = "varchar(15)")
+    @Column(columnDefinition = "varchar(100)")
     String password;
 
     @ManyToOne
@@ -54,4 +62,39 @@ public class TaiKhoan extends DateTimeObject {
     @OneToOne()
     @JoinColumn(name = "so_yeu_ly_lich", columnDefinition = "binary(16)")
     SoYeuLyLich soYeuLyLich;
+
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return List.of((() -> "ADMIN"));
+//    }
+//
+//    @Override
+//    public String getUsername() {
+//        return username;
+//    }
+//
+//    @Override
+//    public String getPassword() {
+//        return password;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonLocked() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isCredentialsNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isEnabled() {
+//        return true;
+//    }
 }

@@ -53,6 +53,7 @@ import sgu.hrm.module_soyeulylich_chitiet.repositories.TinHocRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor // create constructor if field is set final or @notnull
@@ -962,28 +963,31 @@ public class SoYeuLyLichChiTietServices {
         }
 
         @Override
-        public ResDTO<List<QuanHeGiaDinh>> themPQuanHeGiaDinh(String loaisyllctName, String soCCCD, List<ReqQuanHeGiaDinh> reqQuanHeGiaDinhs) {
+        public ResDTO<List<QuanHeGiaDinh>> themPQuanHeGiaDinh(String loaisyllctName, UUID id, List<ReqQuanHeGiaDinh> reqQuanHeGiaDinhs) {
             try {
                 LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(loaisyllctName);
-                SoYeuLyLich soYeuLyLich = soYeuLyLichRepository.findFirstBySoCCCD(soCCCD);
-                List<QuanHeGiaDinh> quanHeGiaDinhs = reqQuanHeGiaDinhs.stream().map(cu ->
-                        new QuanHeGiaDinh(
-                                cu.moiQuanHe(),
-                                cu.hoVaTen(),
-                                cu.namSinh(),
-                                cu.thongTinThanNhan(),
-                                chiTiet, soYeuLyLich)).toList();
-                return new ResDTO<>(
-                        ResEnum.THANH_CONG.getStatusCode(),
-                        ResEnum.THANH_CONG,
-                        quanHeGiaDinhRepository.saveAll(quanHeGiaDinhs)
-                );
-            } catch (RuntimeException e) {
-                return new ResDTO<>(
-                        ResEnum.KHONG_HOP_LE.getStatusCode(),
-                        ResEnum.KHONG_HOP_LE,
+                Optional<SoYeuLyLich> soYeuLyLich = soYeuLyLichRepository.findById(id);
+                if (soYeuLyLich.isPresent()) {
+                    List<QuanHeGiaDinh> quanHeGiaDinhs = reqQuanHeGiaDinhs.stream().map(cu ->
+                            new QuanHeGiaDinh(
+                                    cu.moiQuanHe(),
+                                    cu.hoVaTen(),
+                                    cu.namSinh(),
+                                    cu.thongTinThanNhan(),
+                                    chiTiet, soYeuLyLich.get())).toList();
+
+                    return new ResDTO<>(
+                            ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
+                            ResEnum.CAP_NHAT_THANH_CONG,
+                            quanHeGiaDinhRepository.saveAll(quanHeGiaDinhs)
+                    );
+                } else return new ResDTO<>(
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
                         null
                 );
+            } catch (RuntimeException e) {
+                throw new RuntimeException(e.getCause());
             }
         }
 

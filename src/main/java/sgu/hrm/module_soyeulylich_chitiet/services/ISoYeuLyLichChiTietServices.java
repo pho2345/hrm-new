@@ -32,6 +32,7 @@ import sgu.hrm.module_soyeulylich_chitiet.models.dto.ReqTinHoc;
 
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ISoYeuLyLichChiTietServices {
     interface ILoaiSoYeuLyLichChiTietSefvice {
@@ -127,7 +128,7 @@ public interface ISoYeuLyLichChiTietServices {
     interface IQuanHeGiaDinhSefvice {
         ResDTO<List<QuanHeGiaDinh>> xemQuanHeGiaDinh();
 
-        ResDTO<List<QuanHeGiaDinh>> themPQuanHeGiaDinh(String loaisyllctName, String soCCCD, List<ReqQuanHeGiaDinh> reqQuanHeGiaDinhs);
+        ResDTO<List<QuanHeGiaDinh>> themPQuanHeGiaDinh(String loaisyllctName, UUID id, List<ReqQuanHeGiaDinh> reqQuanHeGiaDinhs);
 
         ResDTO<QuanHeGiaDinh> suaQuanHeGiaDinh(int id, ReqQuanHeGiaDinh reqQuanHeGiaDinh);
     }
