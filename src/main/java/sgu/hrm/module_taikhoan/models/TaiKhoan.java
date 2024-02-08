@@ -35,9 +35,7 @@ import java.util.List;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class TaiKhoan extends DateTimeObject
-//        implements UserDetails
-{
+public class TaiKhoan extends DateTimeObject implements UserDetails {
     @Id
     @Column(columnDefinition = "INTEGER AUTO_INCREMENT")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,38 +61,30 @@ public class TaiKhoan extends DateTimeObject
     @JoinColumn(name = "so_yeu_ly_lich", columnDefinition = "binary(16)")
     SoYeuLyLich soYeuLyLich;
 
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return List.of((() -> "ADMIN"));
-//    }
-//
-//    @Override
-//    public String getUsername() {
-//        return username;
-//    }
-//
-//    @Override
-//    public String getPassword() {
-//        return password;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonLocked() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isCredentialsNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isEnabled() {
-//        return true;
-//    }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(roleTaiKhoan.getTitle()));
+    }
+
+    //ko can getPassword getUsername do @Data no lam roi
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return this.isTrangThai();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

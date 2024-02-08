@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import sgu.hrm.models.DateTimeObject;
@@ -23,6 +24,7 @@ import sgu.hrm.module_soyeulylich.models.SoYeuLyLich;
 @Entity
 @Table(name = "quan_he_gia_dinh")
 @Getter
+@Setter
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor

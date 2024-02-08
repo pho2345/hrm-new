@@ -54,15 +54,9 @@ public class UtilitiesService {
     private final TrinhDoChuyenMonRepository trinhDoChuyenMonRepository;
     private final TrinhDoGiaoDucPhoThongRepository trinhDoGiaoDucPhoThongRepository;
 
-    // nếu dùng này thì lỗi, vì sao ? vì constructor gán giá trị khi tạo đối tượng
-    //kể cả hằng số nghĩa là khi dùng từ khóa neu để khởi tạo thì field có final sẽ được
-    //constructor gán giá trị đúng 1 lần
-//    public UtilitiesService() {
-//    }
-
     @Service
-    public class BacLuongService implements IUtilitiesService.IBacLuongService {
-        public ResDTO<List<BacLuong>> xemBacLuong() {
+    public class BacLuongService implements IUtilitiesService<BacLuong> {
+        public ResDTO<List<BacLuong>> xem() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -71,7 +65,7 @@ public class UtilitiesService {
         }
 
         @Override
-        public ResDTO<BacLuong> themBacLuong(String name) {
+        public ResDTO<BacLuong> them(String name) {
             BacLuong bacLuong = new BacLuong(name);
             try {
                 return new ResDTO<>(
@@ -89,7 +83,7 @@ public class UtilitiesService {
         }
 
         @Override
-        public ResDTO<BacLuong> suaBacLuong(BacLuong luong) {
+        public ResDTO<BacLuong> sua(BacLuong luong) {
             Optional<BacLuong> bacLuong = bacLuongRepository.findById(luong.getId());
             try {
                 if (bacLuong.isPresent()) {
@@ -113,10 +107,62 @@ public class UtilitiesService {
         }
     }
 
+    //    @Service
+//    public class BacLuongService implements IUtilitiesService.IBacLuongService {
+//        public ResDTO<List<BacLuong>> xemBacLuong() {
+//            return new ResDTO<>(
+//                    ResEnum.THANH_CONG.getStatusCode(),
+//                    ResEnum.THANH_CONG,
+//                    bacLuongRepository.findAll()
+//            );
+//        }
+//
+//        @Override
+//        public ResDTO<BacLuong> themBacLuong(String name) {
+//            BacLuong bacLuong = new BacLuong(name);
+//            try {
+//                return new ResDTO<>(
+//                        ResEnum.TAO_THANH_CONG.getStatusCode(),
+//                        ResEnum.TAO_THANH_CONG,
+//                        bacLuongRepository.save(bacLuong)
+//                );
+//            } catch (RuntimeException e) {
+//                return new ResDTO<>(
+//                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+//                        ResEnum.KHONG_HOP_LE,
+//                        null
+//                );
+//            }
+//        }
+//
+//        @Override
+//        public ResDTO<BacLuong> suaBacLuong(BacLuong luong) {
+//            Optional<BacLuong> bacLuong = bacLuongRepository.findById(luong.getId());
+//            try {
+//                if (bacLuong.isPresent()) {
+//                    luong.setUpdate_at();
+//                    return new ResDTO<>(
+//                            ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
+//                            ResEnum.CAP_NHAT_THANH_CONG,
+//                            bacLuongRepository.save(luong));
+//                }
+//                return new ResDTO<>(
+//                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+//                        ResEnum.HONG_TIM_THAY,
+//                        null);
+//            } catch (RuntimeException e) {
+//                return new ResDTO<>(
+//                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+//                        ResEnum.KHONG_HOP_LE,
+//                        null
+//                );
+//            }
+//        }
+//    }
     @Service
-    public class LoaiQuanHamQuanDoiService implements IUtilitiesService.ILoaiQuanHamQuanDoiService {
+    public class LoaiQuanHamQuanDoiService implements IUtilitiesService<LoaiQuanHamQuanDoi> {
         @Override
-        public ResDTO<List<LoaiQuanHamQuanDoi>> xemLoaiQuanHamQuanDoi() {
+        public ResDTO<List<LoaiQuanHamQuanDoi>> xem() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -125,7 +171,7 @@ public class UtilitiesService {
         }
 
         @Override
-        public ResDTO<LoaiQuanHamQuanDoi> themLoaiQuanHamQuanDoi(String name) {
+        public ResDTO<LoaiQuanHamQuanDoi> them(String name) {
             LoaiQuanHamQuanDoi loaiQuanHamQuanDoi = new LoaiQuanHamQuanDoi(name);
             try {
                 return new ResDTO<>(
@@ -143,7 +189,7 @@ public class UtilitiesService {
         }
 
         @Override
-        public ResDTO<LoaiQuanHamQuanDoi> suaLoaiQuanHamQuanDoi(LoaiQuanHamQuanDoi loaiQuanHamQuanDoi) {
+        public ResDTO<LoaiQuanHamQuanDoi> sua(LoaiQuanHamQuanDoi loaiQuanHamQuanDoi) {
             Optional<LoaiQuanHamQuanDoi> loaiQuanHamQuanDoi1 = loaiQuanHamQuanDoiRepository.findById(loaiQuanHamQuanDoi.getId());
             try {
                 if (loaiQuanHamQuanDoi1.isPresent()) {
@@ -168,9 +214,9 @@ public class UtilitiesService {
     }
 
     @Service
-    public class CapBacLoaiQuanHamQuanDoiService implements IUtilitiesService.ICapBacLoaiQuanHamQuanDoiService {
+    public class CapBacLoaiQuanHamQuanDoiService implements IUtilitiesService<CapBacLoaiQuanHamQuanDoi> {
         @Override
-        public ResDTO<List<CapBacLoaiQuanHamQuanDoi>> xemCapBacLoaiQuanHamQuanDoi() {
+        public ResDTO<List<CapBacLoaiQuanHamQuanDoi>> xem() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -198,7 +244,7 @@ public class UtilitiesService {
         }
 
         @Override
-        public ResDTO<CapBacLoaiQuanHamQuanDoi> suaCapBacLoaiQuanHamQuanDoi(CapBacLoaiQuanHamQuanDoi capBacLoaiQuanHamQuanDoi) {
+        public ResDTO<CapBacLoaiQuanHamQuanDoi> sua(CapBacLoaiQuanHamQuanDoi capBacLoaiQuanHamQuanDoi) {
             Optional<CapBacLoaiQuanHamQuanDoi> capBacLoaiQuanHamQuanDoi1 = capBacLoaiQuanHamQuanDoiRepository.findById(capBacLoaiQuanHamQuanDoi.getId());
             try {
                 if (capBacLoaiQuanHamQuanDoi1.isPresent()) {
@@ -223,14 +269,9 @@ public class UtilitiesService {
     }
 
     @Service
-    public class DanhHieuNhaNuocPhongTangService implements IUtilitiesService.IDanhHieuNhaNuocPhongTangService {
+    public class DanhHieuNhaNuocPhongTangService implements IUtilitiesService<DanhHieuNhaNuocPhongTang> {
         @Override
-        public ResDTO<List<DanhHieuNhaNuocPhongTang>> xemDanhHieuNhaNuocPhongTang() {
-//        return danhHieuNhaNuocPhongTangRepository.findAll();
-//        return new UtilitiesResponse<>(UtilitiesResponse.UtilitiesNotification.UTILITIES_SUCCESS,
-//                200,
-//                danhHieuNhaNuocPhongTangRepository.findAll()
-//        );
+        public ResDTO<List<DanhHieuNhaNuocPhongTang>> xem() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -239,7 +280,7 @@ public class UtilitiesService {
         }
 
         @Override
-        public ResDTO<DanhHieuNhaNuocPhongTang> themDanhHieuNhaNuocPhongTang(String name) {
+        public ResDTO<DanhHieuNhaNuocPhongTang> them(String name) {
             DanhHieuNhaNuocPhongTang danhHieuNhaNuocPhongTang = new DanhHieuNhaNuocPhongTang(name);
             try {
                 return new ResDTO<>(
@@ -257,7 +298,7 @@ public class UtilitiesService {
         }
 
         @Override
-        public ResDTO<DanhHieuNhaNuocPhongTang> suaDanhHieuNhaNuocPhongTang(DanhHieuNhaNuocPhongTang danhHieuNhaNuocPhongTang) {
+        public ResDTO<DanhHieuNhaNuocPhongTang> sua(DanhHieuNhaNuocPhongTang danhHieuNhaNuocPhongTang) {
             Optional<DanhHieuNhaNuocPhongTang> danhHieuNhaNuocPhongTang1 = danhHieuNhaNuocPhongTangRepository.findById(danhHieuNhaNuocPhongTang.getId());
             try {
                 if (danhHieuNhaNuocPhongTang1.isPresent()) {
@@ -282,9 +323,9 @@ public class UtilitiesService {
     }
 
     @Service
-    public class DanTocService implements IUtilitiesService.IDanTocService {
+    public class DanTocService implements IUtilitiesService<DanToc> {
         @Override
-        public ResDTO<List<DanToc>> xemDanToc() {
+        public ResDTO<List<DanToc>> xem() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -293,7 +334,7 @@ public class UtilitiesService {
         }
 
         @Override
-        public ResDTO<DanToc> themDanToc(String name) {
+        public ResDTO<DanToc> them(String name) {
             DanToc danToc = new DanToc();
             try {
                 return new ResDTO<>(
@@ -311,7 +352,7 @@ public class UtilitiesService {
         }
 
         @Override
-        public ResDTO<DanToc> suaDanToc(DanToc toc) {
+        public ResDTO<DanToc> sua(DanToc toc) {
             Optional<DanToc> danToc = danTocRepository.findById(toc.getId());
             try {
                 if (danToc.isPresent()) {
@@ -336,14 +377,9 @@ public class UtilitiesService {
     }
 
     @Service
-    public class DoiTuongChinhSachService implements IUtilitiesService.IDoiTuongChinhSachService {
+    public class DoiTuongChinhSachService implements IUtilitiesService<DoiTuongChinhSach> {
         @Override
-        public ResDTO<List<DoiTuongChinhSach>> xemDoiTuongChinhSach() {
-//        return doiTuongChinhSachRepository.findAll();
-//        return new UtilitiesResponse<>(UtilitiesResponse.UtilitiesNotification.UTILITIES_SUCCESS,
-//                200,
-//                doiTuongChinhSachRepository.findAll()
-//        );
+        public ResDTO<List<DoiTuongChinhSach>> xem() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -352,7 +388,7 @@ public class UtilitiesService {
         }
 
         @Override
-        public ResDTO<DoiTuongChinhSach> themDoiTuongChinhSach(String name) {
+        public ResDTO<DoiTuongChinhSach> them(String name) {
             DoiTuongChinhSach doiTuongChinhSach = new DoiTuongChinhSach(name);
             try {
                 return new ResDTO<>(
@@ -370,7 +406,7 @@ public class UtilitiesService {
         }
 
         @Override
-        public ResDTO<DoiTuongChinhSach> suaDoiTuongChinhSach(DoiTuongChinhSach doiTuongChinhSach) {
+        public ResDTO<DoiTuongChinhSach> sua(DoiTuongChinhSach doiTuongChinhSach) {
             Optional<DoiTuongChinhSach> doiTuongChinhSach1 = doiTuongChinhSachRepository.findById(doiTuongChinhSach.getId());
             try {
                 if (doiTuongChinhSach1.isPresent()) {
@@ -395,21 +431,31 @@ public class UtilitiesService {
     }
 
     @Service
-    public class GioiTinhService implements IUtilitiesService.IGioiTinhService {
+    public class GioiTinhService implements IUtilitiesService<GioiTinh> {
         @Override
-        public ResDTO<List<GioiTinh>> xemGioiTinh() {
+        public ResDTO<List<GioiTinh>> xem() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
                     gioiTinhRepository.findAll()
             );
         }
+
+        @Override
+        public ResDTO<?> them(String name) {
+            return null;
+        }
+
+        @Override
+        public ResDTO<?> sua(GioiTinh object) {
+            return null;
+        }
     }
 
     @Service
-    public class HocHamService implements IUtilitiesService.IHocHamService {
+    public class HocHamService implements IUtilitiesService<HocHam> {
         @Override
-        public ResDTO<List<HocHam>> xemHocHam() {
+        public ResDTO<List<HocHam>> xem() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -418,7 +464,7 @@ public class UtilitiesService {
         }
 
         @Override
-        public ResDTO<HocHam> themHocHam(String name) {
+        public ResDTO<HocHam> them(String name) {
             HocHam hocHam = new HocHam(name);
             try {
                 return new ResDTO<>(
@@ -436,7 +482,7 @@ public class UtilitiesService {
         }
 
         @Override
-        public ResDTO<HocHam> suaHocHam(HocHam hocHam) {
+        public ResDTO<HocHam> sua(HocHam hocHam) {
             Optional<HocHam> hocHam1 = hocHamRepository.findById(hocHam.getId());
             try {
                 if (hocHam1.isPresent()) {
@@ -461,9 +507,9 @@ public class UtilitiesService {
     }
 
     @Service
-    public class NhomMauService implements IUtilitiesService.INhomMauService {
+    public class NhomMauService implements IUtilitiesService<NhomMau> {
         @Override
-        public ResDTO<List<NhomMau>> xemNhomMau() {
+        public ResDTO<List<NhomMau>> xem() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -472,7 +518,7 @@ public class UtilitiesService {
         }
 
         @Override
-        public ResDTO<NhomMau> themNhomMau(String name) {
+        public ResDTO<NhomMau> them(String name) {
             NhomMau nhomMau = new NhomMau();
             try {
                 return new ResDTO<>(
@@ -490,7 +536,7 @@ public class UtilitiesService {
         }
 
         @Override
-        public ResDTO<NhomMau> suaNhomMau(NhomMau nhomMau) {
+        public ResDTO<NhomMau> sua(NhomMau nhomMau) {
             Optional<NhomMau> nhomMau1 = nhomMauRepository.findById(nhomMau.getId());
             try {
                 if (nhomMau1.isPresent()) {
@@ -515,9 +561,9 @@ public class UtilitiesService {
     }
 
     @Service
-    public class ThanhPhanGiaDinhService implements IUtilitiesService.IThanhPhanGiaDinhService {
+    public class ThanhPhanGiaDinhService implements IUtilitiesService<ThanhPhanGiaDinh> {
         @Override
-        public ResDTO<List<ThanhPhanGiaDinh>> xemThanhPhanGiaDinh() {
+        public ResDTO<List<ThanhPhanGiaDinh>> xem() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -526,7 +572,7 @@ public class UtilitiesService {
         }
 
         @Override
-        public ResDTO<ThanhPhanGiaDinh> themThanhPhanGiaDinh(String name) {
+        public ResDTO<ThanhPhanGiaDinh> them(String name) {
             ThanhPhanGiaDinh thanhPhanGiaDinh = new ThanhPhanGiaDinh(name);
             try {
                 return new ResDTO<>(
@@ -544,7 +590,7 @@ public class UtilitiesService {
         }
 
         @Override
-        public ResDTO<ThanhPhanGiaDinh> suaThanhPhanGiaDinh(ThanhPhanGiaDinh thanhPhanGiaDinh) {
+        public ResDTO<ThanhPhanGiaDinh> sua(ThanhPhanGiaDinh thanhPhanGiaDinh) {
             Optional<ThanhPhanGiaDinh> thanhPhanGiaDinh1 = thanhPhanGiaDinhRepository.findById(thanhPhanGiaDinh.getId());
             try {
                 if (thanhPhanGiaDinh1.isPresent()) {
@@ -569,9 +615,9 @@ public class UtilitiesService {
     }
 
     @Service
-    public class TinhTrangSucKhoeService implements IUtilitiesService.ITinhTrangSucKhoeService {
+    public class TinhTrangSucKhoeService implements IUtilitiesService<TinhTrangSucKhoe> {
         @Override
-        public ResDTO<List<TinhTrangSucKhoe>> xemTinhTrangSucKhoe() {
+        public ResDTO<List<TinhTrangSucKhoe>> xem() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -580,7 +626,7 @@ public class UtilitiesService {
         }
 
         @Override
-        public ResDTO<TinhTrangSucKhoe> themTinhTrangSucKhoe(String name) {
+        public ResDTO<TinhTrangSucKhoe> them(String name) {
             TinhTrangSucKhoe tinhTrangSucKhoe = new TinhTrangSucKhoe(name);
             try {
                 return new ResDTO<>(
@@ -598,7 +644,7 @@ public class UtilitiesService {
         }
 
         @Override
-        public ResDTO<TinhTrangSucKhoe> suaTinhTrangSucKhoe(TinhTrangSucKhoe tinhTrangSucKhoe) {
+        public ResDTO<TinhTrangSucKhoe> sua(TinhTrangSucKhoe tinhTrangSucKhoe) {
             Optional<TinhTrangSucKhoe> tinhTrangSucKhoe1 = tinhTrangSucKhoeRepository.findById(tinhTrangSucKhoe.getId());
             try {
                 if (tinhTrangSucKhoe1.isPresent()) {
@@ -623,9 +669,9 @@ public class UtilitiesService {
     }
 
     @Service
-    public class TonGiaoService implements IUtilitiesService.ITonGiaoService {
+    public class TonGiaoService implements IUtilitiesService<TonGiao> {
         @Override
-        public ResDTO<List<TonGiao>> xemTonGiao() {
+        public ResDTO<List<TonGiao>> xem() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -634,7 +680,7 @@ public class UtilitiesService {
         }
 
         @Override
-        public ResDTO<TonGiao> themTonGiao(String name) {
+        public ResDTO<TonGiao> them(String name) {
             TonGiao tonGiao = new TonGiao(name);
             try {
                 return new ResDTO<>(
@@ -652,7 +698,7 @@ public class UtilitiesService {
         }
 
         @Override
-        public ResDTO<TonGiao> suaTonGiao(TonGiao tonGiao) {
+        public ResDTO<TonGiao> sua(TonGiao tonGiao) {
             Optional<TonGiao> tonGiao1 = tonGiaoRepository.findById(tonGiao.getId());
             try {
                 if (tonGiao1.isPresent()) {
@@ -677,9 +723,9 @@ public class UtilitiesService {
     }
 
     @Service
-    public class TrinhDoChuyenMonService implements IUtilitiesService.ITrinhDoChuyenMonService {
+    public class TrinhDoChuyenMonService implements IUtilitiesService<TrinhDoChuyenMon> {
         @Override
-        public ResDTO<List<TrinhDoChuyenMon>> xemTrinhDoChuyenMon() {
+        public ResDTO<List<TrinhDoChuyenMon>> xem() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -688,7 +734,7 @@ public class UtilitiesService {
         }
 
         @Override
-        public ResDTO<TrinhDoChuyenMon> themTrinhDoChuyenMon(String name) {
+        public ResDTO<TrinhDoChuyenMon> them(String name) {
             TrinhDoChuyenMon trinhDoChuyenMon = new TrinhDoChuyenMon(name);
             try {
                 return new ResDTO<>(
@@ -706,7 +752,7 @@ public class UtilitiesService {
         }
 
         @Override
-        public ResDTO<TrinhDoChuyenMon> suaTrinhDoChuyenMon(TrinhDoChuyenMon trinhDoChuyenMon) {
+        public ResDTO<TrinhDoChuyenMon> sua(TrinhDoChuyenMon trinhDoChuyenMon) {
             Optional<TrinhDoChuyenMon> trinhDoChuyenMon1 = trinhDoChuyenMonRepository.findById(trinhDoChuyenMon.getId());
             try {
                 if (trinhDoChuyenMon1.isPresent()) {
@@ -731,9 +777,9 @@ public class UtilitiesService {
     }
 
     @Service
-    public class TrinhDoGiaoDucPhoThongService implements IUtilitiesService.ITrinhDoGiaoDucPhoThongService {
+    public class TrinhDoGiaoDucPhoThongService implements IUtilitiesService<TrinhDoGiaoDucPhoThong> {
         @Override
-        public ResDTO<List<TrinhDoGiaoDucPhoThong>> xemTrinhDoGiaoDucPhoThong() {
+        public ResDTO<List<TrinhDoGiaoDucPhoThong>> xem() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -742,7 +788,7 @@ public class UtilitiesService {
         }
 
         @Override
-        public ResDTO<TrinhDoGiaoDucPhoThong> themTrinhDoGiaoDucPhoThong(String name) {
+        public ResDTO<TrinhDoGiaoDucPhoThong> them(String name) {
             TrinhDoGiaoDucPhoThong trinhDoGiaoDucPhoThong = new TrinhDoGiaoDucPhoThong(name);
             try {
                 return new ResDTO<>(
@@ -760,7 +806,7 @@ public class UtilitiesService {
         }
 
         @Override
-        public ResDTO<TrinhDoGiaoDucPhoThong> suaTrinhDoGiaoDucPhoThong(TrinhDoGiaoDucPhoThong trinhDoGiaoDucPhoThong) {
+        public ResDTO<TrinhDoGiaoDucPhoThong> sua(TrinhDoGiaoDucPhoThong trinhDoGiaoDucPhoThong) {
             Optional<TrinhDoGiaoDucPhoThong> trinhDoGiaoDucPhoThong1 = trinhDoGiaoDucPhoThongRepository.findById(trinhDoGiaoDucPhoThong.getId());
             try {
                 if (trinhDoGiaoDucPhoThong1.isPresent()) {

@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import sgu.hrm.models.DateTimeObject;
@@ -22,6 +23,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "tin_hoc")
 @Getter
+@Setter
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor

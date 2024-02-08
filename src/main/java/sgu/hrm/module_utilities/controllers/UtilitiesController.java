@@ -1,6 +1,7 @@
 package sgu.hrm.module_utilities.controllers;
 
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,264 +29,266 @@ import sgu.hrm.module_utilities.models.request.ReqCapBacQuanHamQuanDoi;
 import sgu.hrm.module_utilities.models.request.ReqUtilities;
 import sgu.hrm.module_utilities.services.IUtilitiesService;
 
-import java.util.List;
-
 @RestController
-//@RequiredArgsConstructor
-@RequestMapping(value = "/api/v1/utilities")
+@RequiredArgsConstructor
+@RequestMapping(value = "")
 public class UtilitiesController {
-    private final IUtilitiesService.IBacLuongService bacLuongService;
-    private final IUtilitiesService.ILoaiQuanHamQuanDoiService loaiQuanHamQuanDoiService;
-    private final IUtilitiesService.ICapBacLoaiQuanHamQuanDoiService capBacLoaiQuanHamQuanDoiService;
-    private final IUtilitiesService.IDanhHieuNhaNuocPhongTangService danhHieuNhaNuocPhongTangService;
-    private final IUtilitiesService.IDanTocService danTocService;
-    private final IUtilitiesService.IDoiTuongChinhSachService doiTuongChinhSachService;
-    private final IUtilitiesService.IGioiTinhService gioiTinhService;
-    private final IUtilitiesService.IHocHamService hocHamService;
-    private final IUtilitiesService.INhomMauService nhomMauService;
-    private final IUtilitiesService.IThanhPhanGiaDinhService thanhPhanGiaDinhService;
-    private final IUtilitiesService.ITinhTrangSucKhoeService tinhTrangSucKhoeService;
-    private final IUtilitiesService.ITonGiaoService tonGiaoService;
-    private final IUtilitiesService.ITrinhDoChuyenMonService trinhDoChuyenMonService;
-    private final IUtilitiesService.ITrinhDoGiaoDucPhoThongService trinhDoGiaoDucPhoThongService;
+    private final IUtilitiesService<BacLuong> bacLuongService;
+    private final IUtilitiesService<LoaiQuanHamQuanDoi> loaiQuanHamQuanDoiService;
+    private final IUtilitiesService<CapBacLoaiQuanHamQuanDoi> capBacLoaiQuanHamQuanDoiService;
+    private final IUtilitiesService<DanhHieuNhaNuocPhongTang> danhHieuNhaNuocPhongTangService;
+    private final IUtilitiesService<DanToc> danTocService;
+    private final IUtilitiesService<DoiTuongChinhSach> doiTuongChinhSachService;
+    private final IUtilitiesService<GioiTinh> gioiTinhService;
+    private final IUtilitiesService<HocHam> hocHamService;
+    private final IUtilitiesService<NhomMau> nhomMauService;
+    private final IUtilitiesService<ThanhPhanGiaDinh> thanhPhanGiaDinhService;
+    private final IUtilitiesService<TinhTrangSucKhoe> tinhTrangSucKhoeService;
+    private final IUtilitiesService<TonGiao> tonGiaoService;
+    private final IUtilitiesService<TrinhDoChuyenMon> trinhDoChuyenMonService;
+    private final IUtilitiesService<TrinhDoGiaoDucPhoThong> trinhDoGiaoDucPhoThongService;
 
-    public UtilitiesController(
-            IUtilitiesService.IBacLuongService bacLuongService, IUtilitiesService.ILoaiQuanHamQuanDoiService loaiQuanHamQuanDoiService,
-            IUtilitiesService.ICapBacLoaiQuanHamQuanDoiService capBacLoaiQuanHamQuanDoiService,
-            IUtilitiesService.IDanhHieuNhaNuocPhongTangService danhHieuNhaNuocPhongTangService,
-            IUtilitiesService.IDanTocService danTocService, IUtilitiesService.IDoiTuongChinhSachService doiTuongChinhSachService,
-            IUtilitiesService.IGioiTinhService gioiTinhService, IUtilitiesService.IHocHamService hocHamService,
-            IUtilitiesService.INhomMauService nhomMauService, IUtilitiesService.IThanhPhanGiaDinhService thanhPhanGiaDinhService,
-            IUtilitiesService.ITinhTrangSucKhoeService tinhTrangSucKhoeService, IUtilitiesService.ITonGiaoService tonGiaoService,
-            IUtilitiesService.ITrinhDoChuyenMonService trinhDoChuyenMonService,
-            IUtilitiesService.ITrinhDoGiaoDucPhoThongService trinhDoGiaoDucPhoThongService) {
-        this.bacLuongService = bacLuongService;
-        this.loaiQuanHamQuanDoiService = loaiQuanHamQuanDoiService;
-        this.capBacLoaiQuanHamQuanDoiService = capBacLoaiQuanHamQuanDoiService;
-        this.danhHieuNhaNuocPhongTangService = danhHieuNhaNuocPhongTangService;
-        this.danTocService = danTocService;
-        this.doiTuongChinhSachService = doiTuongChinhSachService;
-        this.gioiTinhService = gioiTinhService;
-        this.hocHamService = hocHamService;
-        this.nhomMauService = nhomMauService;
-        this.thanhPhanGiaDinhService = thanhPhanGiaDinhService;
-        this.tinhTrangSucKhoeService = tinhTrangSucKhoeService;
-        this.tonGiaoService = tonGiaoService;
-        this.trinhDoChuyenMonService = trinhDoChuyenMonService;
-        this.trinhDoGiaoDucPhoThongService = trinhDoGiaoDucPhoThongService;
-    }
+//    public UtilitiesController(
+//            IUtilitiesService<BacLuong> bacLuongService,
+////            IUtilitiesService.IBacLuongService bacLuongService,
+//            IUtilitiesService<LoaiQuanHamQuanDoi> loaiQuanHamQuanDoiService,
+////            IUtilitiesService.ILoaiQuanHamQuanDoiService loaiQuanHamQuanDoiService,
+//            IUtilitiesService.ICapBacLoaiQuanHamQuanDoiService capBacLoaiQuanHamQuanDoiService,
+//            IUtilitiesService.IDanhHieuNhaNuocPhongTangService danhHieuNhaNuocPhongTangService,
+//            IUtilitiesService.IDanTocService danTocService, IUtilitiesService.IDoiTuongChinhSachService doiTuongChinhSachService,
+//            IUtilitiesService.IGioiTinhService gioiTinhService, IUtilitiesService.IHocHamService hocHamService,
+//            IUtilitiesService.INhomMauService nhomMauService, IUtilitiesService.IThanhPhanGiaDinhService thanhPhanGiaDinhService,
+//            IUtilitiesService.ITinhTrangSucKhoeService tinhTrangSucKhoeService, IUtilitiesService.ITonGiaoService tonGiaoService,
+//            IUtilitiesService.ITrinhDoChuyenMonService trinhDoChuyenMonService,
+//            IUtilitiesService.ITrinhDoGiaoDucPhoThongService trinhDoGiaoDucPhoThongService) {
+//        this.bacLuongService = bacLuongService;
+//        this.loaiQuanHamQuanDoiService = loaiQuanHamQuanDoiService;
+//        this.capBacLoaiQuanHamQuanDoiService = capBacLoaiQuanHamQuanDoiService;
+//        this.danhHieuNhaNuocPhongTangService = danhHieuNhaNuocPhongTangService;
+//        this.danTocService = danTocService;
+//        this.doiTuongChinhSachService = doiTuongChinhSachService;
+//        this.gioiTinhService = gioiTinhService;
+//        this.hocHamService = hocHamService;
+//        this.nhomMauService = nhomMauService;
+//        this.thanhPhanGiaDinhService = thanhPhanGiaDinhService;
+//        this.tinhTrangSucKhoeService = tinhTrangSucKhoeService;
+//        this.tonGiaoService = tonGiaoService;
+//        this.trinhDoChuyenMonService = trinhDoChuyenMonService;
+//        this.trinhDoGiaoDucPhoThongService = trinhDoGiaoDucPhoThongService;
+//    }
 
     @GetMapping("/bac-luong")
-    public ResDTO<List<BacLuong>> getAllBacLuong() {
-        return bacLuongService.xemBacLuong();
+    public ResDTO<?> getAllBacLuong() {
+        return bacLuongService.xem();
     }
 
     @PostMapping("/bac-luong/them")
-    public ResDTO<BacLuong> addBacLuong(@RequestBody ReqUtilities utilities) {
-        return bacLuongService.themBacLuong(utilities.name());
+    public ResDTO<?> addBacLuong(@RequestBody ReqUtilities utilities) {
+        return bacLuongService.them(utilities.name());
     }
+
     // khong co requestbody van ok, van hieu do la request body
     @PatchMapping("/bac-luong/sua")
-    public ResDTO<BacLuong> editBacLuong(@RequestBody BacLuong luong) {
-        return bacLuongService.suaBacLuong(luong);
+    public ResDTO<?> editBacLuong(@RequestBody BacLuong luong) {
+        return bacLuongService.sua(luong);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @GetMapping("/loai-quan-ham-quan-doi")
-    public ResDTO<List<LoaiQuanHamQuanDoi>> getAllLoaiQuanHamQuanDoi() {
-        return loaiQuanHamQuanDoiService.xemLoaiQuanHamQuanDoi();
+    public ResDTO<?> getAllLoaiQuanHamQuanDoi() {
+        return loaiQuanHamQuanDoiService.xem();
     }
 
     @PostMapping("/loai-quan-ham-quan-doi/them")
-    public ResDTO<LoaiQuanHamQuanDoi> addLoaiQuanHamQuanDoi(@RequestBody ReqUtilities utilities) {
-        return loaiQuanHamQuanDoiService.themLoaiQuanHamQuanDoi(utilities.name());
+    public ResDTO<?> addLoaiQuanHamQuanDoi(@RequestBody ReqUtilities utilities) {
+        return loaiQuanHamQuanDoiService.them(utilities.name());
     }
 
     @PatchMapping("/loai-quan-ham-quan-doi/sua")
-    public ResDTO<LoaiQuanHamQuanDoi> editLoaiQuanHamQuanDoi(@RequestBody LoaiQuanHamQuanDoi loaiQuanHamQuanDoi) {
-        return loaiQuanHamQuanDoiService.suaLoaiQuanHamQuanDoi(loaiQuanHamQuanDoi);
+    public ResDTO<?> editLoaiQuanHamQuanDoi(@RequestBody LoaiQuanHamQuanDoi loaiQuanHamQuanDoi) {
+        return loaiQuanHamQuanDoiService.sua(loaiQuanHamQuanDoi);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @GetMapping("/cap-bac-loai-quan-ham-quan-doi")
-    public ResDTO<List<CapBacLoaiQuanHamQuanDoi>> getAllCapBacLoaiQuanHamQuanDoi() {
-        return capBacLoaiQuanHamQuanDoiService.xemCapBacLoaiQuanHamQuanDoi();
+    public ResDTO<?> getAllCapBacLoaiQuanHamQuanDoi() {
+        return capBacLoaiQuanHamQuanDoiService.xem();
     }
 
     @PostMapping("/cap-bac-loai-quan-ham-quan-doi/them")
-    public ResDTO<CapBacLoaiQuanHamQuanDoi> addCapBacLoaiQuanHamQuanDoi(@RequestBody ReqCapBacQuanHamQuanDoi capBacQuanHamQuanDoi) {
+    public ResDTO<?> addCapBacLoaiQuanHamQuanDoi(@RequestBody ReqCapBacQuanHamQuanDoi capBacQuanHamQuanDoi) {
         return capBacLoaiQuanHamQuanDoiService.themCapBacLoaiQuanHamQuanDoi(capBacQuanHamQuanDoi.capBacQuanHamQuanDoi(),
                 capBacQuanHamQuanDoi.nameLoaiQuanHam());
     }
 
     @PatchMapping("/cap-bac-loai-quan-ham-quan-doi/sua")
-    public ResDTO<CapBacLoaiQuanHamQuanDoi> editCapBacLoaiQuanHamQuanDoi(CapBacLoaiQuanHamQuanDoi capBacLoaiQuanHamQuanDoi) {
-        return capBacLoaiQuanHamQuanDoiService.suaCapBacLoaiQuanHamQuanDoi(capBacLoaiQuanHamQuanDoi);
+    public ResDTO<?> editCapBacLoaiQuanHamQuanDoi(CapBacLoaiQuanHamQuanDoi capBacLoaiQuanHamQuanDoi) {
+        return capBacLoaiQuanHamQuanDoiService.sua(capBacLoaiQuanHamQuanDoi);
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @GetMapping("/danh-hieu-nha-nuoc-phong")
-    public ResDTO<List<DanhHieuNhaNuocPhongTang>> getAllDanhHieuNhaNuocPhongTang() {
-        return danhHieuNhaNuocPhongTangService.xemDanhHieuNhaNuocPhongTang();
+    public ResDTO<?> getAllDanhHieuNhaNuocPhongTang() {
+        return danhHieuNhaNuocPhongTangService.xem();
     }
 
     @PostMapping("/danh-hieu-nha-nuoc-phong/them")
-    public ResDTO<DanhHieuNhaNuocPhongTang> addDanhHieuNhaNuocPhongTang(@RequestBody ReqUtilities utilities) {
-        return danhHieuNhaNuocPhongTangService.themDanhHieuNhaNuocPhongTang(utilities.name());
+    public ResDTO<?> addDanhHieuNhaNuocPhongTang(@RequestBody ReqUtilities utilities) {
+        return danhHieuNhaNuocPhongTangService.them(utilities.name());
     }
 
     @PatchMapping("/danh-hieu-nha-nuoc-phong/sua")
-    public ResDTO<DanhHieuNhaNuocPhongTang> editDanhHieuNhaNuocPhongTang(DanhHieuNhaNuocPhongTang danhHieuNhaNuocPhongTang) {
-        return danhHieuNhaNuocPhongTangService.suaDanhHieuNhaNuocPhongTang(danhHieuNhaNuocPhongTang);
+    public ResDTO<?> editDanhHieuNhaNuocPhongTang(DanhHieuNhaNuocPhongTang danhHieuNhaNuocPhongTang) {
+        return danhHieuNhaNuocPhongTangService.sua(danhHieuNhaNuocPhongTang);
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @GetMapping("/dan-toc")
-    public ResDTO<List<DanToc>> getAllDanToc() {
-        return danTocService.xemDanToc();
+    public ResDTO<?> getAllDanToc() {
+        return danTocService.xem();
     }
 
     @PostMapping("/dan-toc/them")
-    public ResDTO<DanToc> addDanToc(@RequestBody ReqUtilities utilities) {
-        return danTocService.themDanToc(utilities.name());
+    public ResDTO<?> addDanToc(@RequestBody ReqUtilities utilities) {
+        return danTocService.them(utilities.name());
     }
 
     @PatchMapping("/dan-toc/sua")
-    public ResDTO<DanToc> editDanToc(DanToc toc) {
-        return danTocService.suaDanToc(toc);
+    public ResDTO<?> editDanToc(DanToc toc) {
+        return danTocService.sua(toc);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @GetMapping("/doi-tuong-chinh-sach")
-    public ResDTO<List<DoiTuongChinhSach>> getAllDoiTuongChinhSach() {
-        return doiTuongChinhSachService.xemDoiTuongChinhSach();
+    public ResDTO<?> getAllDoiTuongChinhSach() {
+        return doiTuongChinhSachService.xem();
     }
 
     @PostMapping("/doi-tuong-chinh-sach/them")
-    public ResDTO<DoiTuongChinhSach> addDoiTuongChinhSach(@RequestBody ReqUtilities utilities) {
-        return doiTuongChinhSachService.themDoiTuongChinhSach(utilities.name());
+    public ResDTO<?> addDoiTuongChinhSach(@RequestBody ReqUtilities utilities) {
+        return doiTuongChinhSachService.them(utilities.name());
     }
 
     @PatchMapping("/doi-tuong-chinh-sach/sua")
-    public ResDTO<DoiTuongChinhSach> editDoiTuongChinhSach(DoiTuongChinhSach tuongChinhSach) {
-        return doiTuongChinhSachService.suaDoiTuongChinhSach(tuongChinhSach);
+    public ResDTO<?> editDoiTuongChinhSach(DoiTuongChinhSach tuongChinhSach) {
+        return doiTuongChinhSachService.sua(tuongChinhSach);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @GetMapping("/gioi-tinh")
-    public ResDTO<List<GioiTinh>> getAllGioiTinh() {
-        return gioiTinhService.xemGioiTinh();
+    public ResDTO<?> getAllGioiTinh() {
+        return gioiTinhService.xem();
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @GetMapping("/hoc-ham")
-    public ResDTO<List<HocHam>> getAllHocHam() {
-        return hocHamService.xemHocHam();
+    public ResDTO<?> getAllHocHam() {
+        return hocHamService.xem();
     }
 
     @PostMapping("/hoc-ham/them")
-    public ResDTO<HocHam> addHocHam(@RequestBody ReqUtilities utilities) {
-        return hocHamService.themHocHam(utilities.name());
+    public ResDTO<?> addHocHam(@RequestBody ReqUtilities utilities) {
+        return hocHamService.them(utilities.name());
     }
 
     @PatchMapping("/hoc-ham/sua")
-    public ResDTO<HocHam> editHocHam(HocHam ham) {
-        return hocHamService.suaHocHam(ham);
+    public ResDTO<?> editHocHam(HocHam ham) {
+        return hocHamService.sua(ham);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @GetMapping("/nhom-mau")
-    public ResDTO<List<NhomMau>> getAllNhomMau() {
-        return nhomMauService.xemNhomMau();
+    public ResDTO<?> getAllNhomMau() {
+        return nhomMauService.xem();
     }
 
     @PostMapping("/nhom-mau/them")
-    public ResDTO<NhomMau> addNhomMau(@RequestBody ReqUtilities utilities) {
-        return nhomMauService.themNhomMau(utilities.name());
+    public ResDTO<?> addNhomMau(@RequestBody ReqUtilities utilities) {
+        return nhomMauService.them(utilities.name());
     }
 
     @PatchMapping("/nhom-mau/sua")
-    public ResDTO<NhomMau> editNhomMau(NhomMau mau) {
-        return nhomMauService.suaNhomMau(mau);
+    public ResDTO<?> editNhomMau(NhomMau mau) {
+        return nhomMauService.sua(mau);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @GetMapping("/thanh-phan-gia-dinh")
-    public ResDTO<List<ThanhPhanGiaDinh>> getAllThanhPhanGiaDinh() {
-        return thanhPhanGiaDinhService.xemThanhPhanGiaDinh();
+    public ResDTO<?> getAllThanhPhanGiaDinh() {
+        return thanhPhanGiaDinhService.xem();
     }
 
     @PostMapping("/thanh-phan-gia-dinh/them")
-    public ResDTO<ThanhPhanGiaDinh> addThanhPhanGiaDinh(@RequestBody ReqUtilities utilities) {
-        return thanhPhanGiaDinhService.themThanhPhanGiaDinh(utilities.name());
+    public ResDTO<?> addThanhPhanGiaDinh(@RequestBody ReqUtilities utilities) {
+        return thanhPhanGiaDinhService.them(utilities.name());
     }
 
     @PatchMapping("/thanh-phan-gia-dinh/sua")
-    public ResDTO<ThanhPhanGiaDinh> editThanhPhanGiaDinh(ThanhPhanGiaDinh thanhPhanGiaDinh) {
-        return thanhPhanGiaDinhService.suaThanhPhanGiaDinh(thanhPhanGiaDinh);
+    public ResDTO<?> editThanhPhanGiaDinh(ThanhPhanGiaDinh thanhPhanGiaDinh) {
+        return thanhPhanGiaDinhService.sua(thanhPhanGiaDinh);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @GetMapping("/tinh-trang-suc-khoe")
-    public ResDTO<List<TinhTrangSucKhoe>> getAllTinhTrangSucKhoe() {
-        return tinhTrangSucKhoeService.xemTinhTrangSucKhoe();
+    public ResDTO<?> getAllTinhTrangSucKhoe() {
+        return tinhTrangSucKhoeService.xem();
     }
 
     @PostMapping("/tinh-trang-suc-khoe/them")
-    public ResDTO<TinhTrangSucKhoe> addTinhTrangSucKhoe(@RequestBody ReqUtilities utilities) {
-        return tinhTrangSucKhoeService.themTinhTrangSucKhoe(utilities.name());
+    public ResDTO<?> addTinhTrangSucKhoe(@RequestBody ReqUtilities utilities) {
+        return tinhTrangSucKhoeService.them(utilities.name());
     }
 
     @PatchMapping("/tinh-trang-suc-khoe/sua")
-    public ResDTO<TinhTrangSucKhoe> editTinhTrangSucKhoe(@RequestBody TinhTrangSucKhoe tinhTrangSucKhoe) {
-        return tinhTrangSucKhoeService.suaTinhTrangSucKhoe(tinhTrangSucKhoe);
+    public ResDTO<?> editTinhTrangSucKhoe(@RequestBody TinhTrangSucKhoe tinhTrangSucKhoe) {
+        return tinhTrangSucKhoeService.sua(tinhTrangSucKhoe);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @GetMapping("/ton-giao")
-    public ResDTO<List<TonGiao>> getAllTonGiao() {
-        return tonGiaoService.xemTonGiao();
+    public ResDTO<?> getAllTonGiao() {
+        return tonGiaoService.xem();
     }
 
     @PostMapping("/ton-giao/them")
-    public ResDTO<TonGiao> addTonGiao(@RequestBody ReqUtilities utilities) {
-        return tonGiaoService.themTonGiao(utilities.name());
+    public ResDTO<?> addTonGiao(@RequestBody ReqUtilities utilities) {
+        return tonGiaoService.them(utilities.name());
     }
 
     @PatchMapping("/ton-giao/sua")
-    public ResDTO<TonGiao> editTonGiao(@RequestBody TonGiao tonGiao) {
-        return tonGiaoService.suaTonGiao(tonGiao);
+    public ResDTO<?> editTonGiao(@RequestBody TonGiao tonGiao) {
+        return tonGiaoService.sua(tonGiao);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @GetMapping("/trinh-do-chuyen-mon")
-    public ResDTO<List<TrinhDoChuyenMon>> getAllTrinhDoChuyenMon() {
-        return trinhDoChuyenMonService.xemTrinhDoChuyenMon();
+    public ResDTO<?> getAllTrinhDoChuyenMon() {
+        return trinhDoChuyenMonService.xem();
     }
 
     @PostMapping("/trinh-do-chuyen-mon/them")
-    public ResDTO<TrinhDoChuyenMon> addTrinhDoChuyenMon(@RequestBody ReqUtilities utilities) {
-        return trinhDoChuyenMonService.themTrinhDoChuyenMon(utilities.name());
+    public ResDTO<?> addTrinhDoChuyenMon(@RequestBody ReqUtilities utilities) {
+        return trinhDoChuyenMonService.them(utilities.name());
     }
 
     @PatchMapping("/trinh-do-chuyen-mon/sua")
-    public ResDTO<TrinhDoChuyenMon> editTrinhDoChuyenMon(@RequestBody TrinhDoChuyenMon trinhDoChuyenMon) {
-        return trinhDoChuyenMonService.suaTrinhDoChuyenMon(trinhDoChuyenMon);
+    public ResDTO<?> editTrinhDoChuyenMon(@RequestBody TrinhDoChuyenMon trinhDoChuyenMon) {
+        return trinhDoChuyenMonService.sua(trinhDoChuyenMon);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @GetMapping("/trinh-do-giao-duc-pho-thong")
-    public ResDTO<List<TrinhDoGiaoDucPhoThong>> getAllTrinhDoGiaoDucPhoThong() {
-        return trinhDoGiaoDucPhoThongService.xemTrinhDoGiaoDucPhoThong();
+    public ResDTO<?> getAllTrinhDoGiaoDucPhoThong() {
+        return trinhDoGiaoDucPhoThongService.xem();
     }
 
     @PostMapping("/trinh-do-giao-duc-pho-thong/them")
-    public ResDTO<TrinhDoGiaoDucPhoThong> addTrinhDoGiaoDucPhoThong(@RequestBody ReqUtilities utilities) {
-        return trinhDoGiaoDucPhoThongService.themTrinhDoGiaoDucPhoThong(utilities.name());
+    public ResDTO<?> addTrinhDoGiaoDucPhoThong(@RequestBody ReqUtilities utilities) {
+        return trinhDoGiaoDucPhoThongService.them(utilities.name());
     }
 
     @PatchMapping("/trinh-do-giao-duc-pho-thong/sua")
-    public ResDTO<TrinhDoGiaoDucPhoThong> editTrinhDoGiaoDucPhoThong(@RequestBody TrinhDoGiaoDucPhoThong thong) {
-        return trinhDoGiaoDucPhoThongService.suaTrinhDoGiaoDucPhoThong(thong);
+    public ResDTO<?> editTrinhDoGiaoDucPhoThong(@RequestBody TrinhDoGiaoDucPhoThong thong) {
+        return trinhDoGiaoDucPhoThongService.sua(thong);
     }
 }

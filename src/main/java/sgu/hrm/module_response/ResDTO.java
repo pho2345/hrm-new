@@ -1,6 +1,5 @@
 package sgu.hrm.module_response;
 
-import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -17,6 +16,7 @@ public class ResDTO<T> {
         this.message = message;
         this.data = data;
     }
+    /*
 //    final String time_stamp = String.format("%tY-%tm-%tdT%tH:%tM:%tS", LocalDateTime.now().getYear(),
 //            LocalDateTime.now().getMonth(),
 //            LocalDateTime.now().getDayOfMonth(),
@@ -24,4 +24,5 @@ public class ResDTO<T> {
 //            LocalDateTime.now().getMinute(),
 //            LocalDateTime.now().getSecond()
 //    );
+*/
 }

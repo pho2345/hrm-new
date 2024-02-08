@@ -1,23 +1,37 @@
 package sgu.hrm.module_soyeulylich.services;
 
 import sgu.hrm.module_response.ResDTO;
-import sgu.hrm.module_soyeulylich.models.ReqSoYeuLyLich;
+import sgu.hrm.module_soyeulylich.models.response.ResDSSoYeuLyLich;
 import sgu.hrm.module_soyeulylich.models.SoYeuLyLich;
-import sgu.hrm.module_soyeulylich.models.SoYeuLyLichDTO;
+import sgu.hrm.module_soyeulylich.models.response.ResSoYeuLyLich;
+import sgu.hrm.module_taikhoan.models.TaiKhoan;
 
-import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface ISoYeuLyLichService {
+    ResDTO<?> xemThongTinSoYeuLyLich();
 
-    public ResDTO<List<SoYeuLyLich>> xemSoYeuLyLich();
+    public ResDTO<ResSoYeuLyLich> capNhatSoYeuLyLich(ResSoYeuLyLich resSoYeuLyLich);
 
-    // public void themSoYeuLyLich(SoYeuLyLichDTO soYeuLyLichDTO);
-    ResDTO<SoYeuLyLich> xemSoYeuLyLichTheoSoCCCDHoacID(String q);
+    public ResDTO<?> xemDanhSachSoYeuLyLich();
 
-    ResDTO<SoYeuLyLich> xemSoYeuLyLichTheoId(UUID id);
+    ResDTO<ResDSSoYeuLyLich> xemSoYeuLyLichTheoSoCCCDHoacID(String q);
 
-    ResDTO<SoYeuLyLich> capNhatTrangThaiSoYeuLyLich(boolean check, UUID id); //admin cahp nhan duyet syll
+    ResDTO<?> xemSoYeuLyLichTheoId(UUID id);
 
-    public ResDTO<SoYeuLyLich> capNhatSoYeuLyLich(UUID id, SoYeuLyLichDTO soYeuLyLichDTO);
+    default ResDTO<?> capNhatTrangThaiSoYeuLyLich(boolean check, UUID id) {
+        return null;
+    }
+
+    static ResDSSoYeuLyLich RES_DS_SO_YEU_LY_LICH(SoYeuLyLich soYeuLyLich) {
+        return new ResDSSoYeuLyLich(
+                soYeuLyLich.getId(),
+                soYeuLyLich.getSoCCCD(),
+                Optional.ofNullable(soYeuLyLich.getTaiKhoan()).map(TaiKhoan::getId).orElse(-1),
+                soYeuLyLich.getCreate_at(),
+                soYeuLyLich.getUpdate_at(),
+                soYeuLyLich.isTrangThai()
+        );
+    }
 }

@@ -18,7 +18,7 @@ import sgu.hrm.module_response.ResDTO;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "api/v1")
+@RequestMapping(value = "")
 @RequiredArgsConstructor // create constructor if field set final or @not null
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class HeSoLuongController {

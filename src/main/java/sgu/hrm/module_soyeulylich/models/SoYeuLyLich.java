@@ -3,10 +3,11 @@ package sgu.hrm.module_soyeulylich.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.annotation.Nullable;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,6 +27,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
+
 import sgu.hrm.module_soyeulylich_chitiet.models.BanThanCoLamViecChoCheDoCu;
 import sgu.hrm.module_taikhoan.models.TaiKhoan;
 import sgu.hrm.module_utilities.models.BacLuong;
@@ -58,7 +60,6 @@ import sgu.hrm.module_utilities.models.TrinhDoGiaoDucPhoThong;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 /*
@@ -293,49 +294,49 @@ public class SoYeuLyLich extends DateTimeObject {
 
     // liên kết 2 chiều
     // tai sao list thi lay ok ma set thi méo lấy
-    @OneToMany(mappedBy = "soYeuLyLich")
+    @OneToMany(mappedBy = "soYeuLyLich", fetch = FetchType.EAGER)
     List<LyLuanChinhTri> lyLuanChinhTris;
 
     //liên kết 2 chiều
-    @OneToMany(mappedBy = "soYeuLyLich")
-    Set<NghiepVuChuyenNganh> nghiepVuChuyenNganhs;
+    @OneToMany(mappedBy = "soYeuLyLich", fetch = FetchType.EAGER)
+    List<NghiepVuChuyenNganh> nghiepVuChuyenNganhs;
 
-    @OneToMany(mappedBy = "soYeuLyLich")
-    Set<KienThucAnNinhQuocPhong> kienThucAnNinhQuocPhongs;
+    @OneToMany(mappedBy = "soYeuLyLich", fetch = FetchType.EAGER)
+    List<KienThucAnNinhQuocPhong> kienThucAnNinhQuocPhongs;
 
-    @OneToMany(mappedBy = "soYeuLyLich")
-    Set<TinHoc> tinHocs;
+    @OneToMany(mappedBy = "soYeuLyLich", fetch = FetchType.EAGER)
+    List<TinHoc> tinHocs;
 
-    @OneToMany(mappedBy = "soYeuLyLich")
-    Set<NgoaiNgu> ngoaiNgus;
+    @OneToMany(mappedBy = "soYeuLyLich", fetch = FetchType.EAGER)
+    List<NgoaiNgu> ngoaiNgus;
 
-    @OneToMany(mappedBy = "soYeuLyLich")
-    Set<QuaTrinhCongTac> quaTrinhCongTacs;
+    @OneToMany(mappedBy = "soYeuLyLich", fetch = FetchType.EAGER)
+    List<QuaTrinhCongTac> quaTrinhCongTacs;
 
-    @OneToMany(mappedBy = "soYeuLyLich")
-    Set<BanThanCoLamViecChoCheDoCu> banThanCoLamViecChoCheDoCus;
+    @OneToMany(mappedBy = "soYeuLyLich", fetch = FetchType.EAGER)
+    List<BanThanCoLamViecChoCheDoCu> banThanCoLamViecChoCheDoCus;
 
-    @OneToMany(mappedBy = "soYeuLyLich")
-    Set<LamViecONuocNgoai> lamViecONuocNgoais;
+    @OneToMany(mappedBy = "soYeuLyLich", fetch = FetchType.EAGER)
+    List<LamViecONuocNgoai> lamViecONuocNgoais;
 
-    @OneToMany(mappedBy = "soYeuLyLich")
-    Set<KhenThuong> khenThuongs;
+    @OneToMany(mappedBy = "soYeuLyLich", fetch = FetchType.EAGER)
+    List<KhenThuong> khenThuongs;
 
-    @OneToMany(mappedBy = "soYeuLyLich")
-    Set<KyLuat> kyLuats;
+    @OneToMany(mappedBy = "soYeuLyLich", fetch = FetchType.EAGER)
+    List<KyLuat> kyLuats;
 
-    @OneToMany(mappedBy = "soYeuLyLich")
+    @OneToMany(mappedBy = "soYeuLyLich", fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"loaiSoYeuLyLichChiTiet"})
     List<QuanHeGiaDinh> quanHeGiaDinhs;
 
 //    @OneToMany(mappedBy = "soYeuLyLich", cascade = CascadeType.ALL, orphanRemoval = true)
 //    Set<QuanHeGiaDinhRuotBenVoHoacChong> quanHeGiaDinhRuotBenVoHoacChongs;
 
-    @OneToMany(mappedBy = "soYeuLyLich")
-    Set<LuongBanThan> luongBanThans;
+    @OneToMany(mappedBy = "soYeuLyLich", fetch = FetchType.EAGER)
+    List<LuongBanThan> luongBanThans;
 
-    @OneToMany(mappedBy = "soYeuLyLich")
-    Set<PhuCapKhac> phuCapKhacs;
+    @OneToMany(mappedBy = "soYeuLyLich", fetch = FetchType.EAGER)
+    List<PhuCapKhac> phuCapKhacs;
 
     @OneToOne()
     @JoinColumn(name = "taikhoan", columnDefinition = "INTEGER")

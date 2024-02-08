@@ -1,5 +1,6 @@
 package sgu.hrm.module_soyeulylich_chitiet.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
@@ -49,6 +50,7 @@ public class BanThanCoLamViecChoCheDoCu extends DateTimeObject {
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "so_yeu_ly_lich_btclvccdc_fk"), name = "so_yeu_ly_lich", referencedColumnName = "id", columnDefinition = "binary(16)")
+    @JsonIgnore
     SoYeuLyLich soYeuLyLich;
 
     public BanThanCoLamViecChoCheDoCu(LocalDateTime batDau, LocalDateTime ketThuc, String chucDanhDonViDiaDiem, LoaiSoYeuLyLichChiTiet loaiSoYeuLyLichChiTiet, SoYeuLyLich soYeuLyLich) {
@@ -61,7 +63,7 @@ public class BanThanCoLamViecChoCheDoCu extends DateTimeObject {
     }
 
     public BanThanCoLamViecChoCheDoCu(LocalDateTime batDau, LocalDateTime ketThuc, String chucDanhDonViDiaDiem, SoYeuLyLich soYeuLyLich) {
-        super();
+//        this.setUpdate_at();
         this.batDau = batDau;
         this.ketThuc = ketThuc;
         this.chucDanhDonViDiaDiem = chucDanhDonViDiaDiem;

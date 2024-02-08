@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor // tao constructor if field set final or @not null
-@RequestMapping(value = "/api/v1/congchuc-vienchuc")
+@RequestMapping(value = "/bac-ngach")
 public class CongChucVienChucControllers {
     private final ICongChucVienChucService.IBacNgachCongChucService bacNgachCongChucService;
     private final ICongChucVienChucService.IBacNgachVienChucService bacNgachVienChucService;
