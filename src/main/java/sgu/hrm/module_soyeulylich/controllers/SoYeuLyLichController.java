@@ -24,12 +24,12 @@ public class SoYeuLyLichController {
         this.soYeuLyLichService = soYeuLyLichService;
     }
 
-    @GetMapping("/tai-khoan/so-yeu-ly-lich")
+    @GetMapping("/ca-nhan/so-yeu-ly-lich")
     public ResDTO<?> so_yeu_ly_lich() {
         return soYeuLyLichService.xemThongTinSoYeuLyLich();
     }
 
-    @PatchMapping("/tai-khoan/so-yeu-ly-lich/cap-nhat")
+    @PatchMapping("/ca-nhan/so-yeu-ly-lich/cap-nhat")
     public ResDTO<?> so_yeu_ly_lich_cap_nhat(@RequestBody ResSoYeuLyLich resSoYeuLyLich) {
         return soYeuLyLichService.capNhatSoYeuLyLich(resSoYeuLyLich);
     }

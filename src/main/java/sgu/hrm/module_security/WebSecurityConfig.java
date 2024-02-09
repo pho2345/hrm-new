@@ -59,7 +59,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(configure ->
                                 configure
                                         .requestMatchers("/dang-nhap").permitAll()
-                                        .requestMatchers("/tai-khoan/**").hasAuthority("EMPLOYEE")
+                                        .requestMatchers("/ca-nhan/**").hasAuthority("EMPLOYEE")
                                         .requestMatchers("/nhan-vien/**").hasAuthority("ADMIN")
 //                                        .requestMatchers(HttpMethod.GET, "/utilities/**", "/loai-so-yeu-ly-lich-chi-tiet").hasAnyAuthority("ADMIN", "EMPLOYEE")
 //                                        .requestMatchers(HttpMethod.POST, "/utilities/**").hasAuthority("ADMIN")

@@ -1,2 +1,2 @@
 --tai khoan
-id  hovaten soCCCD username password maHoSo trangThai
+-- id  hovaten soCCCD username password maHoSo trangThai

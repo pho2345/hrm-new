@@ -27,8 +27,11 @@ public interface ISoYeuLyLichService {
     static ResDSSoYeuLyLich RES_DS_SO_YEU_LY_LICH(SoYeuLyLich soYeuLyLich) {
         return new ResDSSoYeuLyLich(
                 soYeuLyLich.getId(),
-                soYeuLyLich.getSoCCCD(),
-                Optional.ofNullable(soYeuLyLich.getTaiKhoan()).map(TaiKhoan::getId).orElse(-1),
+                soYeuLyLich.getHovaten(),
+                soYeuLyLich.getSinhNgay() != null ? soYeuLyLich.getSinhNgay() : null,
+                soYeuLyLich.getChucVuHienTai() != null ? soYeuLyLich.getChucVuHienTai() : null,
+                soYeuLyLich.getTrinhDoChuyenMon() != null ? soYeuLyLich.getTrinhDoChuyenMon().getName() : null,
+                soYeuLyLich.getNgachNgheNghiep() != null ? soYeuLyLich.getNgachNgheNghiep() : null,
                 soYeuLyLich.getCreate_at(),
                 soYeuLyLich.getUpdate_at(),
                 soYeuLyLich.isTrangThai()

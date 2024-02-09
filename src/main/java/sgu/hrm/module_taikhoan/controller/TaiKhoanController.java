@@ -36,14 +36,14 @@ public class TaiKhoanController {
     }
 
     //thong-tin-ca-nhan
-    @GetMapping("/tai-khoan/thong-tin-ca-nhan")
+    @GetMapping("/ca-nhan/tai-khoan")
     @Transactional
     public ResDTO<ResTaiKhoan> thong_tin_ca_nhan() {
         return taiKhoanService.xemThongTinTaiKhoan();
     }
 
     //doi-mat-khau
-    @PatchMapping("/tai-khoan/doi-mat-khau")
+    @PatchMapping("/ca-nhan/tai-khoan/doi-mat-khau")
     @Transactional
     public ResDTO<?> doi_mat_khau(@RequestBody ReqMatKhau reqMatKhau) {
         return taiKhoanService.doiMatKhau(reqMatKhau.matkhau());
@@ -54,17 +54,17 @@ public class TaiKhoanController {
      * ADMIN
      * ADMIN
      * */
-    @GetMapping("/nhan-vien")
+    @GetMapping("/nhan-vien/tai-khoan")
     public ResDTO<?> getAllTaiKhoan() {
         return taiKhoanService.xemDanhSachTaiKhoan();
     }
 
-    @GetMapping("/nhan-vien/tim-kiem")
+    @GetMapping("/nhan-vien/tai-khoan/tim-kiem")
     public ResDTO<ResTaiKhoan> getTaiKhoanBySoCCCD(@RequestParam(name = "q") String number) {
         return taiKhoanService.xemTaiKhoanTheoSoCCCDOrUsername(number);
     }
 
-    @GetMapping("/nhan-vien/{id}")
+    @GetMapping("/nhan-vien/tai-khoan/{id}")
     public ResDTO<ResTaiKhoan> getTaiKhoanBySoCCCD(@PathVariable(name = "id") int id) {
         return taiKhoanService.xemTaiKhoanTheoId(id);
     }
