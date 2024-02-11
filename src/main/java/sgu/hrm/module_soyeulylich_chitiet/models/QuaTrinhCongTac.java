@@ -1,5 +1,6 @@
 package sgu.hrm.module_soyeulylich_chitiet.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
@@ -51,6 +52,7 @@ public class QuaTrinhCongTac extends DateTimeObject {
     LoaiSoYeuLyLichChiTiet loaiSoYeuLyLichChiTiet;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(foreignKey = @ForeignKey(name = "so_yeu_ly_lich_qtct_fk"), name = "so_yeu_ly_lich", referencedColumnName = "id", columnDefinition = "binary(16)")
     SoYeuLyLich soYeuLyLich;
 

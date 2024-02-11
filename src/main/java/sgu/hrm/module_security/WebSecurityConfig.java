@@ -61,19 +61,6 @@ public class WebSecurityConfig {
                                         .requestMatchers("/dang-nhap").permitAll()
                                         .requestMatchers("/ca-nhan/**").hasAuthority("EMPLOYEE")
                                         .requestMatchers("/nhan-vien/**").hasAuthority("ADMIN")
-//                                        .requestMatchers(HttpMethod.GET, "/utilities/**", "/loai-so-yeu-ly-lich-chi-tiet").hasAnyAuthority("ADMIN", "EMPLOYEE")
-//                                        .requestMatchers(HttpMethod.POST, "/utilities/**").hasAuthority("ADMIN")
-//                                        .requestMatchers(HttpMethod.PATCH, "/utilities/**").hasAuthority("ADMIN")
-//                                        ////////////////
-//                                        .requestMatchers(HttpMethod.GET, "/tai-khoan/thong-tin-ca-nhan").hasAuthority("EMPLOYEE")
-//                                        .requestMatchers("/api/v1/tai-khoan",
-//                                                "/api/v1/tai-khoan/tim-kiem",
-//                                                "/api/v1/tai-khoan/them"
-//                                        ).hasAuthority("ADMIN")
-//                                        //////////////////
-//
-//                                        .requestMatchers("/api/v1/tai-khoan/{id}").hasAnyAuthority("ADMIN", "EMPLOYEE")
-//                                        .requestMatchers("/api/v1/**").hasAnyAuthority("ADMIN", "EMPLOYEE")
                                         .anyRequest().permitAll()
                         //need form with post method
                         //and spring security magic will do the rest
@@ -81,9 +68,9 @@ public class WebSecurityConfig {
 //                        flogin
 //                                .loginProcessingUrl("/authenticateTheUser").permitAll()
                 )
-//                .logout(logout ->
-//                        logout
-//                                .logoutUrl("/api/v1/dang-xuat").permitAll())
+                .logout(logout ->
+                        logout
+                                .logoutUrl("/dang-xuat").permitAll())
                 .exceptionHandling(execHandle ->
                         execHandle
                                 .accessDeniedPage("/tu-choi")

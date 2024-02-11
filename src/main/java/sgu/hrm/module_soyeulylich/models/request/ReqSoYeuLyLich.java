@@ -15,17 +15,136 @@ import sgu.hrm.module_soyeulylich_chitiet.models.request.ReqQuaTrinhCongTac;
 import sgu.hrm.module_soyeulylich_chitiet.models.request.ReqQuanHeGiaDinh;
 import sgu.hrm.module_soyeulylich_chitiet.models.request.ReqTinHoc;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public record ReqSoYeuLyLich(
-        ResSoYeuLyLich resSoYeuLyLich,
-        List<ReqBanThanCoLamViecChoCheDoCu> reqBanThanCoLamViecChoCheDoCus,
-        List<ReqKhenThuong> thuong, List<ReqKienThucAnNinhQuocPhong> quocPhongs, List<ReqKyLuat> reqKyLuats,
-        List<ReqLamViecONuocNgoai> reqLamViecONuocNgoais, List<ReqLuongBanThan> reqLuongBanThans,
-        List<ReqLyLuanChinhTri> reqLyLuanChinhTris,
-        List<ReqNghiepVuChuyenNganh> reqNghiepVuChuyenNganhs, List<ReqNgoaiNgu> reqNgoaiNgus,
-        List<ReqPhuCapKhac> reqPhuCapKhacs,
-        List<ReqQuanHeGiaDinh> reqQuanHeGiaDinhs, List<ReqQuaTrinhCongTac> reqQuaTrinhCongTacs,
-        List<ReqTinHoc> reqTinHocs
+        String hovaten,
+
+        String gioiTinh,
+
+        String cacTenGoiKhac,
+
+        LocalDateTime sinhNgay,
+
+        String noiSinh,
+
+        String queQuan,
+
+        String danToc, //DanToc danToc,
+
+        String soCCCD,
+
+        LocalDateTime ngayCapCCCD,
+
+        String soDienThoai,
+
+        String soBHXH,
+
+        String soBHYT,
+
+        String noiOHienNay,
+
+        String thanhPhanGiaDinh, //ThanhPhanGiaDinh thanhPhanGiaDinh,
+
+        String ngheNghiepTruocKhiTuyenDung,
+
+        LocalDateTime ngayDuocTuyenDungLanDau,
+
+        String coQuanToChucDonViTuyenDung, //CoQuanToChucDonViTuyenDung coQuanToChucDonViTuyenDung,
+
+        LocalDateTime ngayVaoCoQuanHienDangCongTac,
+
+        LocalDateTime ngayVaoDangCongSanVietNam,
+
+        LocalDateTime ngayChinhThuc,
+
+        LocalDateTime ngayThamGiaToChucChinhTriXaHoiDauTien,
+
+        LocalDateTime ngayNhapNgu,
+
+        LocalDateTime ngayXuatNgu,
+
+        String capBacLoaiQuanHamQuanDoi, //CapBacLoaiQuanHamQuanDoi capBacLoaiQuanHamQuanDoi,
+
+        String doiTuongChinhSach, //DoiTuongChinhSach doiTuongChinhSach,
+
+        String trinhDoGiaoDucPhoThong, //TrinhDoGiaoDucPhoThong trinhDoGiaoDucPhoThong,
+
+        String trinhDoChuyenMon, //TrinhDoChuyenMon trinhDoChuyenMon,
+
+        String hocHam, //HocHam hocHam,
+
+        String danhHieuNhaNuocPhongTang, //DanhHieuNhaNuocPhongTang danhHieuNhaNuocPhongTang,
+
+        String chucVuHienTai,
+
+        LocalDateTime ngayBoNhiem,
+
+        LocalDateTime ngayBoNhiemLai,
+
+        String duocQuyHoacChucDanh,
+
+        String chucVuKiemNhiem,
+
+        String chucVuDangHienTai,
+
+        String chucVuDangKiemNhiem,
+
+        String congVienChinhDuocGiao,
+
+        String soTruongCongTac,
+
+        String congViecLamLauNhat,
+
+        double tienLuong,
+
+        String ngachNgheNghiep,
+
+        String maSoNgachNgheNghiep,
+
+        LocalDateTime ngayBoNhiemNgachNgheNghiep,
+
+        String bacLuong, //BacLuong bacLuong,
+
+        float heSoLuongNgachNgheNghiep,
+
+        LocalDateTime ngayHuongLuongNgachNgheNghiep,
+
+        double phanTramHuongLuongNgachNgheNghiep,
+
+        float phuCapThamNienVuotKhungNgachNgheNghiep,
+
+        LocalDateTime ngayHuongPCTNVKNgachNgheNghiep,
+
+        float phuCapChucVu,
+
+        float phuCapKiemNhiem,
+
+        float phuCapKhac,
+
+        String viTriViecLam,
+
+        String maSoViTriViecLam,
+
+        double bacLuongTriViecLam,
+
+        double luongTheoMucTien,
+
+        LocalDateTime ngayHuongLuongTheoViTriViecLam,
+
+        double phamTramHuongLuong,
+
+        double phuCapThamNienVuotKhung,
+
+        LocalDateTime ngayHuongPCTNVK,
+
+        String tinhTrangSucKhoe, //TinhTrangSucKhoe tinhTrangSucKhoe,
+
+        double chieuCao,
+
+        double canNang,
+
+        String nhomMau //NhomMau nhomMau
 ) {
 }

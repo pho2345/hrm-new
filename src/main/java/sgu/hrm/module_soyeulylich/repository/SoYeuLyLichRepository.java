@@ -5,12 +5,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import sgu.hrm.module_soyeulylich.models.SoYeuLyLich;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface SoYeuLyLichRepository extends JpaRepository<SoYeuLyLich, UUID> {
     @Query
-    SoYeuLyLich findFirstBySoCCCD(String soCCCD);
+    Optional<SoYeuLyLich> findFirstBySoCCCD(String soCCCD);
 
     //using JPQL
     @Query(value = "UPDATE SoYeuLyLich syll SET syll.trangThai = ?1 WHERE syll.id = ?2")

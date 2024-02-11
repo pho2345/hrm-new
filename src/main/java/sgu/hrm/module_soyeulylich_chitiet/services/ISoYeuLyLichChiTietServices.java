@@ -58,9 +58,7 @@ public interface ISoYeuLyLichChiTietServices<T, H> {
 
     ResDTO<?> xoaThongTin(int id);
 
-    default ResDTO<?> xemDanhSach() {
-        return null;
-    }
+    ResDTO<?> xemDanhSach(String id);
 
 
     interface ILoaiSoYeuLyLichChiTietSefvice {

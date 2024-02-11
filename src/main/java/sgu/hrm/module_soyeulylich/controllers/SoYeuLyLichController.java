@@ -1,5 +1,6 @@
 package sgu.hrm.module_soyeulylich.controllers;
 
+import jakarta.transaction.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,10 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import sgu.hrm.module_response.ResDTO;
+import sgu.hrm.module_soyeulylich.models.request.ReqDSSoYeuLyLich;
+import sgu.hrm.module_soyeulylich.models.request.ReqSoYeuLyLich;
 import sgu.hrm.module_soyeulylich.models.response.ResDSSoYeuLyLich;
 import sgu.hrm.module_soyeulylich.models.response.ResSoYeuLyLich;
 import sgu.hrm.module_soyeulylich.services.ISoYeuLyLichService;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -30,8 +34,8 @@ public class SoYeuLyLichController {
     }
 
     @PatchMapping("/ca-nhan/so-yeu-ly-lich/cap-nhat")
-    public ResDTO<?> so_yeu_ly_lich_cap_nhat(@RequestBody ResSoYeuLyLich resSoYeuLyLich) {
-        return soYeuLyLichService.capNhatSoYeuLyLich(resSoYeuLyLich);
+    public ResDTO<?> so_yeu_ly_lich_cap_nhat(@RequestBody ReqSoYeuLyLich reqSoYeuLyLich) {
+        return soYeuLyLichService.capNhatSoYeuLyLich(reqSoYeuLyLich);
     }
 
     //ADMIN --- ADMIN --- ADMIN
@@ -47,8 +51,15 @@ public class SoYeuLyLichController {
     }
 
     @GetMapping("/nhan-vien/so-yeu-ly-lich/{id}")
-    public ResDTO<?> getSoYeuLyLichById(@PathVariable(name = "id") UUID id) {
+    public ResDTO<?> getSoYeuLyLichById(@PathVariable(name = "id") String id) {
         return soYeuLyLichService.xemSoYeuLyLichTheoId(id);
+    }
+
+    @PatchMapping("/nhan-vien/so-yeu-ly-lich/{id}/phe-duyet")
+    @Transactional
+    public ResDTO<?> editSoYeuLyLich(@PathVariable(name = "id") String id,
+                                     @RequestBody ReqDSSoYeuLyLich reqDSSoYeuLyLich) {
+        return soYeuLyLichService.pheDuyetSoYeuLyLich(id, reqDSSoYeuLyLich);
     }
 
     //can sua
@@ -57,12 +68,7 @@ public class SoYeuLyLichController {
 //        return soYeuLyLichService.xemSoYeuLyLichTheoId(id);
 //    }
 
-//    @PatchMapping("/{id}/cap-nhat")
-//    @Transactional
-//    public ResDTO<?> editSoYeuLyLich(@PathVariable(name = "id") UUID id,
-//                                     @RequestBody ResSoYeuLyLich resSoYeuLyLich) {
-//        return soYeuLyLichService.capNhatSoYeuLyLich(id, resSoYeuLyLich);
-//    }
+
 //    @PatchMapping("/cap-nhat")
 //    public void editSoYeuLyLich(@RequestBody SoYeuLyLichDTO soYeuLyLichDTO) {
 //        soYeuLyLichService.themSoYeuLyLich(soYeuLyLichDTO);

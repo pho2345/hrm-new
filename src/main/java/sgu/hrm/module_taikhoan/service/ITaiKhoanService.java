@@ -28,7 +28,7 @@ public interface ITaiKhoanService {
 
     ResDTO<ResTaiKhoan> xemTaiKhoanTheoId(int id); //admin user
 
-    ResDTO<TaiKhoan> themTaiKhoan(ReqTaiKhoan taiKhoan);
+    ResDTO<?> themTaiKhoan(ReqTaiKhoan taiKhoan);
 
     ResDTO<?> dangNhap(ReqTaiKhoanLogin reqTaiKhoanLogin);
 

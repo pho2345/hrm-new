@@ -105,6 +105,11 @@ public class SoYeuLyLichChiTietController {
         return banThanCoLamViecChoCheDoCuSefvice.xoaThongTin(id);
     }
 
+    @GetMapping("/nhan-vien/{id}/lam-viec-cho-che-do-cu")
+    public ResDTO<?> nhanvien_lam_viec_cho_che_do_cu(@PathVariable String id) {
+        return banThanCoLamViecChoCheDoCuSefvice.xemDanhSach(id);
+    }
+
     //==============================================================================================
     @GetMapping("/ca-nhan/khen-thuong")
     public ResDTO<List<?>> khen_thuong() {
@@ -129,6 +134,11 @@ public class SoYeuLyLichChiTietController {
     @DeleteMapping("/ca-nhan/khen-thuong/{id}/xoa")
     public ResDTO<?> xoa_khen_thuong(@PathVariable int id) {
         return khenThuongSefvice.xoaThongTin(id);
+    }
+
+    @GetMapping("/nhan-vien/{id}/khen-thuong")
+    public ResDTO<?> nhanvien_khen_thuong(@PathVariable String id) {
+        return khenThuongSefvice.xemDanhSach(id);
     }
 
     //    =================================================
@@ -157,6 +167,11 @@ public class SoYeuLyLichChiTietController {
         return kienThucAnNinhQuocPhongSefvice.xoaThongTin(id);
     }
 
+    @GetMapping("/nhan-vien/{id}/kien-thuc-an-ninh-quoc-phong")
+    public ResDTO<?> nhanvien_kien_thuc_an_ninh_quoc_phong(@PathVariable String id) {
+        return kienThucAnNinhQuocPhongSefvice.xemDanhSach(id);
+    }
+
     //    =================================================
     @GetMapping("/ca-nhan/ky-luat")
     public ResDTO<List<?>> ky_luat() {
@@ -181,6 +196,11 @@ public class SoYeuLyLichChiTietController {
     @DeleteMapping("/ca-nhan/ky-luat/{id}/xoa")
     public ResDTO<?> xoa_ky_luat(@PathVariable int id) {
         return kyLuatSefvice.xoaThongTin(id);
+    }
+
+    @GetMapping("/nhan-vien/{id}/ky-luat")
+    public ResDTO<?> nhanvien_ky_luat(@PathVariable String id) {
+        return kyLuatSefvice.xemDanhSach(id);
     }
 
     //========================================================
@@ -208,6 +228,11 @@ public class SoYeuLyLichChiTietController {
     public ResDTO<?> xoa_lam_viec_o_nuoc_ngoai(@PathVariable int id) {
         return lamViecONuocNgoaiSefvice.xoaThongTin(id);
     }
+
+    @GetMapping("/nhan-vien/{id}/lam-viec-o-nuoc-ngoai")
+    public ResDTO<?> nhanvien_lam_viec_o_nuoc_ngoai(@PathVariable String id) {
+        return lamViecONuocNgoaiSefvice.xemDanhSach(id);
+    }
     //========================================================
 
     @GetMapping("/ca-nhan/luong-ban-than")
@@ -233,6 +258,11 @@ public class SoYeuLyLichChiTietController {
     @DeleteMapping("/ca-nhan/luong-ban-than/{id}/xoa")
     public ResDTO<?> xoa_luong_ban_than(@PathVariable int id) {
         return luongBanThanSefvice.xoaThongTin(id);
+    }
+
+    @GetMapping("/nhan-vien/{id}/luong-ban-than")
+    public ResDTO<?> nhanvien_luong_ban_than(@PathVariable String id) {
+        return luongBanThanSefvice.xemDanhSach(id);
     }
     //========================================================
 
@@ -261,6 +291,11 @@ public class SoYeuLyLichChiTietController {
         return lyLuanChinhTriSefvice.xoaThongTin(id);
     }
 
+    @GetMapping("/nhan-vien/{id}/ly-luan-chinh-tri")
+    public ResDTO<?> nhanvien_ly_luan_chinh_tri(@PathVariable String id) {
+        return lyLuanChinhTriSefvice.xemDanhSach(id);
+    }
+
     //========================================================
     @GetMapping("/ca-nhan/nghiep-vu-chuyen-nganh")
     public ResDTO<List<?>> nghiep_vu_chuyen_nganh() {
@@ -285,6 +320,11 @@ public class SoYeuLyLichChiTietController {
     @DeleteMapping("/ca-nhan/nghiep-vu-chuyen-nganh/{id}/xoa")
     public ResDTO<?> xoa_nghiep_vu_chuyen_nganh(@PathVariable int id) {
         return nghiepVuChuyenNganhSefvice.xoaThongTin(id);
+    }
+
+    @GetMapping("/nhan-vien/{id}/nghiep-vu-chuyen-nganh")
+    public ResDTO<?> nhanvien_nghiep_vu_chuyen_nganh(@PathVariable String id) {
+        return nghiepVuChuyenNganhSefvice.xemDanhSach(id);
     }
 
     //    ==========================================
@@ -313,6 +353,11 @@ public class SoYeuLyLichChiTietController {
         return ngoaiNguSefvice.xoaThongTin(id);
     }
 
+    @GetMapping("/nhan-vien/{id}/ngoai-ngu")
+    public ResDTO<?> nhanvien_ngoai_ngu(@PathVariable String id) {
+        return ngoaiNguSefvice.xemDanhSach(id);
+    }
+
     //===========================================================
     @GetMapping("/ca-nhan/phu-cap-khac")
     public ResDTO<List<?>> phu_cap_khac() {
@@ -337,6 +382,11 @@ public class SoYeuLyLichChiTietController {
     @DeleteMapping("/ca-nhan/phu-cap-khac/{id}/xoa")
     public ResDTO<?> xoa_phu_cap_khac(@PathVariable int id) {
         return phuCapKhacSefvice.xoaThongTin(id);
+    }
+
+    @GetMapping("/nhan-vien/{id}/phu-cap-khac")
+    public ResDTO<?> nhanvien_phu_cap_khac(@PathVariable String id) {
+        return phuCapKhacSefvice.xemDanhSach(id);
     }
 
     //=======================================================
@@ -364,6 +414,11 @@ public class SoYeuLyLichChiTietController {
     public ResDTO<?> xoa_quan_he_gia_dinh(@PathVariable int id) {
         return quanHeGiaDinhSefvice.xoaThongTin(id);
     }
+
+    @GetMapping("/nhan-vien/{id}/quan-he-gia-dinh")
+    public ResDTO<?> nhanvien_quan_he_gia_dinh(@PathVariable String id) {
+        return quanHeGiaDinhSefvice.xemDanhSach(id);
+    }
     //=======================================================
 
     @GetMapping("/ca-nhan/qua-trinh-cong-tac")
@@ -390,6 +445,11 @@ public class SoYeuLyLichChiTietController {
     public ResDTO<?> xoa_qua_trinh_cong_tac(@PathVariable int id) {
         return quaTrinhCongTacSefvice.xoaThongTin(id);
     }
+
+    @GetMapping("/nhan-vien/{id}/qua-trinh-cong-tac")
+    public ResDTO<?> nhanvien_qua_trinh_cong_tac(@PathVariable String id) {
+        return quaTrinhCongTacSefvice.xemDanhSach(id);
+    }
     //=======================================================
 
     @GetMapping("/ca-nhan/tin-hoc")
@@ -415,5 +475,10 @@ public class SoYeuLyLichChiTietController {
     @DeleteMapping("/ca-nhan/tin-hoc/{id}/xoa")
     public ResDTO<?> xoa_tin_hoc(@PathVariable int id) {
         return tinHocSefvice.xoaThongTin(id);
+    }
+
+    @GetMapping("/nhan-vien/{id}/tin-hoc")
+    public ResDTO<?> nhanvien_tin_hoc(@PathVariable String id) {
+        return tinHocSefvice.xemDanhSach(id);
     }
 }

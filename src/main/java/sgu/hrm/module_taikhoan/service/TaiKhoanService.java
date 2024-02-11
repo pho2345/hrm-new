@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import sgu.hrm.module_response.ResDTO;
 import sgu.hrm.module_response.ResEnum;
 import sgu.hrm.module_soyeulylich.models.SoYeuLyLich;
+import sgu.hrm.module_soyeulylich.models.response.ResDSSoYeuLyLich;
 import sgu.hrm.module_soyeulylich.repository.SoYeuLyLichRepository;
 import sgu.hrm.module_security.jwt_utilities.JWTUtilities;
 import sgu.hrm.module_taikhoan.models.TaiKhoan;
@@ -108,10 +109,13 @@ public class TaiKhoanService implements ITaiKhoanService {
     @Override
     public ResDTO<?> xemDanhSachTaiKhoan() {
         try {
-            List<TaiKhoan> taiKhoans = taiKhoanRepository.findAll();
+            TaiKhoan taiKhoan = crush_em_t();
             List<ResTaiKhoan> khoanResponseDTOs = List.of();
-            if (!taiKhoans.isEmpty()) {
-                khoanResponseDTOs = taiKhoans.stream().map(this::mapToResTaiKhoan).toList();
+            if (taiKhoan != null) {
+                List<TaiKhoan> taiKhoans = taiKhoanRepository.findAll();
+                if (!taiKhoans.isEmpty()) {
+                    khoanResponseDTOs = taiKhoans.stream().map(this::mapToResTaiKhoan).toList();
+                }
             }
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
@@ -126,17 +130,18 @@ public class TaiKhoanService implements ITaiKhoanService {
     @Override
     public ResDTO<ResTaiKhoan> xemTaiKhoanTheoSoCCCDOrUsername(String number) {
         try {
+            TaiKhoan taiKhoan = crush_em_t();
             ResTaiKhoan resTaiKhoan = null;
-            TaiKhoan taiKhoanSoCCCD = taiKhoanRepository.findBySoCCCD(number);
-            TaiKhoan taiKhoanUsername = taiKhoanRepository.findByUsername(number);
-
-            if (taiKhoanSoCCCD != null) {
-                resTaiKhoan = mapToResTaiKhoan(taiKhoanSoCCCD);
+            if (taiKhoan != null) {
+                TaiKhoan taiKhoanSoCCCD = taiKhoanRepository.findBySoCCCD(number);
+                TaiKhoan taiKhoanUsername = taiKhoanRepository.findByUsername(number);
+                if (taiKhoanSoCCCD != null) {
+                    resTaiKhoan = mapToResTaiKhoan(taiKhoanSoCCCD);
+                }
+                if (taiKhoanUsername != null) {
+                    resTaiKhoan = mapToResTaiKhoan(taiKhoanUsername);
+                }
             }
-            if (taiKhoanUsername != null) {
-                resTaiKhoan = mapToResTaiKhoan(taiKhoanUsername);
-            }
-
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -150,7 +155,12 @@ public class TaiKhoanService implements ITaiKhoanService {
     @Override
     public ResDTO<ResTaiKhoan> xemTaiKhoanTheoId(int id) {
         try {
-            ResTaiKhoan resTaiKhoan = taiKhoanRepository.findById(id).map(tk -> mapToResTaiKhoan(tk)).orElse(null);
+            TaiKhoan taiKhoan = crush_em_t();
+            ResTaiKhoan resTaiKhoan = null;
+            if (taiKhoan != null) {
+                resTaiKhoan = taiKhoanRepository.findById(id).map(tk -> mapToResTaiKhoan(tk)).orElse(null);
+
+            }
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -162,7 +172,7 @@ public class TaiKhoanService implements ITaiKhoanService {
     }
 
     @Override
-    public ResDTO<TaiKhoan> themTaiKhoan(ReqTaiKhoan reqTaiKhoan) {
+    public ResDTO<?> themTaiKhoan(ReqTaiKhoan reqTaiKhoan) {
         TaiKhoan taiKhoan = null;
         SoYeuLyLich soYeuLyLich = null;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -212,12 +222,27 @@ public class TaiKhoanService implements ITaiKhoanService {
                         .build();
                 soYeuLyLichRepository.save(soYeuLyLich);
                 taiKhoan.setSoYeuLyLich(soYeuLyLich);
+                taiKhoanRepository.save(taiKhoan);
                 return new ResDTO<>(
                         ResEnum.TAO_THANH_CONG.getStatusCode(),
                         ResEnum.TAO_THANH_CONG,
-                        taiKhoanRepository.save(taiKhoan)
+                        Optional.of(soYeuLyLich).map(tk -> new ResDSSoYeuLyLich(
+                                tk.getId(),
+                                tk.getHovaten(),
+                                tk.getSinhNgay() != null ? tk.getSinhNgay() : null,
+                                tk.getChucVuHienTai() != null ? tk.getChucVuHienTai() : null,
+                                tk.getTrinhDoChuyenMon() != null ? tk.getTrinhDoChuyenMon().getName() : null,
+                                tk.getNgachNgheNghiep() != null ? tk.getNgachNgheNghiep() : null,
+                                tk.getCreate_at(),
+                                tk.getUpdate_at(),
+                                tk.isTrangThai()
+                        )).orElse(null)
                 );
-            }
+            } else return new ResDTO<>(
+                    ResEnum.KHONG_HOP_LE.getStatusCode(),
+                    ResEnum.KHONG_HOP_LE,
+                    null
+            );
         } catch (RuntimeException e) {
             throw new RuntimeException(e.getCause());
         } finally {
@@ -235,11 +260,6 @@ public class TaiKhoanService implements ITaiKhoanService {
                 javaMailSender.send(message);
             }
         }
-        return new ResDTO<>(
-                ResEnum.KHONG_HOP_LE.getStatusCode(),
-                ResEnum.KHONG_HOP_LE,
-                null
-        );
     }
 
     @Override

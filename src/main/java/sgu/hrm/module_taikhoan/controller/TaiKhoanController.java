@@ -26,7 +26,6 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "")
 public class TaiKhoanController {
 
     private final ITaiKhoanService taiKhoanService;
@@ -71,13 +70,7 @@ public class TaiKhoanController {
 
     @PostMapping("/nhan-vien/them")
     @Transactional
-    public ResDTO<TaiKhoan> addTaiKhoan(@RequestBody ReqTaiKhoan reqTaiKhoan) {
+    public ResDTO<?> addTaiKhoan(@RequestBody ReqTaiKhoan reqTaiKhoan) {
         return taiKhoanService.themTaiKhoan(reqTaiKhoan);
     }
-
-    //    @GetMapping("/user-name")
-//    public ResDTO<ResTaiKhoan> getTaiKhoanByUsername(@RequestParam(name = "username") String username) {
-//        return taiKhoanService.xemTaiKhoanTheoUsername(username);
-//    }
-//
 }

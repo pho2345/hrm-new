@@ -1,6 +1,5 @@
 package sgu.hrm.module_soyeulylich_chitiet.services;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -72,6 +71,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor // create constructor if field is set final or @notnull
@@ -235,7 +235,7 @@ public class SoYeuLyLichChiTietServices {
                 BanThanCoLamViecChoCheDoCu banThanCoLamViecChoCheDoCu = null;
                 if (taiKhoan != null) {
                     banThanCoLamViecChoCheDoCu = mapToBanThanCoLamViecChoCheDoCu(-1, taiKhoan.getSoYeuLyLich(), cu);
-                    //banThanCoLamViecChoCheDoCuRepository.save(banThanCoLamViecChoCheDoCu);
+                    banThanCoLamViecChoCheDoCuRepository.save(banThanCoLamViecChoCheDoCu);
                 }
                 return new ResDTO<>(
                         ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
@@ -290,162 +290,32 @@ public class SoYeuLyLichChiTietServices {
             }
         }
 
-//        @Override
-//        public ResDTO<List<BanThanCoLamViecChoCheDoCu>> xemBanThanCoLamViecChoCheDoCu() {
-//            try {
-//                Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//                if (!(auth instanceof AnonymousAuthenticationToken)) {
-//                    TaiKhoan taiKhoan = (TaiKhoan) auth.getPrincipal();
-//                    return new ResDTO<>(
-//                            ResEnum.THANH_CONG.getStatusCode(),
-//                            ResEnum.THANH_CONG,
-//                            taiKhoan.getSoYeuLyLich().getBanThanCoLamViecChoCheDoCus()
-//                    );
-//                }
-//                return new ResDTO<>(
-//                        ResEnum.THANH_CONG.getStatusCode(),
-//                        ResEnum.THANH_CONG,
-//                        null
-//                );
-//            } catch (RuntimeException e) {
-//                throw new RuntimeException(e.getCause());
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<List<BanThanCoLamViecChoCheDoCu>> themBanThanCoLamViecChoCheDoCu(String loaisyllctName, String soCCCD, List<ReqBanThanCoLamViecChoCheDoCu> cuu) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(loaisyllctName);
-//                SoYeuLyLich soYeuLyLich = soYeuLyLichRepository.findFirstBySoCCCD(soCCCD);
-//                List<BanThanCoLamViecChoCheDoCu> banThanCoLamViecChoCheDoCu = cuu.stream().map(
-//                        cu -> new BanThanCoLamViecChoCheDoCu(cu.batDau(), cu.ketThuc(), cu.chucDanhDonViDiaDiem(), chiTiet, soYeuLyLich)).toList();
-//                return new ResDTO<>(
-//                        ResEnum.THANH_CONG.getStatusCode(),
-//                        ResEnum.THANH_CONG,
-//                        banThanCoLamViecChoCheDoCuRepository.saveAll(banThanCoLamViecChoCheDoCu)
-//                );
-//            } catch (RuntimeException e) {
-//                return new ResDTO<>(
-//                        ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                        ResEnum.KHONG_HOP_LE,
-//                        null
-//                );
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<BanThanCoLamViecChoCheDoCu> suaBanThanCoLamViecChoCheDoCu(int id, ReqBanThanCoLamViecChoCheDoCu cu) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(cu.loaiSoYeuLyLichChiTiet());
-//                SoYeuLyLich lyLich = soYeuLyLichRepository.findFirstBySoCCCD(cu.soYeuLyLich());
-//                Optional<BanThanCoLamViecChoCheDoCu> banThanCoLamViecChoCheDoCu = banThanCoLamViecChoCheDoCuRepository.findById(id);
-//                if (banThanCoLamViecChoCheDoCu.isPresent()) {
-//                    BanThanCoLamViecChoCheDoCu banThanCoLamViecChoCheDoCu1 = BanThanCoLamViecChoCheDoCu.builder()
-//                            .id(banThanCoLamViecChoCheDoCu.get().getId())
-//                            .batDau(cu.batDau())
-//                            .ketThuc(cu.ketThuc())
-//                            .chucDanhDonViDiaDiem(cu.chucDanhDonViDiaDiem())
-//                            .loaiSoYeuLyLichChiTiet(chiTiet)
-//                            .soYeuLyLich(lyLich)
-//                            .build();
-//                    banThanCoLamViecChoCheDoCu1.setUpdate_at();
-//                    return new ResDTO<>(
-//                            ResEnum.THANH_CONG.getStatusCode(),
-//                            ResEnum.THANH_CONG,
-//                            banThanCoLamViecChoCheDoCuRepository.save(banThanCoLamViecChoCheDoCu1)
-//                    );
-//                } else return new ResDTO<>(
-//                        ResEnum.HONG_TIM_THAY.getStatusCode(),
-//                        ResEnum.HONG_TIM_THAY,
-//                        null
-//                );
-//            } catch (RuntimeException e) {
-//                e.getLocalizedMessage();
-//            }
-//            return new ResDTO<>(
-//                    ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                    ResEnum.KHONG_HOP_LE,
-//                    null
-//            );
-//        }
+        @Override
+        public ResDTO<?> xemDanhSach(String id) {
+            try {
+                List<ResBanThanCoLamViecChoCheDoCu> banThanCoLamViecChoCheDoCus =
+                        banThanCoLamViecChoCheDoCuRepository.listBanThanCoLamViecChoCheDoCu(UUID.fromString(id)).stream().map(
+                                this::mapToResBanThanCoLamViecChoCheDoCu
+                        ).toList();
+                return new ResDTO<>(
+                        ResEnum.THANH_CONG.getStatusCode(),
+                        ResEnum.THANH_CONG,
+                        banThanCoLamViecChoCheDoCus
+                );
+            } catch (IllegalArgumentException e) {
+                return new ResDTO<>(
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null
+                );
+            } catch (RuntimeException e) {
+                throw new RuntimeException(e.getCause());
+            }
+        }
     }
 
     @Service
     public class KhenThuongService extends ISoYeuLyLichChiTietServices.IKhenThuongSefvice {
-        //        @Override
-//        public ResDTO<List<KhenThuong>> xemKhenThuong() {
-//            try {
-//                Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//                TaiKhoan taiKhoan = (TaiKhoan) auth.getPrincipal();
-//                if (!(auth instanceof AnonymousAuthenticationToken)) {
-//                    return new ResDTO<>(
-//                            ResEnum.THANH_CONG.getStatusCode(),
-//                            ResEnum.THANH_CONG,
-//                            taiKhoan.getSoYeuLyLich().getKhenThuongs()
-//                    );
-//                }
-//                return new ResDTO<>(
-//                        ResEnum.THANH_CONG.getStatusCode(),
-//                        ResEnum.THANH_CONG,
-//                        null
-//                );
-//            } catch (RuntimeException e) {
-//                throw new RuntimeException(e.getCause());
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<List<KhenThuong>> themKhenThuong(String loaisyllctName, String soCCCD, List<ReqKhenThuong> thuong) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(loaisyllctName);
-//                SoYeuLyLich soYeuLyLich = soYeuLyLichRepository.findFirstBySoCCCD(soCCCD);
-//                List<KhenThuong> khenThuongs = thuong.stream().map(
-//                        cu -> new KhenThuong(cu.nam(), cu.xepLoaiChuyenMon(), cu.xepLoaiThiDua(), cu.hinhThucKhenThuong(), chiTiet, soYeuLyLich)).toList();
-//                return new ResDTO<>(
-//                        ResEnum.THANH_CONG.getStatusCode(),
-//                        ResEnum.THANH_CONG,
-//                        khenThuongRepository.saveAll(khenThuongs)
-//                );
-//            } catch (RuntimeException e) {
-//                return new ResDTO<>(
-//                        ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                        ResEnum.KHONG_HOP_LE,
-//                        null
-//                );
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<KhenThuong> suaKhenThuong(int id, ReqKhenThuong thuong) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(thuong.loaiSoYeuLyLichChiTiet());
-//                SoYeuLyLich lyLich = soYeuLyLichRepository.findFirstBySoCCCD(thuong.soYeuLyLich());
-//                Optional<KhenThuong> khenThuong = khenThuongRepository.findById(id);
-//                if (khenThuong.isPresent()) {
-//                    KhenThuong khenThuongNew = KhenThuong.builder()
-//                            .id(khenThuong.get().getId())
-//                            .nam(thuong.nam())
-//                            .xepLoaiChuyenMon(thuong.xepLoaiChuyenMon())
-//                            .xepLoaiThiDua(thuong.xepLoaiThiDua())
-//                            .loaiSoYeuLyLichChiTiet(chiTiet)
-//                            .soYeuLyLich(lyLich)
-//                            .build();
-//                    khenThuongNew.setUpdate_at();
-//                    return new ResDTO<>(
-//                            ResEnum.THANH_CONG.getStatusCode(),
-//                            ResEnum.THANH_CONG,
-//                            khenThuongRepository.save(khenThuongNew)
-//                    );
-//                }
-//            } catch (RuntimeException e) {
-//                throw new RuntimeException(e.getCause());
-//            }
-//            return new ResDTO<>(
-//                    ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                    ResEnum.KHONG_HOP_LE,
-//                    null
-//            );
-//        }
         private ResKhenThuong mapToResKhenThuong(KhenThuong thuong) {
             return new ResKhenThuong(
                     thuong.getId(),
@@ -577,85 +447,33 @@ public class SoYeuLyLichChiTietServices {
                 throw new RuntimeException(e.getCause());
             }
         }
+
+        @Override
+        public ResDTO<?> xemDanhSach(String id) {
+            try {
+                List<ResKhenThuong> resKhenThuongs =
+                        khenThuongRepository.listKhenThuong(UUID.fromString(id)).stream().map(
+                                this::mapToResKhenThuong
+                        ).toList();
+                return new ResDTO<>(
+                        ResEnum.THANH_CONG.getStatusCode(),
+                        ResEnum.THANH_CONG,
+                        resKhenThuongs
+                );
+            } catch (IllegalArgumentException e) {
+                return new ResDTO<>(
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null
+                );
+            } catch (RuntimeException e) {
+                throw new RuntimeException(e.getCause());
+            }
+        }
     }
 
     @Service
     public class KienThucAnNinhQuocPhongService extends ISoYeuLyLichChiTietServices.IKienThucAnNinhQuocPhongSefvice {
-
-        //        @Override
-//        public ResDTO<List<KienThucAnNinhQuocPhong>> xemKienThucAnNinhQuocPhong() {
-//            try {
-//                TaiKhoan taiKhoan = crush_em_T();
-//                return new ResDTO<>(
-//                        ResEnum.THANH_CONG.getStatusCode(),
-//                        ResEnum.THANH_CONG,
-//                        taiKhoan != null ? taiKhoan.getSoYeuLyLich().getKienThucAnNinhQuocPhongs() : null
-//                );
-//            } catch (RuntimeException e) {
-//                throw new RuntimeException(e.getCause());
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<List<KienThucAnNinhQuocPhong>> themKienThucAnNinhQuocPhong(String loaisyllctName, String soCCCD, List<ReqKienThucAnNinhQuocPhong> quocPhongs) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(loaisyllctName);
-//                SoYeuLyLich soYeuLyLich = soYeuLyLichRepository.findFirstBySoCCCD(soCCCD);
-//                List<KienThucAnNinhQuocPhong> kienThucAnNinhQuocPhongs = quocPhongs.stream().map(
-//                        cu -> new KienThucAnNinhQuocPhong(
-//                                cu.batDau(),
-//                                cu.ketThuc(),
-//                                cu.tenCoSoDaoTao(),
-//                                cu.chungChiDuocCap(),
-//                                chiTiet,
-//                                soYeuLyLich
-//                        )).toList();
-//                return new ResDTO<>(
-//                        ResEnum.THANH_CONG.getStatusCode(),
-//                        ResEnum.THANH_CONG,
-//                        kienThucAnNinhQuocPhongRepository.saveAll(kienThucAnNinhQuocPhongs)
-//                );
-//            } catch (RuntimeException e) {
-//                return new ResDTO<>(
-//                        ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                        ResEnum.KHONG_HOP_LE,
-//                        null
-//                );
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<KienThucAnNinhQuocPhong> suaKienThucAnNinhQuocPhong(int id, ReqKienThucAnNinhQuocPhong phong) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(phong.loaiSoYeuLyLichChiTiet());
-//                SoYeuLyLich lyLich = soYeuLyLichRepository.findFirstBySoCCCD(phong.soYeuLyLich());
-//                Optional<KienThucAnNinhQuocPhong> quocPhong = kienThucAnNinhQuocPhongRepository.findById(id);
-//                if (quocPhong.isPresent()) {
-//                    KienThucAnNinhQuocPhong kienThucAnNinhQuocPhongNew = KienThucAnNinhQuocPhong.builder()
-//                            .id(quocPhong.get().getId())
-//                            .batDau(phong.batDau())
-//                            .ketThuc(phong.ketThuc())
-//                            .chungChiDuocCap(phong.chungChiDuocCap())
-//                            .tenCoSoDaoTao(phong.tenCoSoDaoTao())
-//                            .loaiSoYeuLyLichChiTiet(chiTiet)
-//                            .soYeuLyLich(lyLich)
-//                            .build();
-//                    kienThucAnNinhQuocPhongNew.setUpdate_at();
-//                    return new ResDTO<>(
-//                            ResEnum.THANH_CONG.getStatusCode(),
-//                            ResEnum.THANH_CONG,
-//                            kienThucAnNinhQuocPhongRepository.save(kienThucAnNinhQuocPhongNew)
-//                    );
-//                }
-//            } catch (RuntimeException e) {
-//                e.printStackTrace();
-//            }
-//            return new ResDTO<>(
-//                    ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                    ResEnum.KHONG_HOP_LE,
-//                    null
-//            );
-//        }
         private ResKienThucAnNinhQuocPhong mapToResKienThucAnNinhQuocPhong(KienThucAnNinhQuocPhong phong) {
             return new ResKienThucAnNinhQuocPhong(
                     phong.getId(),
@@ -784,6 +602,29 @@ public class SoYeuLyLichChiTietServices {
                         ResEnum.XOA_THANH_CONG.getStatusCode(),
                         ResEnum.XOA_THANH_CONG,
                         ResEnum.XOA_THANH_CONG.name()
+                );
+            } catch (RuntimeException e) {
+                throw new RuntimeException(e.getCause());
+            }
+        }
+
+        @Override
+        public ResDTO<?> xemDanhSach(String id) {
+            try {
+                List<ResKienThucAnNinhQuocPhong> resKienThucAnNinhQuocPhongs =
+                        kienThucAnNinhQuocPhongRepository.listKienThucAnNinhQuocPhong(UUID.fromString(id)).stream().map(
+                                this::mapToResKienThucAnNinhQuocPhong
+                        ).toList();
+                return new ResDTO<>(
+                        ResEnum.THANH_CONG.getStatusCode(),
+                        ResEnum.THANH_CONG,
+                        resKienThucAnNinhQuocPhongs
+                );
+            } catch (IllegalArgumentException e) {
+                return new ResDTO<>(
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null
                 );
             } catch (RuntimeException e) {
                 throw new RuntimeException(e.getCause());
@@ -930,80 +771,28 @@ public class SoYeuLyLichChiTietServices {
             }
         }
 
-//        @Override
-//        public ResDTO<List<KyLuat>> xemKyLuat() {
-//            try {
-//                TaiKhoan taiKhoan = crush_em_T();
-//                return new ResDTO<>(
-//                        ResEnum.THANH_CONG.getStatusCode(),
-//                        ResEnum.THANH_CONG,
-//                        taiKhoan != null ? taiKhoan.getSoYeuLyLich().getKyLuats() : null
-//                );
-//            } catch (RuntimeException e) {
-//                throw new RuntimeException(e.getCause());
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<List<KyLuat>> themKyLuat(String loaisyllctName, String soCCCD, List<ReqKyLuat> luat) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(loaisyllctName);
-//                SoYeuLyLich soYeuLyLich = soYeuLyLichRepository.findFirstBySoCCCD(soCCCD);
-//                List<KyLuat> kyLuats = luat.stream().map(
-//                        cu -> new KyLuat(
-//                                cu.batDau(),
-//                                cu.ketThuc(),
-//                                cu.hinhThuc(),
-//                                cu.hanhViViPhamChinh(),
-//                                cu.coQuanQuyetDinh(),
-//                                chiTiet, soYeuLyLich)).toList();
-//                return new ResDTO<>(
-//                        ResEnum.THANH_CONG.getStatusCode(),
-//                        ResEnum.THANH_CONG,
-//                        kyLuatRepository.saveAll(kyLuats)
-//                );
-//            } catch (RuntimeException e) {
-//                return new ResDTO<>(
-//                        ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                        ResEnum.KHONG_HOP_LE,
-//                        null
-//                );
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<KyLuat> suaKyLuat(int id, ReqKyLuat kluat) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(kluat.loaiSoYeuLyLichChiTiet());
-//                SoYeuLyLich lyLich = soYeuLyLichRepository.findFirstBySoCCCD(kluat.soYeuLyLich());
-//                Optional<KyLuat> kyLuat = kyLuatRepository.findById(id);
-//                if (kyLuat.isPresent()) {
-//                    KyLuat kyLuatNew = KyLuat.builder()
-//                            .id(kyLuat.get().getId())
-//                            .batDau(kluat.batDau())
-//                            .ketThuc(kluat.ketThuc())
-//                            .hinhThuc(kluat.hinhThuc())
-//                            .hanhViViPhamChinh(kluat.hanhViViPhamChinh())
-//                            .coQuanQuyetDinh(kluat.coQuanQuyetDinh())
-//                            .loaiSoYeuLyLichChiTiet(chiTiet)
-//                            .soYeuLyLich(lyLich)
-//                            .build();
-//                    kyLuatNew.setUpdate_at();
-//                    return new ResDTO<>(
-//                            ResEnum.THANH_CONG.getStatusCode(),
-//                            ResEnum.THANH_CONG,
-//                            kyLuatRepository.save(kyLuatNew)
-//                    );
-//                }
-//            } catch (RuntimeException e) {
-//                e.printStackTrace();
-//            }
-//            return new ResDTO<>(
-//                    ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                    ResEnum.KHONG_HOP_LE,
-//                    null
-//            );
-//        }
+        @Override
+        public ResDTO<?> xemDanhSach(String id) {
+            try {
+                List<ResKyLuat> resKyLuats =
+                        kyLuatRepository.listKyLuat(UUID.fromString(id)).stream().map(
+                                this::mapToResKyLuat
+                        ).toList();
+                return new ResDTO<>(
+                        ResEnum.THANH_CONG.getStatusCode(),
+                        ResEnum.THANH_CONG,
+                        resKyLuats
+                );
+            } catch (IllegalArgumentException e) {
+                return new ResDTO<>(
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null
+                );
+            } catch (RuntimeException e) {
+                throw new RuntimeException(e.getCause());
+            }
+        }
     }
 
     @Service
@@ -1138,77 +927,28 @@ public class SoYeuLyLichChiTietServices {
             }
         }
 
-//        @Override
-//        public ResDTO<List<LamViecONuocNgoai>> xemLamViecONuocNgoai() {
-//            try {
-//                TaiKhoan taiKhoan = crush_em_T();
-//                return new ResDTO<>(
-//                        ResEnum.THANH_CONG.getStatusCode(),
-//                        ResEnum.THANH_CONG,
-//                        taiKhoan != null ? taiKhoan.getSoYeuLyLich().getLamViecONuocNgoais() : null
-//                );
-//            } catch (RuntimeException e) {
-//                throw new RuntimeException(e.getCause());
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<List<LamViecONuocNgoai>> themLamViecONuocNgoai(String loaisyllctName, String soCCCD, List<ReqLamViecONuocNgoai> reqLamViecONuocNgoais) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(loaisyllctName);
-//                SoYeuLyLich soYeuLyLich = soYeuLyLichRepository.findFirstBySoCCCD(soCCCD);
-//                List<LamViecONuocNgoai> lamViecONuocNgoais = reqLamViecONuocNgoais.stream().map(
-//                        cu -> new LamViecONuocNgoai(
-//                                cu.batDau(),
-//                                cu.ketThuc(),
-//                                cu.toChucDiaChiCongViec(),
-//                                chiTiet, soYeuLyLich)).toList();
-//                return new ResDTO<>(
-//                        ResEnum.THANH_CONG.getStatusCode(),
-//                        ResEnum.THANH_CONG,
-//                        lamViecONuocNgoaiRepository.saveAll(lamViecONuocNgoais)
-//                );
-//            } catch (RuntimeException e) {
-//                return new ResDTO<>(
-//                        ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                        ResEnum.KHONG_HOP_LE,
-//                        null
-//                );
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<LamViecONuocNgoai> suaLamViecONuocNgoai(int id, ReqLamViecONuocNgoai nuocNgoai) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(nuocNgoai.loaiSoYeuLyLichChiTiet());
-//                SoYeuLyLich lyLich = soYeuLyLichRepository.findFirstBySoCCCD(nuocNgoai.soYeuLyLich());
-//                Optional<LamViecONuocNgoai> lamViecONuocNgoai = lamViecONuocNgoaiRepository.findById(id);
-//                if (lamViecONuocNgoai.isPresent()) {
-//                    LamViecONuocNgoai lamViecONuocNgoaiNew = LamViecONuocNgoai.builder()
-//                            .id(lamViecONuocNgoai.get().getId())
-//                            .batDau(nuocNgoai.batDau())
-//                            .ketThuc(nuocNgoai.ketThuc())
-//                            .toChucDiaChiCongViec(nuocNgoai.toChucDiaChiCongViec())
-//                            .loaiSoYeuLyLichChiTiet(chiTiet)
-//                            .soYeuLyLich(lyLich)
-//                            .build();
-//                    lamViecONuocNgoaiNew.setUpdate_at();
-//                    return new ResDTO<>(
-//                            ResEnum.THANH_CONG.getStatusCode(),
-//                            ResEnum.THANH_CONG,
-//                            lamViecONuocNgoaiRepository.save(lamViecONuocNgoaiNew)
-//                    );
-//                }
-//            } catch (RuntimeException e) {
-//                e.printStackTrace();
-//            }
-//            return new ResDTO<>(
-//                    ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                    ResEnum.KHONG_HOP_LE,
-//                    null
-//            );
-//        }
-
+        @Override
+        public ResDTO<?> xemDanhSach(String id) {
+            try {
+                List<ResLamViecONuocNgoai> resLamViecONuocNgoais =
+                        lamViecONuocNgoaiRepository.listLamViecONuocNgoai(UUID.fromString(id)).stream().map(
+                                this::mapToResLamViecONuocNgoai
+                        ).toList();
+                return new ResDTO<>(
+                        ResEnum.THANH_CONG.getStatusCode(),
+                        ResEnum.THANH_CONG,
+                        resLamViecONuocNgoais
+                );
+            } catch (IllegalArgumentException e) {
+                return new ResDTO<>(
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null
+                );
+            } catch (RuntimeException e) {
+                throw new RuntimeException(e.getCause());
+            }
+        }
     }
 
     @Service
@@ -1351,82 +1091,29 @@ public class SoYeuLyLichChiTietServices {
                 throw new RuntimeException(e.getCause());
             }
         }
-//        @Override
-//        public ResDTO<List<LuongBanThan>> xemLuongBanThan() {
-//            try {
-//                TaiKhoan taiKhoan = crush_em_T();
-//                return new ResDTO<>(
-//                        ResEnum.THANH_CONG.getStatusCode(),
-//                        ResEnum.THANH_CONG,
-//                        taiKhoan != null ? taiKhoan.getSoYeuLyLich().getLuongBanThans() : null
-//                );
-//            } catch (RuntimeException e) {
-//                throw new RuntimeException(e.getCause());
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<List<LuongBanThan>> themLuongBanThan(String loaisyllctName, String soCCCD, List<ReqLuongBanThan> reqLuongBanThans) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(loaisyllctName);
-//                SoYeuLyLich soYeuLyLich = soYeuLyLichRepository.findFirstBySoCCCD(soCCCD);
-//                List<LuongBanThan> luongBanThans = reqLuongBanThans.stream().map(
-//                        cu -> new LuongBanThan(
-//                                cu.batDau(),
-//                                cu.ketThuc(),
-//                                cu.maSo(),
-//                                cu.bacLuong(),
-//                                cu.heSoLuong(),
-//                                cu.tienLuongTheoViTri(),
-//                                chiTiet, soYeuLyLich)).toList();
-//                return new ResDTO<>(
-//                        ResEnum.THANH_CONG.getStatusCode(),
-//                        ResEnum.THANH_CONG,
-//                        luongBanThanRepository.saveAll(luongBanThans)
-//                );
-//            } catch (RuntimeException e) {
-//                return new ResDTO<>(
-//                        ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                        ResEnum.KHONG_HOP_LE,
-//                        null
-//                );
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<LuongBanThan> suaLuongBanThan(int id, ReqLuongBanThan reqLuongBanThan) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(reqLuongBanThan.loaiSoYeuLyLichChiTiet());
-//                SoYeuLyLich lyLich = soYeuLyLichRepository.findFirstBySoCCCD(reqLuongBanThan.soYeuLyLich());
-//                Optional<LuongBanThan> luongBanThan = luongBanThanRepository.findById(id);
-//                if (luongBanThan.isPresent()) {
-//                    LuongBanThan luongBanThanNew = LuongBanThan.builder()
-//                            .id(luongBanThan.get().getId())
-//                            .batDau(reqLuongBanThan.batDau())
-//                            .ketThuc(reqLuongBanThan.ketThuc())
-//                            .maSo(reqLuongBanThan.maSo())
-//                            .bacLuong(reqLuongBanThan.bacLuong())
-//                            .heSoLuong(reqLuongBanThan.heSoLuong())
-//                            .tienLuongTheoViTri(reqLuongBanThan.tienLuongTheoViTri())
-//                            .loaiSoYeuLyLichChiTiet(chiTiet)
-//                            .soYeuLyLich(lyLich)
-//                            .build();
-//                    luongBanThanNew.setUpdate_at();
-//                    return new ResDTO<>(
-//                            ResEnum.THANH_CONG.getStatusCode(),
-//                            ResEnum.THANH_CONG,
-//                            luongBanThanRepository.save(luongBanThanNew)
-//                    );
-//                }
-//            } catch (RuntimeException e) {
-//                e.printStackTrace();
-//            }
-//            return new ResDTO<>(
-//                    ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                    ResEnum.KHONG_HOP_LE,
-//                    null
-//            );
-//        }
+
+        @Override
+        public ResDTO<?> xemDanhSach(String id) {
+            try {
+                List<ResLuongBanThan> resLuongBanThans =
+                        luongBanThanRepository.listLuongBanThan(UUID.fromString(id)).stream().map(
+                                this::mapToResLuongBanThan
+                        ).toList();
+                return new ResDTO<>(
+                        ResEnum.THANH_CONG.getStatusCode(),
+                        ResEnum.THANH_CONG,
+                        resLuongBanThans
+                );
+            } catch (IllegalArgumentException e) {
+                return new ResDTO<>(
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null
+                );
+            } catch (RuntimeException e) {
+                throw new RuntimeException(e.getCause());
+            }
+        }
     }
 
     @Service
@@ -1566,81 +1253,29 @@ public class SoYeuLyLichChiTietServices {
                 throw new RuntimeException(e.getCause());
             }
         }
-//        @Override
-//        public ResDTO<List<LyLuanChinhTri>> xemLyLuanChinhTri() {
-//            try {
-//                TaiKhoan taiKhoan = crush_em_T();
-//                return new ResDTO<>(
-//                        ResEnum.THANH_CONG.getStatusCode(),
-//                        ResEnum.THANH_CONG,
-//                        taiKhoan != null ? taiKhoan.getSoYeuLyLich().getLyLuanChinhTris() : null
-//                );
-//            } catch (RuntimeException e) {
-//                throw new RuntimeException(e.getCause());
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<List<LyLuanChinhTri>> themLyLuanChinhTri(String loaisyllctName, String soCCCD, List<ReqLyLuanChinhTri> reqLyLuanChinhTris) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(loaisyllctName);
-//                SoYeuLyLich soYeuLyLich = soYeuLyLichRepository.findFirstBySoCCCD(soCCCD);
-//
-//                List<LyLuanChinhTri> lyLuanChinhTris = reqLyLuanChinhTris.stream().map(cu ->
-//                        new LyLuanChinhTri(
-//                                cu.batDau(),
-//                                cu.ketThuc(),
-//                                cu.tenCoSoDaoTao(),
-//                                cu.hinhThucDaoTao(),
-//                                cu.vanBangDuocCap(),
-//                                chiTiet, soYeuLyLich)).toList();
-//                return new ResDTO<>(
-//                        ResEnum.THANH_CONG.getStatusCode(),
-//                        ResEnum.THANH_CONG,
-//                        lyLuanChinhTriRepository.saveAll(lyLuanChinhTris)
-//                );
-//            } catch (RuntimeException e) {
-//                return new ResDTO<>(
-//                        ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                        ResEnum.KHONG_HOP_LE,
-//                        null
-//                );
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<LyLuanChinhTri> suaLyLuanChinhTri(int id, ReqLyLuanChinhTri reqLyLuanChinhTri) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(reqLyLuanChinhTri.loaiSoYeuLyLichChiTiet());
-//                SoYeuLyLich lyLich = soYeuLyLichRepository.findFirstBySoCCCD(reqLyLuanChinhTri.soYeuLyLich());
-//                Optional<LyLuanChinhTri> lyLuanChinhTri = lyLuanChinhTriRepository.findById(id);
-//                if (lyLuanChinhTri.isPresent()) {
-//                    LyLuanChinhTri llyLuanChinhTriNew = LyLuanChinhTri.builder()
-//                            .id(lyLuanChinhTri.get().getId())
-//                            .batDau(reqLyLuanChinhTri.batDau())
-//                            .ketThuc(reqLyLuanChinhTri.ketThuc())
-//                            .tenCoSoDaoTao(reqLyLuanChinhTri.tenCoSoDaoTao())
-//                            .hinhThucDaoTao(reqLyLuanChinhTri.hinhThucDaoTao())
-//                            .vanBangDuocCap(reqLyLuanChinhTri.vanBangDuocCap())
-//                            .loaiSoYeuLyLichChiTiet(chiTiet)
-//                            .soYeuLyLich(lyLich)
-//                            .build();
-//                    llyLuanChinhTriNew.setUpdate_at();
-//                    return new ResDTO<>(
-//                            ResEnum.THANH_CONG.getStatusCode(),
-//                            ResEnum.THANH_CONG,
-//                            lyLuanChinhTriRepository.save(llyLuanChinhTriNew)
-//                    );
-//                }
-//            } catch (RuntimeException e) {
-//                e.printStackTrace();
-//            }
-//            return new ResDTO<>(
-//                    ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                    ResEnum.KHONG_HOP_LE,
-//                    null
-//            );
-//        }
+
+        @Override
+        public ResDTO<?> xemDanhSach(String id) {
+            try {
+                List<ResLyLuanChinhTri> resLyLuanChinhTris =
+                        lyLuanChinhTriRepository.listLyLuanChinhTri(UUID.fromString(id)).stream().map(
+                                this::mapToResLyLuanChinhTri
+                        ).toList();
+                return new ResDTO<>(
+                        ResEnum.THANH_CONG.getStatusCode(),
+                        ResEnum.THANH_CONG,
+                        resLyLuanChinhTris
+                );
+            } catch (IllegalArgumentException e) {
+                return new ResDTO<>(
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null
+                );
+            } catch (RuntimeException e) {
+                throw new RuntimeException(e.getCause());
+            }
+        }
     }
 
     @Service
@@ -1777,79 +1412,29 @@ public class SoYeuLyLichChiTietServices {
                 throw new RuntimeException(e.getCause());
             }
         }
-//
-//        @Override
-//        public ResDTO<List<NghiepVuChuyenNganh>> xemNghiepVuChuyenNganh() {
-//            try {
-//                TaiKhoan taiKhoan = crush_em_T();
-//                return new ResDTO<>(
-//                        ResEnum.THANH_CONG.getStatusCode(),
-//                        ResEnum.THANH_CONG,
-//                        taiKhoan != null ? taiKhoan.getSoYeuLyLich().getNghiepVuChuyenNganhs() : null
-//                );
-//            } catch (RuntimeException e) {
-//                throw new RuntimeException(e.getCause());
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<List<NghiepVuChuyenNganh>> themNghiepVuChuyenNganh(String loaisyllctName, String soCCCD, List<ReqNghiepVuChuyenNganh> reqNghiepVuChuyenNganhs) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(loaisyllctName);
-//                SoYeuLyLich soYeuLyLich = soYeuLyLichRepository.findFirstBySoCCCD(soCCCD);
-//                List<NghiepVuChuyenNganh> nghiepVuChuyenNganhs = reqNghiepVuChuyenNganhs.stream().map(cu ->
-//                        new NghiepVuChuyenNganh(
-//                                cu.batDau(),
-//                                cu.ketThuc(),
-//                                cu.tenCoSoDaoTao(),
-//                                cu.chungChiDuocCap(),
-//                                chiTiet, soYeuLyLich)).toList();
-//                return new ResDTO<>(
-//                        ResEnum.THANH_CONG.getStatusCode(),
-//                        ResEnum.THANH_CONG,
-//                        nghiepVuChuyenNganhRepository.saveAll(nghiepVuChuyenNganhs)
-//                );
-//            } catch (RuntimeException e) {
-//                return new ResDTO<>(
-//                        ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                        ResEnum.KHONG_HOP_LE,
-//                        null
-//                );
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<NghiepVuChuyenNganh> suaNghiepVuChuyenNganh(int id, ReqNghiepVuChuyenNganh reqNghiepVuChuyenNganh) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(reqNghiepVuChuyenNganh.loaiSoYeuLyLichChiTiet());
-//                SoYeuLyLich lyLich = soYeuLyLichRepository.findFirstBySoCCCD(reqNghiepVuChuyenNganh.soYeuLyLich());
-//                Optional<NghiepVuChuyenNganh> nghiepVuChuyenNganh = nghiepVuChuyenNganhRepository.findById(id);
-//                if (nghiepVuChuyenNganh.isPresent()) {
-//                    NghiepVuChuyenNganh nghiepVuChuyenNganhNew = NghiepVuChuyenNganh.builder()
-//                            .id(nghiepVuChuyenNganh.get().getId())
-//                            .batDau(reqNghiepVuChuyenNganh.batDau())
-//                            .ketThuc(reqNghiepVuChuyenNganh.ketThuc())
-//                            .tenCoSoDaoTao(reqNghiepVuChuyenNganh.tenCoSoDaoTao())
-//                            .chungChiDuocCap(reqNghiepVuChuyenNganh.chungChiDuocCap())
-//                            .loaiSoYeuLyLichChiTiet(chiTiet)
-//                            .soYeuLyLich(lyLich)
-//                            .build();
-//                    nghiepVuChuyenNganhNew.setUpdate_at();
-//                    return new ResDTO<>(
-//                            ResEnum.THANH_CONG.getStatusCode(),
-//                            ResEnum.THANH_CONG,
-//                            nghiepVuChuyenNganhRepository.save(nghiepVuChuyenNganhNew)
-//                    );
-//                }
-//            } catch (RuntimeException e) {
-//                e.printStackTrace();
-//            }
-//            return new ResDTO<>(
-//                    ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                    ResEnum.KHONG_HOP_LE,
-//                    null
-//            );
-//        }
+
+        @Override
+        public ResDTO<?> xemDanhSach(String id) {
+            try {
+                List<ResNghiepVuChuyenNganh> resNghiepVuChuyenNganhs =
+                        nghiepVuChuyenNganhRepository.listNghiepVuChuyenNganh(UUID.fromString(id)).stream().map(
+                                this::mapToResNghiepVuChuyenNganh
+                        ).toList();
+                return new ResDTO<>(
+                        ResEnum.THANH_CONG.getStatusCode(),
+                        ResEnum.THANH_CONG,
+                        resNghiepVuChuyenNganhs
+                );
+            } catch (IllegalArgumentException e) {
+                return new ResDTO<>(
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null
+                );
+            } catch (RuntimeException e) {
+                throw new RuntimeException(e.getCause());
+            }
+        }
     }
 
     @Service
@@ -1993,81 +1578,28 @@ public class SoYeuLyLichChiTietServices {
             }
         }
 
-//        @Override
-//        public ResDTO<List<NgoaiNgu>> xemNgoaiNgu() {
-//            try {
-//                TaiKhoan taiKhoan = crush_em_T();
-//                return new ResDTO<>(
-//                        ResEnum.THANH_CONG.getStatusCode(),
-//                        ResEnum.THANH_CONG,
-//                        taiKhoan != null ? taiKhoan.getSoYeuLyLich().getNgoaiNgus() : null
-//                );
-//            } catch (RuntimeException e) {
-//                throw new RuntimeException(e.getCause());
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<List<NgoaiNgu>> themNgoaiNgu(String loaisyllctName, String soCCCD, List<ReqNgoaiNgu> reqNgoaiNgus) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(loaisyllctName);
-//                SoYeuLyLich soYeuLyLich = soYeuLyLichRepository.findFirstBySoCCCD(soCCCD);
-//                List<NgoaiNgu> ngoaiNgus = reqNgoaiNgus.stream().map(cu ->
-//                        new NgoaiNgu(
-//                                cu.batDau(),
-//                                cu.ketThuc(),
-//                                cu.tenCoSoDaoTao(),
-//                                cu.tenNgoaiNgu(),
-//                                cu.chungChiDuocCap(),
-//                                cu.diemSo(),
-//                                chiTiet, soYeuLyLich)).toList();
-//                return new ResDTO<>(
-//                        ResEnum.THANH_CONG.getStatusCode(),
-//                        ResEnum.THANH_CONG,
-//                        ngoaiNguRepository.saveAll(ngoaiNgus)
-//                );
-//            } catch (RuntimeException e) {
-//                return new ResDTO<>(
-//                        ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                        ResEnum.KHONG_HOP_LE,
-//                        null
-//                );
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<NgoaiNgu> suaNgoaiNgu(int id, ReqNgoaiNgu reqNgoaiNgu) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(reqNgoaiNgu.loaiSoYeuLyLichChiTiet());
-//                SoYeuLyLich lyLich = soYeuLyLichRepository.findFirstBySoCCCD(reqNgoaiNgu.soYeuLyLich());
-//                Optional<NgoaiNgu> ngoaiNgu = ngoaiNguRepository.findById(id);
-//                if (ngoaiNgu.isPresent()) {
-//                    NgoaiNgu ngoaiNguNew = NgoaiNgu.builder()
-//                            .id(ngoaiNgu.get().getId())
-//                            .batDau(reqNgoaiNgu.batDau())
-//                            .ketThuc(reqNgoaiNgu.ketThuc())
-//                            .tenCoSoDaoTao(reqNgoaiNgu.tenCoSoDaoTao())
-//                            .chungChiDuocCap(reqNgoaiNgu.chungChiDuocCap())
-//                            .diemSo(reqNgoaiNgu.diemSo())
-//                            .loaiSoYeuLyLichChiTiet(chiTiet)
-//                            .soYeuLyLich(lyLich)
-//                            .build();
-//                    ngoaiNguNew.setUpdate_at();
-//                    return new ResDTO<>(
-//                            ResEnum.THANH_CONG.getStatusCode(),
-//                            ResEnum.THANH_CONG,
-//                            ngoaiNguRepository.save(ngoaiNguNew)
-//                    );
-//                }
-//            } catch (RuntimeException e) {
-//                e.printStackTrace();
-//            }
-//            return new ResDTO<>(
-//                    ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                    ResEnum.KHONG_HOP_LE,
-//                    null
-//            );
-//        }
+        @Override
+        public ResDTO<?> xemDanhSach(String id) {
+            try {
+                List<ResNgoaiNgu> resNgoaiNgus =
+                        ngoaiNguRepository.listNgoaiNgu(UUID.fromString(id)).stream().map(
+                                this::mapToResNgoaiNgu
+                        ).toList();
+                return new ResDTO<>(
+                        ResEnum.THANH_CONG.getStatusCode(),
+                        ResEnum.THANH_CONG,
+                        resNgoaiNgus
+                );
+            } catch (IllegalArgumentException e) {
+                return new ResDTO<>(
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null
+                );
+            } catch (RuntimeException e) {
+                throw new RuntimeException(e.getCause());
+            }
+        }
     }
 
     @Service
@@ -2214,84 +1746,28 @@ public class SoYeuLyLichChiTietServices {
             }
         }
 
-//        @Override
-//        public ResDTO<List<PhuCapKhac>> xemPhuCapKhac() {
-//            try {
-//                TaiKhoan taiKhoan = crush_em_T();
-//                return new ResDTO<>(
-//                        ResEnum.THANH_CONG.getStatusCode(),
-//                        ResEnum.THANH_CONG,
-//                        taiKhoan != null ? taiKhoan.getSoYeuLyLich().getPhuCapKhacs() : null
-//                );
-//            } catch (RuntimeException e) {
-//                throw new RuntimeException(e.getCause());
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<List<PhuCapKhac>> themPhuCapKhac(String loaisyllctName, String soCCCD, List<ReqPhuCapKhac> reqPhuCapKhacs) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(loaisyllctName);
-//                SoYeuLyLich soYeuLyLich = soYeuLyLichRepository.findFirstBySoCCCD(soCCCD);
-//                List<PhuCapKhac> phuCapKhacs = reqPhuCapKhacs.stream().map(cu ->
-//                        new PhuCapKhac(
-//                                cu.batDau(),
-//                                cu.ketThuc(),
-//                                cu.loaiPhuCap(),
-//                                cu.phanTramHuongPhuCap(),
-//                                cu.heSoPhuCap(),
-//                                cu.hinhThucThuong(),
-//                                cu.giaTri(),
-//                                chiTiet, soYeuLyLich)).toList();
-//                return new ResDTO<>(
-//                        ResEnum.THANH_CONG.getStatusCode(),
-//                        ResEnum.THANH_CONG,
-//                        phuCapKhacRepository.saveAll(phuCapKhacs)
-//                );
-//            } catch (RuntimeException e) {
-//                return new ResDTO<>(
-//                        ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                        ResEnum.KHONG_HOP_LE,
-//                        null
-//                );
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<PhuCapKhac> suaPhuCapKhac(int id, ReqPhuCapKhac reqPhuCapKhac) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(reqPhuCapKhac.loaiSoYeuLyLichChiTiet());
-//                SoYeuLyLich lyLich = soYeuLyLichRepository.findFirstBySoCCCD(reqPhuCapKhac.soYeuLyLich());
-//                Optional<PhuCapKhac> phuCapKhac = phuCapKhacRepository.findById(id);
-//                if (phuCapKhac.isPresent()) {
-//                    PhuCapKhac phuCapKhacNew = PhuCapKhac.builder()
-//                            .id(phuCapKhac.get().getId())
-//                            .batDau(reqPhuCapKhac.batDau())
-//                            .ketThuc(reqPhuCapKhac.ketThuc())
-//                            .loaiPhuCap(reqPhuCapKhac.loaiPhuCap())
-//                            .phanTramHuongPhuCap(reqPhuCapKhac.phanTramHuongPhuCap())
-//                            .heSoPhuCap(reqPhuCapKhac.heSoPhuCap())
-//                            .hinhThucThuong(reqPhuCapKhac.hinhThucThuong())
-//                            .giaTri(reqPhuCapKhac.giaTri())
-//                            .loaiSoYeuLyLichChiTiet(chiTiet)
-//                            .soYeuLyLich(lyLich)
-//                            .build();
-//                    phuCapKhacNew.setUpdate_at();
-//                    return new ResDTO<>(
-//                            ResEnum.THANH_CONG.getStatusCode(),
-//                            ResEnum.THANH_CONG,
-//                            phuCapKhacRepository.save(phuCapKhacNew)
-//                    );
-//                }
-//            } catch (RuntimeException e) {
-//                e.printStackTrace();
-//            }
-//            return new ResDTO<>(
-//                    ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                    ResEnum.KHONG_HOP_LE,
-//                    null
-//            );
-//        }
+        @Override
+        public ResDTO<?> xemDanhSach(String id) {
+            try {
+                List<ResPhuCapKhac> resPhuCapKhacs =
+                        phuCapKhacRepository.listPhuCapKhac(UUID.fromString(id)).stream().map(
+                                this::mapToResPhuCapKhac
+                        ).toList();
+                return new ResDTO<>(
+                        ResEnum.THANH_CONG.getStatusCode(),
+                        ResEnum.THANH_CONG,
+                        resPhuCapKhacs
+                );
+            } catch (IllegalArgumentException e) {
+                return new ResDTO<>(
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null
+                );
+            } catch (RuntimeException e) {
+                throw new RuntimeException(e.getCause());
+            }
+        }
     }
 
     @Service
@@ -2429,81 +1905,28 @@ public class SoYeuLyLichChiTietServices {
             }
         }
 
-//        @Override
-//        public ResDTO<List<QuanHeGiaDinh>> xemQuanHeGiaDinh() {
-//            try {
-//                TaiKhoan taiKhoan = crush_em_T();
-//                return new ResDTO<>(
-//                        ResEnum.THANH_CONG.getStatusCode(),
-//                        ResEnum.THANH_CONG,
-//                        taiKhoan != null ? taiKhoan.getSoYeuLyLich().getQuanHeGiaDinhs() : null
-//                );
-//            } catch (RuntimeException e) {
-//                throw new RuntimeException(e.getCause());
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<List<QuanHeGiaDinh>> themPQuanHeGiaDinh(String loaisyllctName, UUID id, List<ReqQuanHeGiaDinh> reqQuanHeGiaDinhs) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(loaisyllctName);
-//                Optional<SoYeuLyLich> soYeuLyLich = soYeuLyLichRepository.findById(id);
-//                if (soYeuLyLich.isPresent()) {
-//                    List<QuanHeGiaDinh> quanHeGiaDinhs = reqQuanHeGiaDinhs.stream().map(cu ->
-//                            new QuanHeGiaDinh(
-//                                    cu.moiQuanHe(),
-//                                    cu.hoVaTen(),
-//                                    cu.namSinh(),
-//                                    cu.thongTinThanNhan(),
-//                                    chiTiet, soYeuLyLich.get())).toList();
-//
-//                    return new ResDTO<>(
-//                            ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
-//                            ResEnum.CAP_NHAT_THANH_CONG,
-//                            quanHeGiaDinhRepository.saveAll(quanHeGiaDinhs)
-//                    );
-//                } else return new ResDTO<>(
-//                        ResEnum.HONG_TIM_THAY.getStatusCode(),
-//                        ResEnum.HONG_TIM_THAY,
-//                        null
-//                );
-//            } catch (RuntimeException e) {
-//                throw new RuntimeException(e.getCause());
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<QuanHeGiaDinh> suaQuanHeGiaDinh(int id, ReqQuanHeGiaDinh reqQuanHeGiaDinh) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(reqQuanHeGiaDinh.loaiSoYeuLyLichChiTiet());
-//                SoYeuLyLich lyLich = soYeuLyLichRepository.findFirstBySoCCCD(reqQuanHeGiaDinh.soYeuLyLich());
-//                Optional<QuanHeGiaDinh> quanHeGiaDinh = quanHeGiaDinhRepository.findById(id);
-//                if (quanHeGiaDinh.isPresent()) {
-//                    QuanHeGiaDinh quanHeGiaDinhNew = QuanHeGiaDinh.builder()
-//                            .id(quanHeGiaDinh.get().getId())
-//                            .moiQuanHe(reqQuanHeGiaDinh.moiQuanHe())
-//                            .hoVaTen(reqQuanHeGiaDinh.hoVaTen())
-//                            .namSinh(reqQuanHeGiaDinh.namSinh())
-//                            .thongTinThanNhan(reqQuanHeGiaDinh.thongTinThanNhan())
-//                            .loaiSoYeuLyLichChiTiet(chiTiet)
-//                            .soYeuLyLich(lyLich)
-//                            .build();
-//                    quanHeGiaDinhNew.setUpdate_at();
-//                    return new ResDTO<>(
-//                            ResEnum.THANH_CONG.getStatusCode(),
-//                            ResEnum.THANH_CONG,
-//                            quanHeGiaDinhRepository.save(quanHeGiaDinhNew)
-//                    );
-//                }
-//            } catch (RuntimeException e) {
-//                e.printStackTrace();
-//            }
-//            return new ResDTO<>(
-//                    ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                    ResEnum.KHONG_HOP_LE,
-//                    null
-//            );
-//        }
+        @Override
+        public ResDTO<?> xemDanhSach(String id) {
+            try {
+                List<ResQuanHeGiaDinh> resQuanHeGiaDinhs =
+                        quanHeGiaDinhRepository.listQuanHeGiaDinh(UUID.fromString(id)).stream().map(
+                                this::mapToResQuanHeGiaDinh
+                        ).toList();
+                return new ResDTO<>(
+                        ResEnum.THANH_CONG.getStatusCode(),
+                        ResEnum.THANH_CONG,
+                        resQuanHeGiaDinhs
+                );
+            } catch (IllegalArgumentException e) {
+                return new ResDTO<>(
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null
+                );
+            } catch (RuntimeException e) {
+                throw new RuntimeException(e.getCause());
+            }
+        }
     }
 
     @Service
@@ -2640,78 +2063,29 @@ public class SoYeuLyLichChiTietServices {
                 throw new RuntimeException(e.getCause());
             }
         }
-//        @Override
-//        public ResDTO<List<QuaTrinhCongTac>> xemQuaTrinhCongTac() {
-//            try {
-//                TaiKhoan taiKhoan = crush_em_T();
-//                return new ResDTO<>(
-//                        ResEnum.THANH_CONG.getStatusCode(),
-//                        ResEnum.THANH_CONG,
-//                        taiKhoan != null ? taiKhoan.getSoYeuLyLich().getQuaTrinhCongTacs() : null
-//                );
-//            } catch (RuntimeException e) {
-//                throw new RuntimeException(e.getCause());
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<List<QuaTrinhCongTac>> themQuaTrinhCongTac(String loaisyllctName, String soCCCD, List<ReqQuaTrinhCongTac> reqQuaTrinhCongTacs) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(loaisyllctName);
-//                SoYeuLyLich soYeuLyLich = soYeuLyLichRepository.findFirstBySoCCCD(soCCCD);
-//                List<QuaTrinhCongTac> quaTrinhCongTacs = reqQuaTrinhCongTacs.stream().map(cu ->
-//                        new QuaTrinhCongTac(
-//                                cu.batDau(),
-//                                cu.ketThuc(),
-//                                cu.donViCongTac(),
-//                                cu.chucDanh(),
-//                                chiTiet, soYeuLyLich)).toList();
-//                return new ResDTO<>(
-//                        ResEnum.THANH_CONG.getStatusCode(),
-//                        ResEnum.THANH_CONG,
-//                        quaTrinhCongTacRepository.saveAll(quaTrinhCongTacs)
-//                );
-//            } catch (RuntimeException e) {
-//                return new ResDTO<>(
-//                        ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                        ResEnum.KHONG_HOP_LE,
-//                        null
-//                );
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<QuaTrinhCongTac> suaQuaTrinhCongTac(int id, ReqQuaTrinhCongTac reqQuaTrinhCongTac) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(reqQuaTrinhCongTac.loaiSoYeuLyLichChiTiet());
-//                SoYeuLyLich lyLich = soYeuLyLichRepository.findFirstBySoCCCD(reqQuaTrinhCongTac.soYeuLyLich());
-//                Optional<QuaTrinhCongTac> quaTrinhCongTac = quaTrinhCongTacRepository.findById(id);
-//                if (quaTrinhCongTac.isPresent()) {
-//                    QuaTrinhCongTac quaTrinhCongTacNew = QuaTrinhCongTac.builder()
-//                            .id(quaTrinhCongTac.get().getId())
-//                            .batDau(reqQuaTrinhCongTac.batDau())
-//                            .ketThuc(reqQuaTrinhCongTac.ketThuc())
-//                            .donViCongTac(reqQuaTrinhCongTac.donViCongTac())
-//                            .chucDanh(reqQuaTrinhCongTac.chucDanh())
-//                            .loaiSoYeuLyLichChiTiet(chiTiet)
-//                            .soYeuLyLich(lyLich)
-//                            .build();
-//                    quaTrinhCongTacNew.setUpdate_at();
-//                    return new ResDTO<>(
-//                            ResEnum.THANH_CONG.getStatusCode(),
-//                            ResEnum.THANH_CONG,
-//                            quaTrinhCongTacRepository.save(quaTrinhCongTacNew)
-//                    );
-//                }
-//            } catch (RuntimeException e) {
-//                e.printStackTrace();
-//            }
-//            return new ResDTO<>(
-//                    ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                    ResEnum.KHONG_HOP_LE,
-//                    null
-//            );
-//        }
+
+        @Override
+        public ResDTO<?> xemDanhSach(String id) {
+            try {
+                List<ResQuaTrinhCongTac> resQuaTrinhCongTacs =
+                        quaTrinhCongTacRepository.listQuaTrinhCongTac(UUID.fromString(id)).stream().map(
+                                this::mapToResQuaTrinhCongTac
+                        ).toList();
+                return new ResDTO<>(
+                        ResEnum.THANH_CONG.getStatusCode(),
+                        ResEnum.THANH_CONG,
+                        resQuaTrinhCongTacs
+                );
+            } catch (IllegalArgumentException e) {
+                return new ResDTO<>(
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null
+                );
+            } catch (RuntimeException e) {
+                throw new RuntimeException(e.getCause());
+            }
+        }
     }
 
     @Service
@@ -2849,77 +2223,27 @@ public class SoYeuLyLichChiTietServices {
             }
         }
 
-//        @Override
-//        public ResDTO<List<TinHoc>> xemTinHoc() {
-//            try {
-//                TaiKhoan taiKhoan = crush_em_T();
-//                return new ResDTO<>(
-//                        ResEnum.THANH_CONG.getStatusCode(),
-//                        ResEnum.THANH_CONG,
-//                        taiKhoan != null ? taiKhoan.getSoYeuLyLich().getTinHocs() : null
-//                );
-//            } catch (RuntimeException e) {
-//                throw new RuntimeException(e.getCause());
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<List<TinHoc>> themQTinHoc(String loaisyllctName, String soCCCD, List<ReqTinHoc> reqTinHocs) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(loaisyllctName);
-//                SoYeuLyLich soYeuLyLich = soYeuLyLichRepository.findFirstBySoCCCD(soCCCD);
-//                List<TinHoc> tinHocs = reqTinHocs.stream().map(cu ->
-//                        new TinHoc(
-//                                cu.batDau(),
-//                                cu.ketThuc(),
-//                                cu.tenCoSoDaoTao(),
-//                                cu.chungChiDuocCap(),
-//                                chiTiet, soYeuLyLich)).toList();
-//                return new ResDTO<>(
-//                        ResEnum.THANH_CONG.getStatusCode(),
-//                        ResEnum.THANH_CONG,
-//                        tinHocRepository.saveAll(tinHocs)
-//                );
-//            } catch (RuntimeException e) {
-//                return new ResDTO<>(
-//                        ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                        ResEnum.KHONG_HOP_LE,
-//                        null
-//                );
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<TinHoc> suaTinHoc(int id, ReqTinHoc reqTinHoc) {
-//            try {
-//                LoaiSoYeuLyLichChiTiet chiTiet = loaiSoYeuLyLichChiTietRepository.findByName(reqTinHoc.loaiSoYeuLyLichChiTiet());
-//                SoYeuLyLich lyLich = soYeuLyLichRepository.findFirstBySoCCCD(reqTinHoc.soYeuLyLich());
-//                Optional<TinHoc> tinHoc = tinHocRepository.findById(id);
-//                if (tinHoc.isPresent()) {
-//                    TinHoc tinHocNew = TinHoc.builder()
-//                            .id(tinHoc.get().getId())
-//                            .batDau(reqTinHoc.batDau())
-//                            .ketThuc(reqTinHoc.ketThuc())
-//                            .tenCoSoDaoTao(reqTinHoc.tenCoSoDaoTao())
-//                            .chungChiDuocCap(reqTinHoc.chungChiDuocCap())
-//                            .loaiSoYeuLyLichChiTiet(chiTiet)
-//                            .soYeuLyLich(lyLich)
-//                            .build();
-//                    tinHocNew.setUpdate_at();
-//                    return new ResDTO<>(
-//                            ResEnum.THANH_CONG.getStatusCode(),
-//                            ResEnum.THANH_CONG,
-//                            tinHocRepository.save(tinHocNew)
-//                    );
-//                }
-//            } catch (RuntimeException e) {
-//                e.printStackTrace();
-//            }
-//            return new ResDTO<>(
-//                    ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                    ResEnum.KHONG_HOP_LE,
-//                    null
-//            );
-//        }
+        @Override
+        public ResDTO<?> xemDanhSach(String id) {
+            try {
+                List<ResTinHoc> resTinHocs =
+                        tinHocRepository.listTinHoc(UUID.fromString(id)).stream().map(
+                                this::mapToResTinHoc
+                        ).toList();
+                return new ResDTO<>(
+                        ResEnum.THANH_CONG.getStatusCode(),
+                        ResEnum.THANH_CONG,
+                        resTinHocs
+                );
+            } catch (IllegalArgumentException e) {
+                return new ResDTO<>(
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null
+                );
+            } catch (RuntimeException e) {
+                throw new RuntimeException(e.getCause());
+            }
+        }
     }
 }
