@@ -43,10 +43,10 @@ public class KyLuat extends DateTimeObject {
     @Column(name = "hinh_thuc", columnDefinition = "varchar(20)")
     String hinhThuc;
 
-    @Column(name = "hanh_vi_vi_pham_chinh", columnDefinition = "varchar(20)")
+    @Column(name = "hanh_vi_vi_pham_chinh", columnDefinition = "varchar(50) default''")
     String hanhViViPhamChinh;
 
-    @Column(name = "co_quan_quyet_dinh", columnDefinition = "varchar(20)")
+    @Column(name = "co_quan_quyet_dinh", columnDefinition = "varchar(50) default''")
     String coQuanQuyetDinh;
 
     @ManyToOne

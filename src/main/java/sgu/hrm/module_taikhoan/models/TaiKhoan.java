@@ -87,4 +87,17 @@ public class TaiKhoan extends DateTimeObject implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "TaiKhoan{" +
+                "id=" + id +
+                ", hoVaTen='" + hoVaTen + '\'' +
+                ", soCCCD='" + soCCCD + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", roleTaiKhoan=" + roleTaiKhoan.toString() +
+                ", soYeuLyLich=" + soYeuLyLich.toString() +
+                '}';
+    }
 }

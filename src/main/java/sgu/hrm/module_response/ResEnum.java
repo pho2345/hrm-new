@@ -3,6 +3,7 @@ package sgu.hrm.module_response;
 public enum ResEnum {
     DOI_MAT_KHAU_THANH_CONG(200),
     DANG_NHAP_THANH_CONG(200),
+    DANG_NHAP_THAT_BAI(200),
     THANH_CONG(200),
     TAO_THANH_CONG(201),
     CAP_NHAT_THANH_CONG(204),
