@@ -2,9 +2,7 @@ package sgu.hrm.module_soyeulylich.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,7 +18,6 @@ import jakarta.persistence.Table;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +29,7 @@ import sgu.hrm.module_soyeulylich_chitiet.models.BanThanCoLamViecChoCheDoCu;
 import sgu.hrm.module_taikhoan.models.TaiKhoan;
 import sgu.hrm.module_utilities.models.BacLuong;
 import sgu.hrm.module_utilities.models.CapBacLoaiQuanHamQuanDoi;
-import sgu.hrm.models.CoQuanToChucDonViTuyenDung;
+// import sgu.hrm.models.CoQuanToChucDonViTuyenDung;
 import sgu.hrm.module_utilities.models.DanToc;
 import sgu.hrm.module_utilities.models.DanhHieuNhaNuocPhongTang;
 import sgu.hrm.models.DateTimeObject;
@@ -51,7 +48,7 @@ import sgu.hrm.module_utilities.models.NhomMau;
 import sgu.hrm.module_soyeulylich_chitiet.models.PhuCapKhac;
 import sgu.hrm.module_soyeulylich_chitiet.models.QuaTrinhCongTac;
 import sgu.hrm.module_soyeulylich_chitiet.models.QuanHeGiaDinh;
-//import sgu.hrm.models.QuanHeGiaDinhRuotBenVoHoacChong;
+
 import sgu.hrm.module_utilities.models.ThanhPhanGiaDinh;
 import sgu.hrm.module_soyeulylich_chitiet.models.TinHoc;
 import sgu.hrm.module_utilities.models.TinhTrangSucKhoe;
@@ -132,10 +129,14 @@ public class SoYeuLyLich extends DateTimeObject {
 
     @Column(name = "ngay_duoc_tuyen_dung_lan_dau", columnDefinition = "datetime")
     LocalDateTime ngayDuocTuyenDungLanDau;
+
     // error
-    @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "coquan_tochuc_donvi_tuyendung_fk"), name = "coquan_tochuc_donvi_tuyendung_syll", referencedColumnName = "id", columnDefinition = "tinyint")
-    CoQuanToChucDonViTuyenDung coQuanToChucDonViTuyenDung;
+//    @ManyToOne
+//    @JoinColumn(foreignKey = @ForeignKey(name = "coquan_tochuc_donvi_tuyendung_fk"), name = "coquan_tochuc_donvi_tuyendung_syll", referencedColumnName = "id", columnDefinition = "tinyint")
+//    CoQuanToChucDonViTuyenDung coQuanToChucDonViTuyenDung;
+
+    @Column(name = "coquan_tochuc_donvi_tuyendung", columnDefinition = "varchar(250) default''")
+    String coQuanToChucDonViTuyenDung;
 
     @Column(name = "ngay_vao_co_quan_hien_dang_cong_tac", columnDefinition = "datetime")
     LocalDateTime ngayVaoCoQuanHienDangCongTac;
@@ -342,4 +343,88 @@ public class SoYeuLyLich extends DateTimeObject {
     @JoinColumn(name = "taikhoan", columnDefinition = "INTEGER")
     @JsonIgnore
     TaiKhoan taiKhoan;
+
+    @Override
+    public String toString() {
+        return "SoYeuLyLich{" +
+                "id=" + id +
+                ", hovaten='" + hovaten + '\'' +
+                ", gioiTinh=" + gioiTinh +
+                ", cacTenGoiKhac='" + cacTenGoiKhac + '\'' +
+                ", sinhNgay=" + sinhNgay +
+                ", noiSinh='" + noiSinh + '\'' +
+                ", queQuan='" + queQuan + '\'' +
+                ", danToc=" + danToc +
+                ", soCCCD='" + soCCCD + '\'' +
+                ", ngayCapCCCD=" + ngayCapCCCD +
+                ", soDienThoai='" + soDienThoai + '\'' +
+                ", soBHXH='" + soBHXH + '\'' +
+                ", soBHYT='" + soBHYT + '\'' +
+                ", noiOHienNay='" + noiOHienNay + '\'' +
+                ", thanhPhanGiaDinh=" + thanhPhanGiaDinh +
+                ", ngheNghiepTruocKhiTuyenDung='" + ngheNghiepTruocKhiTuyenDung + '\'' +
+                ", ngayDuocTuyenDungLanDau=" + ngayDuocTuyenDungLanDau +
+                ", coQuanToChucDonViTuyenDung='" + coQuanToChucDonViTuyenDung + '\'' +
+                ", ngayVaoCoQuanHienDangCongTac=" + ngayVaoCoQuanHienDangCongTac +
+                ", ngayVaoDangCongSanVietNam=" + ngayVaoDangCongSanVietNam +
+                ", ngayChinhThuc=" + ngayChinhThuc +
+                ", ngayThamGiaToChucChinhTriXaHoiDauTien=" + ngayThamGiaToChucChinhTriXaHoiDauTien +
+                ", ngayNhapNgu=" + ngayNhapNgu +
+                ", ngayXuatNgu=" + ngayXuatNgu +
+                ", capBacLoaiQuanHamQuanDoi=" + capBacLoaiQuanHamQuanDoi +
+                ", doiTuongChinhSach=" + doiTuongChinhSach +
+                ", trinhDoGiaoDucPhoThong=" + trinhDoGiaoDucPhoThong +
+                ", trinhDoChuyenMon=" + trinhDoChuyenMon +
+                ", hocHam=" + hocHam +
+                ", danhHieuNhaNuocPhongTang=" + danhHieuNhaNuocPhongTang +
+                ", chucVuHienTai='" + chucVuHienTai + '\'' +
+                ", ngayBoNhiem=" + ngayBoNhiem +
+                ", ngayBoNhiemLai=" + ngayBoNhiemLai +
+                ", duocQuyHoacChucDanh='" + duocQuyHoacChucDanh + '\'' +
+                ", chucVuKiemNhiem='" + chucVuKiemNhiem + '\'' +
+                ", chucVuDangHienTai='" + chucVuDangHienTai + '\'' +
+                ", chucVuDangKiemNhiem='" + chucVuDangKiemNhiem + '\'' +
+                ", congVienChinhDuocGiao='" + congVienChinhDuocGiao + '\'' +
+                ", soTruongCongTac='" + soTruongCongTac + '\'' +
+                ", congViecLamLauNhat='" + congViecLamLauNhat + '\'' +
+                ", tienLuong=" + tienLuong +
+                ", ngachNgheNghiep='" + ngachNgheNghiep + '\'' +
+                ", maSoNgachNgheNghiep='" + maSoNgachNgheNghiep + '\'' +
+                ", ngayBoNhiemNgachNgheNghiep=" + ngayBoNhiemNgachNgheNghiep +
+                ", bacLuong=" + bacLuong +
+                ", heSoLuongNgachNgheNghiep=" + heSoLuongNgachNgheNghiep +
+                ", ngayHuongLuongNgachNgheNghiep=" + ngayHuongLuongNgachNgheNghiep +
+                ", phanTramHuongLuongNgachNgheNghiep=" + phanTramHuongLuongNgachNgheNghiep +
+                ", phuCapThamNienVuotKhungNgachNgheNghiep=" + phuCapThamNienVuotKhungNgachNgheNghiep +
+                ", ngayHuongPCTNVKNgachNgheNghiep=" + ngayHuongPCTNVKNgachNgheNghiep +
+                ", phuCapChucVu=" + phuCapChucVu +
+                ", phuCapKiemNhiem=" + phuCapKiemNhiem +
+                ", phuCapKhac=" + phuCapKhac +
+                ", viTriViecLam='" + viTriViecLam + '\'' +
+                ", maSoViTriViecLam='" + maSoViTriViecLam + '\'' +
+                ", bacLuongTriViecLam=" + bacLuongTriViecLam +
+                ", luongTheoMucTien=" + luongTheoMucTien +
+                ", ngayHuongLuongTheoViTriViecLam=" + ngayHuongLuongTheoViTriViecLam +
+                ", phamTramHuongLuong=" + phamTramHuongLuong +
+                ", phuCapThamNienVuotKhung=" + phuCapThamNienVuotKhung +
+                ", ngayHuongPCTNVK=" + ngayHuongPCTNVK +
+                ", tinhTrangSucKhoe=" + tinhTrangSucKhoe +
+                ", chieuCao=" + chieuCao +
+                ", canNang=" + canNang +
+                ", nhomMau=" + nhomMau +
+                ", lyLuanChinhTris=" + lyLuanChinhTris +
+                ", nghiepVuChuyenNganhs=" + nghiepVuChuyenNganhs +
+                ", kienThucAnNinhQuocPhongs=" + kienThucAnNinhQuocPhongs +
+                ", tinHocs=" + tinHocs +
+                ", ngoaiNgus=" + ngoaiNgus +
+                ", quaTrinhCongTacs=" + quaTrinhCongTacs +
+                ", banThanCoLamViecChoCheDoCus=" + banThanCoLamViecChoCheDoCus +
+                ", lamViecONuocNgoais=" + lamViecONuocNgoais +
+                ", khenThuongs=" + khenThuongs +
+                ", kyLuats=" + kyLuats +
+                ", quanHeGiaDinhs=" + quanHeGiaDinhs +
+                ", luongBanThans=" + luongBanThans +
+                ", phuCapKhacs=" + phuCapKhacs +
+                '}';
+    }
 }

@@ -1,9 +1,12 @@
 package sgu.hrm.module_utilities.services;
 
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
+
 import sgu.hrm.module_response.ResDTO;
 import sgu.hrm.module_response.ResEnum;
+
 import sgu.hrm.module_utilities.models.BacLuong;
 import sgu.hrm.module_utilities.models.CapBacLoaiQuanHamQuanDoi;
 import sgu.hrm.module_utilities.models.DanToc;
@@ -18,6 +21,7 @@ import sgu.hrm.module_utilities.models.TinhTrangSucKhoe;
 import sgu.hrm.module_utilities.models.TonGiao;
 import sgu.hrm.module_utilities.models.TrinhDoChuyenMon;
 import sgu.hrm.module_utilities.models.TrinhDoGiaoDucPhoThong;
+
 import sgu.hrm.module_utilities.repositories.BacLuongRepository;
 import sgu.hrm.module_utilities.repositories.CapBacLoaiQuanHamQuanDoiRepository;
 import sgu.hrm.module_utilities.repositories.DanTocRepository;
@@ -56,7 +60,7 @@ public class UtilitiesService {
 
     @Service
     public class BacLuongService implements IUtilitiesService<BacLuong> {
-        public ResDTO<List<BacLuong>> xem() {
+        public ResDTO<List<BacLuong>> xemDS() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -162,7 +166,7 @@ public class UtilitiesService {
     @Service
     public class LoaiQuanHamQuanDoiService implements IUtilitiesService<LoaiQuanHamQuanDoi> {
         @Override
-        public ResDTO<List<LoaiQuanHamQuanDoi>> xem() {
+        public ResDTO<List<LoaiQuanHamQuanDoi>> xemDS() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -216,7 +220,7 @@ public class UtilitiesService {
     @Service
     public class CapBacLoaiQuanHamQuanDoiService implements IUtilitiesService<CapBacLoaiQuanHamQuanDoi> {
         @Override
-        public ResDTO<List<CapBacLoaiQuanHamQuanDoi>> xem() {
+        public ResDTO<List<CapBacLoaiQuanHamQuanDoi>> xemDS() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -271,7 +275,7 @@ public class UtilitiesService {
     @Service
     public class DanhHieuNhaNuocPhongTangService implements IUtilitiesService<DanhHieuNhaNuocPhongTang> {
         @Override
-        public ResDTO<List<DanhHieuNhaNuocPhongTang>> xem() {
+        public ResDTO<List<DanhHieuNhaNuocPhongTang>> xemDS() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -325,7 +329,7 @@ public class UtilitiesService {
     @Service
     public class DanTocService implements IUtilitiesService<DanToc> {
         @Override
-        public ResDTO<List<DanToc>> xem() {
+        public ResDTO<List<DanToc>> xemDS() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -379,7 +383,7 @@ public class UtilitiesService {
     @Service
     public class DoiTuongChinhSachService implements IUtilitiesService<DoiTuongChinhSach> {
         @Override
-        public ResDTO<List<DoiTuongChinhSach>> xem() {
+        public ResDTO<List<DoiTuongChinhSach>> xemDS() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -433,7 +437,7 @@ public class UtilitiesService {
     @Service
     public class GioiTinhService implements IUtilitiesService<GioiTinh> {
         @Override
-        public ResDTO<List<GioiTinh>> xem() {
+        public ResDTO<List<GioiTinh>> xemDS() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -455,7 +459,7 @@ public class UtilitiesService {
     @Service
     public class HocHamService implements IUtilitiesService<HocHam> {
         @Override
-        public ResDTO<List<HocHam>> xem() {
+        public ResDTO<List<HocHam>> xemDS() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -509,7 +513,7 @@ public class UtilitiesService {
     @Service
     public class NhomMauService implements IUtilitiesService<NhomMau> {
         @Override
-        public ResDTO<List<NhomMau>> xem() {
+        public ResDTO<List<NhomMau>> xemDS() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -563,7 +567,7 @@ public class UtilitiesService {
     @Service
     public class ThanhPhanGiaDinhService implements IUtilitiesService<ThanhPhanGiaDinh> {
         @Override
-        public ResDTO<List<ThanhPhanGiaDinh>> xem() {
+        public ResDTO<List<ThanhPhanGiaDinh>> xemDS() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -617,7 +621,7 @@ public class UtilitiesService {
     @Service
     public class TinhTrangSucKhoeService implements IUtilitiesService<TinhTrangSucKhoe> {
         @Override
-        public ResDTO<List<TinhTrangSucKhoe>> xem() {
+        public ResDTO<List<TinhTrangSucKhoe>> xemDS() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -671,7 +675,7 @@ public class UtilitiesService {
     @Service
     public class TonGiaoService implements IUtilitiesService<TonGiao> {
         @Override
-        public ResDTO<List<TonGiao>> xem() {
+        public ResDTO<List<TonGiao>> xemDS() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -725,7 +729,7 @@ public class UtilitiesService {
     @Service
     public class TrinhDoChuyenMonService implements IUtilitiesService<TrinhDoChuyenMon> {
         @Override
-        public ResDTO<List<TrinhDoChuyenMon>> xem() {
+        public ResDTO<List<TrinhDoChuyenMon>> xemDS() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,
@@ -779,7 +783,7 @@ public class UtilitiesService {
     @Service
     public class TrinhDoGiaoDucPhoThongService implements IUtilitiesService<TrinhDoGiaoDucPhoThong> {
         @Override
-        public ResDTO<List<TrinhDoGiaoDucPhoThong>> xem() {
+        public ResDTO<List<TrinhDoGiaoDucPhoThong>> xemDS() {
             return new ResDTO<>(
                     ResEnum.THANH_CONG.getStatusCode(),
                     ResEnum.THANH_CONG,

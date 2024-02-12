@@ -20,7 +20,7 @@ import sgu.hrm.module_soyeulylich.models.response.ResSoYeuLyLich;
 import sgu.hrm.module_taikhoan.models.TaiKhoan;
 import sgu.hrm.module_utilities.models.BacLuong;
 import sgu.hrm.module_utilities.models.CapBacLoaiQuanHamQuanDoi;
-import sgu.hrm.models.CoQuanToChucDonViTuyenDung;
+// import sgu.hrm.models.CoQuanToChucDonViTuyenDung;
 import sgu.hrm.module_utilities.models.DanToc;
 import sgu.hrm.module_utilities.models.DanhHieuNhaNuocPhongTang;
 import sgu.hrm.module_utilities.models.DoiTuongChinhSach;
@@ -33,7 +33,7 @@ import sgu.hrm.module_utilities.models.TrinhDoChuyenMon;
 import sgu.hrm.module_utilities.models.TrinhDoGiaoDucPhoThong;
 import sgu.hrm.module_utilities.repositories.BacLuongRepository;
 import sgu.hrm.module_utilities.repositories.CapBacLoaiQuanHamQuanDoiRepository;
-import sgu.hrm.repository.CoQuanToChucDonViTuyenDungRepository;
+//import sgu.hrm.repository.CoQuanToChucDonViTuyenDungRepository;
 import sgu.hrm.module_utilities.repositories.DanTocRepository;
 import sgu.hrm.module_utilities.repositories.DanhHieuNhaNuocPhongTangRepository;
 import sgu.hrm.module_utilities.repositories.DoiTuongChinhSachRepository;
@@ -57,7 +57,7 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
     final GioiTinhRepository gioiTinhRepository;
     final DanTocRepository danTocRepository;
     final ThanhPhanGiaDinhRepository thanhPhanGiaDinhRepository;
-    final CoQuanToChucDonViTuyenDungRepository coQuanToChucDonViTuyenDungRepository;
+//    final CoQuanToChucDonViTuyenDungRepository coQuanToChucDonViTuyenDungRepository;
     final CapBacLoaiQuanHamQuanDoiRepository capBacLoaiQuanHamQuanDoiRepository;
     final DoiTuongChinhSachRepository doiTuongChinhSachRepository;
     final TrinhDoGiaoDucPhoThongRepository trinhDoGiaoDucPhoThongRepository;
@@ -221,7 +221,7 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
                 .sinhNgay(soYeuLyLich.getSinhNgay())
                 .noiSinh(soYeuLyLich.getNoiSinh())
                 .queQuan(soYeuLyLich.getQueQuan())
-                .danToc(Optional.ofNullable(soYeuLyLich.getDanToc()).map(toc -> toc.getName()).orElse(""))
+                .danToc(Optional.ofNullable(soYeuLyLich.getDanToc()).map(DanToc::getName).orElse(""))
                 .soCCCD(soYeuLyLich.getSoCCCD())
                 .ngayCapCCCD(soYeuLyLich.getNgayCapCCCD())
                 .soDienThoai(soYeuLyLich.getSoDienThoai())
@@ -231,7 +231,7 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
                 .thanhPhanGiaDinh(Optional.ofNullable(soYeuLyLich.getThanhPhanGiaDinh()).map(ThanhPhanGiaDinh::getName).orElse(""))
                 .ngheNghiepTruocKhiTuyenDung(soYeuLyLich.getNgheNghiepTruocKhiTuyenDung())
                 .ngayDuocTuyenDungLanDau(soYeuLyLich.getNgayDuocTuyenDungLanDau())
-                .coQuanToChucDonViTuyenDung(soYeuLyLich.getCoQuanToChucDonViTuyenDung() != null ? soYeuLyLich.getCoQuanToChucDonViTuyenDung().getName() : "")
+                .coQuanToChucDonViTuyenDung(soYeuLyLich.getCoQuanToChucDonViTuyenDung() != null ? soYeuLyLich.getCoQuanToChucDonViTuyenDung() : "")
                 .ngayVaoCoQuanHienDangCongTac(soYeuLyLich.getNgayVaoCoQuanHienDangCongTac())
                 .ngayVaoDangCongSanVietNam(soYeuLyLich.getNgayVaoDangCongSanVietNam())
                 .ngayChinhThuc(soYeuLyLich.getNgayChinhThuc())
@@ -286,7 +286,7 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
         GioiTinh gioiTinh = gioiTinhRepository.findByName(reqSoYeuLyLich.gioiTinh());
         DanToc danToc = danTocRepository.findByName(reqSoYeuLyLich.danToc());
         ThanhPhanGiaDinh thanhPhanGiaDinh = thanhPhanGiaDinhRepository.findByName(reqSoYeuLyLich.thanhPhanGiaDinh());
-        CoQuanToChucDonViTuyenDung coQuanToChucDonViTuyenDung = coQuanToChucDonViTuyenDungRepository.findByName(reqSoYeuLyLich.coQuanToChucDonViTuyenDung());
+//        CoQuanToChucDonViTuyenDung coQuanToChucDonViTuyenDung = coQuanToChucDonViTuyenDungRepository.findByName(reqSoYeuLyLich.coQuanToChucDonViTuyenDung());
         CapBacLoaiQuanHamQuanDoi capBacLoaiQuanHamQuanDoi = capBacLoaiQuanHamQuanDoiRepository.findByName(reqSoYeuLyLich.capBacLoaiQuanHamQuanDoi());
         DoiTuongChinhSach doiTuongChinhSach = doiTuongChinhSachRepository.findByName(reqSoYeuLyLich.doiTuongChinhSach());
         TrinhDoGiaoDucPhoThong trinhDoGiaoDucPhoThong = trinhDoGiaoDucPhoThongRepository.findByName(reqSoYeuLyLich.trinhDoGiaoDucPhoThong());
@@ -313,7 +313,7 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
                 .thanhPhanGiaDinh(thanhPhanGiaDinh)
                 .ngheNghiepTruocKhiTuyenDung(reqSoYeuLyLich.ngheNghiepTruocKhiTuyenDung())
                 .ngayDuocTuyenDungLanDau(reqSoYeuLyLich.ngayDuocTuyenDungLanDau())
-                .coQuanToChucDonViTuyenDung(coQuanToChucDonViTuyenDung)
+                .coQuanToChucDonViTuyenDung(reqSoYeuLyLich.coQuanToChucDonViTuyenDung())
                 .ngayVaoCoQuanHienDangCongTac(reqSoYeuLyLich.ngayVaoCoQuanHienDangCongTac())
                 .ngayVaoDangCongSanVietNam(reqSoYeuLyLich.ngayVaoDangCongSanVietNam())
                 .ngayChinhThuc(reqSoYeuLyLich.ngayChinhThuc())

@@ -1,4 +1,4 @@
-package sgu.hrm.repository;
+package sgu.hrm.module_taikhoan.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
