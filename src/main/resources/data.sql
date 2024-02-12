@@ -3,9 +3,9 @@ insert into `role_taikhoan` (id, title)
 values (0, 'ADMIN'),
        (1, 'EMPLOYEE');
 -- taikhoan
-INSERT INTO taikhoan (`username`, `password`, `status`)
-VALUES ('ThuNTM', '001225145523', 1),
-       ('TaiNG', '001478111451', 1);
+INSERT INTO taikhoan (`username`, `password`)
+VALUES ('ThuNTM', '001225145523'),
+       ('TaiNG', '001478111451');
 -- nhóm máu
 INSERT INTO nhom_mau (id, name)
 values (0, 'A'),
