@@ -79,6 +79,7 @@ public class TaiKhoanService implements ITaiKhoanService {
                 taiKhoan.getHoVaTen(),
                 taiKhoan.getSoCCCD(),
                 taiKhoan.getUsername(),
+                taiKhoan.getEmail(),
                 taiKhoan.getSoYeuLyLich().getId(),
                 (taiKhoan.getRoleTaiKhoan().getId() == 1) ? "EMPLOYEE" : "ADMIN",
                 taiKhoan.isTrangThai());
@@ -189,6 +190,7 @@ public class TaiKhoanService implements ITaiKhoanService {
                     .soCCCD(reqTaiKhoan.soCCCD())
                     .username(newUsername)
                     .password(reqTaiKhoan.soCCCD())
+                    .email(reqTaiKhoan.email())
                     .roleTaiKhoan(roleTaiKhoanRepository.findById(1).get())
                     .trangThai(true)
                     .create_at(LocalDateTime.now())
@@ -231,10 +233,13 @@ public class TaiKhoanService implements ITaiKhoanService {
             throw new RuntimeException(e.getCause());
         } finally {
             if (taiKhoan != null) {
+                Properties properties = new Properties();
+                properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
+                properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+                properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
                 // create the producer
-                KafkaProducer<String, String> producer = new KafkaProducer<>(KafkaTopicSendMail.properties);
-                ProducerRecord<String, String> producerRecord =
-                        new ProducerRecord<>("send_mail", taiKhoan.toString());
+                KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
+                ProducerRecord<String, String> producerRecord = new ProducerRecord<>("send_mail", taiKhoan.toString());
                 // send data - asynchronous
                 producer.send(producerRecord);
                 //flush + close

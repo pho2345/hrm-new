@@ -13,7 +13,7 @@ import java.util.Properties;
 //@Component
 @Configuration
 public class KafkaTopicSendMail {
-    private final String bootstrapServers = "127.0.0.1:9092";
+    private final String bootstrapServers = "172.24.218.158:9092";
     private final Logger log = LoggerFactory.getLogger(KafkaTopicSendMail.class);
     public static Properties properties = new Properties();
 
