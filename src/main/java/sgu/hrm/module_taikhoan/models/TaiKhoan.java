@@ -50,7 +50,7 @@ public class TaiKhoan extends DateTimeObject implements UserDetails {
     @Column(columnDefinition = "varchar(30) unique")
     String username;
 
-    @Column(columnDefinition = "varchar(100)")
+    @Column(columnDefinition = "varchar(20)")
     String password;
 
     @Column(columnDefinition = "varchar(250) not null default ''")

@@ -233,12 +233,8 @@ public class TaiKhoanService implements ITaiKhoanService {
             throw new RuntimeException(e.getCause());
         } finally {
             if (taiKhoan != null) {
-                Properties properties = new Properties();
-                properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
-                properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-                properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
                 // create the producer
-                KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
+                KafkaProducer<String, String> producer = new KafkaProducer<>(KafkaTopicSendMail.properties);
                 ProducerRecord<String, String> producerRecord = new ProducerRecord<>("send_mail", taiKhoan.toString());
                 // send data - asynchronous
                 producer.send(producerRecord);
