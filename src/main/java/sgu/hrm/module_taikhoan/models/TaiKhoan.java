@@ -50,8 +50,11 @@ public class TaiKhoan extends DateTimeObject implements UserDetails {
     @Column(columnDefinition = "varchar(30) unique")
     String username;
 
-    @Column(columnDefinition = "varchar(100)")
+    @Column(columnDefinition = "varchar(20)")
     String password;
+
+    @Column(columnDefinition = "varchar(250) not null default ''")
+    String email;
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "role_tai_khoan_fk"), name = "role", referencedColumnName = "id", columnDefinition = "tinyint")
@@ -96,6 +99,7 @@ public class TaiKhoan extends DateTimeObject implements UserDetails {
                 ", soCCCD='" + soCCCD + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
                 ", roleTaiKhoan=" + roleTaiKhoan.toString() +
                 ", soYeuLyLich=" + soYeuLyLich.toString() +
                 '}';

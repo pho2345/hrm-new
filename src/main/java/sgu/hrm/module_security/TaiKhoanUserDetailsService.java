@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import sgu.hrm.module_taikhoan.models.TaiKhoan;
 import sgu.hrm.module_taikhoan.repository.TaiKhoanRepository;
 
-
 @Service
 public class TaiKhoanUserDetailsService implements UserDetailsService {
     final TaiKhoanRepository taiKhoanRepository;

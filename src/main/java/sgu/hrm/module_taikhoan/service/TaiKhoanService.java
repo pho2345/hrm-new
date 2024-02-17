@@ -79,7 +79,8 @@ public class TaiKhoanService implements ITaiKhoanService {
                 taiKhoan.getHoVaTen(),
                 taiKhoan.getSoCCCD(),
                 taiKhoan.getUsername(),
-                Optional.ofNullable(taiKhoan.getSoYeuLyLich()).map(syll->syll.getId()).orElse(null),
+                taiKhoan.getEmail(),
+                taiKhoan.getSoYeuLyLich().getId(),
                 (taiKhoan.getRoleTaiKhoan().getId() == 1) ? "EMPLOYEE" : "ADMIN",
                 taiKhoan.isTrangThai());
     }
@@ -189,6 +190,7 @@ public class TaiKhoanService implements ITaiKhoanService {
                     .soCCCD(reqTaiKhoan.soCCCD())
                     .username(newUsername)
                     .password(reqTaiKhoan.soCCCD())
+                    .email(reqTaiKhoan.email())
                     .roleTaiKhoan(roleTaiKhoanRepository.findById(1).get())
                     .trangThai(true)
                     .create_at(LocalDateTime.now())
@@ -233,8 +235,7 @@ public class TaiKhoanService implements ITaiKhoanService {
             if (taiKhoan != null) {
                 // create the producer
                 KafkaProducer<String, String> producer = new KafkaProducer<>(KafkaTopicSendMail.properties);
-                ProducerRecord<String, String> producerRecord =
-                        new ProducerRecord<>("send_mail", taiKhoan.toString());
+                ProducerRecord<String, String> producerRecord = new ProducerRecord<>("send_mail", taiKhoan.toString());
                 // send data - asynchronous
                 producer.send(producerRecord);
                 //flush + close

@@ -10,6 +10,7 @@ public record ResTaiKhoan(
         String hoVaten,
         String soCCCD,
         String username,
+        String email,
         UUID maSoYeuLyLich,
         String role,
         boolean trangThai
