@@ -55,7 +55,9 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception {
-        security.csrf(AbstractHttpConfigurer::disable)
+        security
+                .cors(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(configure ->
                                 configure
                                         .requestMatchers("/dang-nhap").permitAll()

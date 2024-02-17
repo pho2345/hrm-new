@@ -79,7 +79,7 @@ public class TaiKhoanService implements ITaiKhoanService {
                 taiKhoan.getHoVaTen(),
                 taiKhoan.getSoCCCD(),
                 taiKhoan.getUsername(),
-                taiKhoan.getSoYeuLyLich().getId(),
+                Optional.ofNullable(taiKhoan.getSoYeuLyLich()).map(syll->syll.getId()).orElse(null),
                 (taiKhoan.getRoleTaiKhoan().getId() == 1) ? "EMPLOYEE" : "ADMIN",
                 taiKhoan.isTrangThai());
     }
@@ -274,9 +274,9 @@ public class TaiKhoanService implements ITaiKhoanService {
             }
             //không tạo refresh token ok
             return new ResDTO<>(
-                    ResEnum.DANG_NHAP_THANH_CONG.getStatusCode(),
-                    ResEnum.DANG_NHAP_THANH_CONG,
-                    ResEnum.DANG_NHAP_THANH_CONG.name()
+                    ResEnum.HONG_TIM_THAY.getStatusCode(),
+                    ResEnum.HONG_TIM_THAY,
+                    ResEnum.HONG_TIM_THAY.name()
             );
         } catch (AuthenticationException e) {
             return new ResDTO<>(
