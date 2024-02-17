@@ -14,7 +14,6 @@ import lombok.experimental.FieldDefaults;
 import sgu.hrm.models.DateTimeObject;
 
 import java.util.List;
-
 @Entity
 @Table(name = "loai_vien_chuc")
 @Getter

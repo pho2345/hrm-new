@@ -1,29 +1,20 @@
 package sgu.hrm.module_taikhoan.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import sgu.hrm.module_response.ResDTO;
-import sgu.hrm.module_response.ResEnum;
-import sgu.hrm.module_taikhoan.models.TaiKhoan;
 import sgu.hrm.module_taikhoan.models.request.ReqMatKhau;
 import sgu.hrm.module_taikhoan.models.request.ReqTaiKhoan;
-import sgu.hrm.module_taikhoan.models.request.ReqTaiKhoanLogin;
 import sgu.hrm.module_taikhoan.models.resopnse.ResTaiKhoan;
 import sgu.hrm.module_taikhoan.service.ITaiKhoanService;
 
-import java.security.Principal;
-import java.util.List;
 
 @RestController
 public class TaiKhoanController {

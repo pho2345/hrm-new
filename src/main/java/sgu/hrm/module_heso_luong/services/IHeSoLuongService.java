@@ -7,7 +7,6 @@ import sgu.hrm.module_heso_luong.models.LoaiVienChuc;
 import sgu.hrm.module_heso_luong.models.NhomLoaiCongChuc;
 import sgu.hrm.module_heso_luong.models.NhomLoaiVienChuc;
 import sgu.hrm.module_response.ResDTO;
-import sgu.hrm.module_utilities.models.BacLuong;
 
 import java.util.List;
 

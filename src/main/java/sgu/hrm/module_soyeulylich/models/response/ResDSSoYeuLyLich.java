@@ -2,7 +2,6 @@ package sgu.hrm.module_soyeulylich.models.response;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
-
 public record ResDSSoYeuLyLich(
         UUID id,
         String ho_va_ten,

@@ -1,6 +1,5 @@
 package sgu.hrm.module_soyeulylich_chitiet.services;
 
-import org.springframework.stereotype.Service;
 import sgu.hrm.module_response.ResDTO;
 import sgu.hrm.module_soyeulylich_chitiet.models.BanThanCoLamViecChoCheDoCu;
 import sgu.hrm.module_soyeulylich_chitiet.models.KhenThuong;
@@ -30,22 +29,8 @@ import sgu.hrm.module_soyeulylich_chitiet.models.request.ReqPhuCapKhac;
 import sgu.hrm.module_soyeulylich_chitiet.models.request.ReqQuaTrinhCongTac;
 import sgu.hrm.module_soyeulylich_chitiet.models.request.ReqQuanHeGiaDinh;
 import sgu.hrm.module_soyeulylich_chitiet.models.request.ReqTinHoc;
-import sgu.hrm.module_soyeulylich_chitiet.models.response.ResBanThanCoLamViecChoCheDoCu;
-import sgu.hrm.module_soyeulylich_chitiet.models.response.ResKienThucAnNinhQuocPhong;
-import sgu.hrm.module_soyeulylich_chitiet.models.response.ResKyLuat;
-import sgu.hrm.module_soyeulylich_chitiet.models.response.ResLamViecONuocNgoai;
-import sgu.hrm.module_soyeulylich_chitiet.models.response.ResLuongBanThan;
-import sgu.hrm.module_soyeulylich_chitiet.models.response.ResLyLuanChinhTri;
-import sgu.hrm.module_soyeulylich_chitiet.models.response.ResNghiepVuChuyenNganh;
-import sgu.hrm.module_soyeulylich_chitiet.models.response.ResNgoaiNgu;
-import sgu.hrm.module_soyeulylich_chitiet.models.response.ResPhuCapKhac;
-import sgu.hrm.module_soyeulylich_chitiet.models.response.ResQuaTrinhCongTac;
-import sgu.hrm.module_soyeulylich_chitiet.models.response.ResQuanHeGiaDinh;
-import sgu.hrm.module_soyeulylich_chitiet.models.response.ResTinHoc;
-
 
 import java.util.List;
-import java.util.UUID;
 
 public interface ISoYeuLyLichChiTietServices<T, H> {
     ResDTO<List<?>> xemDanhSachThongTin();

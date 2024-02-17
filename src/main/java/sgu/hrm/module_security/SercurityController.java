@@ -1,6 +1,5 @@
 package sgu.hrm.module_security;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +10,6 @@ import sgu.hrm.module_response.ResDTO;
 import sgu.hrm.module_response.ResEnum;
 import sgu.hrm.module_taikhoan.models.request.ReqTaiKhoanLogin;
 import sgu.hrm.module_taikhoan.service.ITaiKhoanService;
-import sgu.hrm.module_taikhoan.service.TaiKhoanService;
 
 @RestController
 @RequiredArgsConstructor
@@ -49,8 +47,4 @@ public class SercurityController {
             );
         }
     }
-    //    @GetMapping("/login")
-//    public void getSomething(HttpServletResponse response) throws Exception {
-//        response.sendRedirect(" /api/v1/so-yeu-ly-lich");
-//    }
 }

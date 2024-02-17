@@ -3,19 +3,17 @@ package sgu.hrm.module_soyeulylich_chitiet.models;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.experimental.SuperBuilder;
+
 import sgu.hrm.models.DateTimeObject;
 
-import java.util.List;
 
 @Entity
 @Table(name = "loai_so_yeu_ly_lich_chitiet")
