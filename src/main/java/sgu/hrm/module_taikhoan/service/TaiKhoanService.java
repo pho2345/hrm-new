@@ -286,6 +286,7 @@ public class TaiKhoanService implements ITaiKhoanService {
                     ResEnum.DANG_NHAP_THAT_BAI.name()
             );
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException(e.getCause());
         }
     }
