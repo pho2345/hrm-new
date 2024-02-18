@@ -20,7 +20,6 @@ import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import sgu.hrm.models.DateTimeObject;
 import sgu.hrm.module_soyeulylich.models.SoYeuLyLich;
 

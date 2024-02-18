@@ -5,11 +5,7 @@ import sgu.hrm.module_soyeulylich.models.request.ReqDSSoYeuLyLich;
 import sgu.hrm.module_soyeulylich.models.request.ReqSoYeuLyLich;
 import sgu.hrm.module_soyeulylich.models.response.ResDSSoYeuLyLich;
 import sgu.hrm.module_soyeulylich.models.SoYeuLyLich;
-import sgu.hrm.module_soyeulylich.models.response.ResSoYeuLyLich;
-import sgu.hrm.module_taikhoan.models.TaiKhoan;
-
-import java.util.Optional;
-import java.util.UUID;
+import sgu.hrm.module_soyeulylich.models.response.ResSoYeuLyLich;;
 
 public interface ISoYeuLyLichService {
     ResDTO<?> xemThongTinSoYeuLyLich();

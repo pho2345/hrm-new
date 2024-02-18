@@ -273,7 +273,7 @@ public class SoYeuLyLichChiTietServices {
         public ResDTO<?> xoaThongTin(int id) {
             try {
                 TaiKhoan taiKhoan = crush_em_T();
-                BanThanCoLamViecChoCheDoCu banThanCoLamViecChoCheDoCu = null;
+                BanThanCoLamViecChoCheDoCu banThanCoLamViecChoCheDoCu;
                 if (taiKhoan != null) {
                     banThanCoLamViecChoCheDoCu = taiKhoan.getSoYeuLyLich().getBanThanCoLamViecChoCheDoCus().stream().filter(
                             cu -> cu.getId() == id

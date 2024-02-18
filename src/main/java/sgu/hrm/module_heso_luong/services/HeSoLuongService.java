@@ -1,9 +1,9 @@
 package sgu.hrm.module_heso_luong.services;
 
 import lombok.AccessLevel;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+
 import org.springframework.stereotype.Service;
 import sgu.hrm.module_heso_luong.models.HeSoLuongCongChuc;
 import sgu.hrm.module_heso_luong.models.HeSoLuongVienChuc;

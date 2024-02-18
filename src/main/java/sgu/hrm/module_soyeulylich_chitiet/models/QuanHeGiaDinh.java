@@ -20,7 +20,7 @@ import lombok.experimental.SuperBuilder;
 import sgu.hrm.models.DateTimeObject;
 import sgu.hrm.module_soyeulylich.models.SoYeuLyLich;
 
-//gia dinh bao gom ruot va ben vo hoac chong luon
+/** gia dinh bao gom ruot va ben vo hoac chong luon **/
 @Entity
 @Table(name = "quan_he_gia_dinh")
 @Getter

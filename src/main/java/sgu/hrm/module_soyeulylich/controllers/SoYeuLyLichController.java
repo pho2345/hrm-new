@@ -12,11 +12,8 @@ import sgu.hrm.module_response.ResDTO;
 import sgu.hrm.module_soyeulylich.models.request.ReqDSSoYeuLyLich;
 import sgu.hrm.module_soyeulylich.models.request.ReqSoYeuLyLich;
 import sgu.hrm.module_soyeulylich.models.response.ResDSSoYeuLyLich;
-import sgu.hrm.module_soyeulylich.models.response.ResSoYeuLyLich;
 import sgu.hrm.module_soyeulylich.services.ISoYeuLyLichService;
 
-import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "")

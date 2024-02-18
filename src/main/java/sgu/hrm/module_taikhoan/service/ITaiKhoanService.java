@@ -1,16 +1,10 @@
 package sgu.hrm.module_taikhoan.service;
 
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import sgu.hrm.module_response.ResDTO;
 import sgu.hrm.module_taikhoan.models.TaiKhoan;
-import sgu.hrm.module_taikhoan.models.request.ReqMatKhau;
 import sgu.hrm.module_taikhoan.models.request.ReqTaiKhoan;
 import sgu.hrm.module_taikhoan.models.request.ReqTaiKhoanLogin;
 import sgu.hrm.module_taikhoan.models.resopnse.ResTaiKhoan;
-import sgu.hrm.module_taikhoan.repository.TaiKhoanRepository;
-//import sgu.hrm.module_taikhoan.models.resopnse.TaiKhoanRes;
 
 import java.text.Normalizer;
 import java.util.List;

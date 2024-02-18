@@ -1,13 +1,9 @@
 package sgu.hrm.module_heso_luong.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Column;
+
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import sgu.hrm.module_utilities.models.BacLuong;
 
 import java.io.Serializable;
 

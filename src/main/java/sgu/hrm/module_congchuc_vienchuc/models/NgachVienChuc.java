@@ -14,7 +14,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import sgu.hrm.models.DateTimeObject;
-import sgu.hrm.module_congchuc_vienchuc.models.BacNgachVienChuc;
 
 @Entity
 @Table(name = "ngach_vien_chuc")

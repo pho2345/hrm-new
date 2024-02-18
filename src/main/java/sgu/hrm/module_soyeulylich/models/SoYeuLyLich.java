@@ -59,10 +59,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-/*
+/**
  * xung đột khi khai báo biến
  * khi dùng columnDefinition trong annotation
- * */
+**/
 
 @Entity
 @Table(name = "so_yeu_ly_lich")

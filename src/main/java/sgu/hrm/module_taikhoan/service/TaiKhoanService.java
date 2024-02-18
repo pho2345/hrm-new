@@ -5,9 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,7 +20,6 @@ import sgu.hrm.module_kafka.KafkaTopicSendMail;
 import sgu.hrm.module_response.ResDTO;
 import sgu.hrm.module_response.ResEnum;
 import sgu.hrm.module_soyeulylich.models.SoYeuLyLich;
-//import sgu.hrm.module_soyeulylich.models.response.ResDSSoYeuLyLich;
 import sgu.hrm.module_soyeulylich.repository.SoYeuLyLichRepository;
 import sgu.hrm.module_security.jwt_utilities.JWTUtilities;
 import sgu.hrm.module_taikhoan.models.TaiKhoan;
@@ -38,7 +35,6 @@ import java.time.LocalDateTime;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Properties;
 
 @Service
 @RequiredArgsConstructor
@@ -80,7 +76,7 @@ public class TaiKhoanService implements ITaiKhoanService {
                 taiKhoan.getSoCCCD(),
                 taiKhoan.getUsername(),
                 taiKhoan.getEmail(),
-                taiKhoan.getSoYeuLyLich().getId(),
+                Optional.ofNullable(taiKhoan.getSoYeuLyLich()).map(SoYeuLyLich::getId).orElse(null),
                 (taiKhoan.getRoleTaiKhoan().getId() == 1) ? "EMPLOYEE" : "ADMIN",
                 taiKhoan.isTrangThai());
     }
