@@ -9,6 +9,7 @@ import sgu.hrm.module_response.ResEnum;
 
 import sgu.hrm.module_utilities.models.BacLuong;
 import sgu.hrm.module_utilities.models.CapBacLoaiQuanHamQuanDoi;
+import sgu.hrm.module_utilities.models.CapNhomChucDanhDang;
 import sgu.hrm.module_utilities.models.DanToc;
 import sgu.hrm.module_utilities.models.DanhHieuNhaNuocPhongTang;
 import sgu.hrm.module_utilities.models.DoiTuongChinhSach;
@@ -24,18 +25,24 @@ import sgu.hrm.module_utilities.models.TrinhDoGiaoDucPhoThong;
 
 import sgu.hrm.module_utilities.repositories.BacLuongRepository;
 import sgu.hrm.module_utilities.repositories.CapBacLoaiQuanHamQuanDoiRepository;
+import sgu.hrm.module_utilities.repositories.CapNhomChucDanhDangRepository;
+import sgu.hrm.module_utilities.repositories.ChucDanhDangRepository;
+import sgu.hrm.module_utilities.repositories.ChucVuRepository;
 import sgu.hrm.module_utilities.repositories.DanTocRepository;
 import sgu.hrm.module_utilities.repositories.DanhHieuNhaNuocPhongTangRepository;
 import sgu.hrm.module_utilities.repositories.DoiTuongChinhSachRepository;
 import sgu.hrm.module_utilities.repositories.GioiTinhRepository;
+import sgu.hrm.module_utilities.repositories.HinhThucKhenThuongRepository;
 import sgu.hrm.module_utilities.repositories.HocHamRepository;
 import sgu.hrm.module_utilities.repositories.LoaiQuanHamQuanDoiRepository;
+import sgu.hrm.module_utilities.repositories.NhomChucDanhDangRepository;
 import sgu.hrm.module_utilities.repositories.NhomMauRepository;
 import sgu.hrm.module_utilities.repositories.ThanhPhanGiaDinhRepository;
 import sgu.hrm.module_utilities.repositories.TinhTrangSucKhoeRepository;
 import sgu.hrm.module_utilities.repositories.TonGiaoRepository;
 import sgu.hrm.module_utilities.repositories.TrinhDoChuyenMonRepository;
 import sgu.hrm.module_utilities.repositories.TrinhDoGiaoDucPhoThongRepository;
+import sgu.hrm.module_utilities.repositories.ViTriViecLamRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -44,19 +51,25 @@ import java.util.Optional;
 @RequiredArgsConstructor // if field is set final or @not null
 public class UtilitiesService {
     private final BacLuongRepository bacLuongRepository;
-    private final LoaiQuanHamQuanDoiRepository loaiQuanHamQuanDoiRepository;
     private final CapBacLoaiQuanHamQuanDoiRepository capBacLoaiQuanHamQuanDoiRepository;
+    private final CapNhomChucDanhDangRepository capNhomChucDanhDangRepository;
+    private final ChucDanhDangRepository chucDanhDangRepository;
+    private final ChucVuRepository chucVuRepository;
     private final DanhHieuNhaNuocPhongTangRepository danhHieuNhaNuocPhongTangRepository;
     private final DanTocRepository danTocRepository;
     private final DoiTuongChinhSachRepository doiTuongChinhSachRepository;
     private final GioiTinhRepository gioiTinhRepository;
+    private final HinhThucKhenThuongRepository hinhThucKhenThuongRepository;
     private final HocHamRepository hocHamRepository;
+    private final LoaiQuanHamQuanDoiRepository loaiQuanHamQuanDoiRepository;
+    private final NhomChucDanhDangRepository nhomChucDanhDangRepository;
     private final NhomMauRepository nhomMauRepository;
     private final ThanhPhanGiaDinhRepository thanhPhanGiaDinhRepository;
     private final TinhTrangSucKhoeRepository tinhTrangSucKhoeRepository;
     private final TonGiaoRepository tonGiaoRepository;
     private final TrinhDoChuyenMonRepository trinhDoChuyenMonRepository;
     private final TrinhDoGiaoDucPhoThongRepository trinhDoGiaoDucPhoThongRepository;
+    private final ViTriViecLamRepository viTriViecLamRepository;
 
     @Service
     public class BacLuongService implements IUtilitiesService<BacLuong> {
@@ -111,58 +124,6 @@ public class UtilitiesService {
         }
     }
 
-    //    @Service
-//    public class BacLuongService implements IUtilitiesService.IBacLuongService {
-//        public ResDTO<List<BacLuong>> xemBacLuong() {
-//            return new ResDTO<>(
-//                    ResEnum.THANH_CONG.getStatusCode(),
-//                    ResEnum.THANH_CONG,
-//                    bacLuongRepository.findAll()
-//            );
-//        }
-//
-//        @Override
-//        public ResDTO<BacLuong> themBacLuong(String name) {
-//            BacLuong bacLuong = new BacLuong(name);
-//            try {
-//                return new ResDTO<>(
-//                        ResEnum.TAO_THANH_CONG.getStatusCode(),
-//                        ResEnum.TAO_THANH_CONG,
-//                        bacLuongRepository.save(bacLuong)
-//                );
-//            } catch (RuntimeException e) {
-//                return new ResDTO<>(
-//                        ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                        ResEnum.KHONG_HOP_LE,
-//                        null
-//                );
-//            }
-//        }
-//
-//        @Override
-//        public ResDTO<BacLuong> suaBacLuong(BacLuong luong) {
-//            Optional<BacLuong> bacLuong = bacLuongRepository.findById(luong.getId());
-//            try {
-//                if (bacLuong.isPresent()) {
-//                    luong.setUpdate_at();
-//                    return new ResDTO<>(
-//                            ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
-//                            ResEnum.CAP_NHAT_THANH_CONG,
-//                            bacLuongRepository.save(luong));
-//                }
-//                return new ResDTO<>(
-//                        ResEnum.HONG_TIM_THAY.getStatusCode(),
-//                        ResEnum.HONG_TIM_THAY,
-//                        null);
-//            } catch (RuntimeException e) {
-//                return new ResDTO<>(
-//                        ResEnum.KHONG_HOP_LE.getStatusCode(),
-//                        ResEnum.KHONG_HOP_LE,
-//                        null
-//                );
-//            }
-//        }
-//    }
     @Service
     public class LoaiQuanHamQuanDoiService implements IUtilitiesService<LoaiQuanHamQuanDoi> {
         @Override

@@ -9,6 +9,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import sgu.hrm.module_congchuc_vienchuc.models.NgachCongChuc;
+import sgu.hrm.module_congchuc_vienchuc.models.NgachVienChuc;
+import sgu.hrm.module_congchuc_vienchuc.repositories.NgachCongChucRepository;
+import sgu.hrm.module_congchuc_vienchuc.repositories.NgachVienChucRepository;
 import sgu.hrm.module_response.ResDTO;
 import sgu.hrm.module_response.ResEnum;
 import sgu.hrm.module_soyeulylich.models.request.ReqDSSoYeuLyLich;
@@ -21,6 +25,7 @@ import sgu.hrm.module_taikhoan.models.TaiKhoan;
 import sgu.hrm.module_utilities.models.BacLuong;
 import sgu.hrm.module_utilities.models.CapBacLoaiQuanHamQuanDoi;
 // import sgu.hrm.models.CoQuanToChucDonViTuyenDung;
+import sgu.hrm.module_utilities.models.ChucVu;
 import sgu.hrm.module_utilities.models.DanToc;
 import sgu.hrm.module_utilities.models.DanhHieuNhaNuocPhongTang;
 import sgu.hrm.module_utilities.models.DoiTuongChinhSach;
@@ -31,9 +36,11 @@ import sgu.hrm.module_utilities.models.ThanhPhanGiaDinh;
 import sgu.hrm.module_utilities.models.TinhTrangSucKhoe;
 import sgu.hrm.module_utilities.models.TrinhDoChuyenMon;
 import sgu.hrm.module_utilities.models.TrinhDoGiaoDucPhoThong;
+import sgu.hrm.module_utilities.models.ViTriViecLam;
 import sgu.hrm.module_utilities.repositories.BacLuongRepository;
 import sgu.hrm.module_utilities.repositories.CapBacLoaiQuanHamQuanDoiRepository;
 //import sgu.hrm.repository.CoQuanToChucDonViTuyenDungRepository;
+import sgu.hrm.module_utilities.repositories.ChucVuRepository;
 import sgu.hrm.module_utilities.repositories.DanTocRepository;
 import sgu.hrm.module_utilities.repositories.DanhHieuNhaNuocPhongTangRepository;
 import sgu.hrm.module_utilities.repositories.DoiTuongChinhSachRepository;
@@ -44,6 +51,7 @@ import sgu.hrm.module_utilities.repositories.ThanhPhanGiaDinhRepository;
 import sgu.hrm.module_utilities.repositories.TinhTrangSucKhoeRepository;
 import sgu.hrm.module_utilities.repositories.TrinhDoChuyenMonRepository;
 import sgu.hrm.module_utilities.repositories.TrinhDoGiaoDucPhoThongRepository;
+import sgu.hrm.module_utilities.repositories.ViTriViecLamRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -57,7 +65,7 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
     final GioiTinhRepository gioiTinhRepository;
     final DanTocRepository danTocRepository;
     final ThanhPhanGiaDinhRepository thanhPhanGiaDinhRepository;
-//    final CoQuanToChucDonViTuyenDungRepository coQuanToChucDonViTuyenDungRepository;
+    //    final CoQuanToChucDonViTuyenDungRepository coQuanToChucDonViTuyenDungRepository;
     final CapBacLoaiQuanHamQuanDoiRepository capBacLoaiQuanHamQuanDoiRepository;
     final DoiTuongChinhSachRepository doiTuongChinhSachRepository;
     final TrinhDoGiaoDucPhoThongRepository trinhDoGiaoDucPhoThongRepository;
@@ -67,6 +75,10 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
     final BacLuongRepository bacLuongRepository;
     final TinhTrangSucKhoeRepository tinhTrangSucKhoeRepository;
     final NhomMauRepository nhomMauRepository;
+    final ChucVuRepository chucVuRepository;
+    final NgachCongChucRepository ngachCongChucRepository;
+    final NgachVienChucRepository ngachVienChucRepository;
+    final ViTriViecLamRepository viTriViecLamRepository;
 
     @Override
     public ResDTO<?> xemThongTinSoYeuLyLich() {
@@ -198,6 +210,15 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
         }
     }
 
+    private double tinhLuongThucNhan(double tienLuong, float heSoLuongNgachNgheNghiep, double phanTramHuongLuongNgachNgheNghiep,
+                                     float phuCapThamNienVuotKhungNgachNgheNghiep, float phuCapChucVu, float phuCapKiemNhiem, float phuCapKhac,
+                                     double luongTheoMucTien, double phamTramHuongLuong, double phuCapThamNienVuotKhung
+    ) {
+
+        return (tienLuong * (heSoLuongNgachNgheNghiep * phanTramHuongLuongNgachNgheNghiep + phuCapThamNienVuotKhungNgachNgheNghiep)
+                + phuCapChucVu + phuCapKiemNhiem + phuCapKhac) + (luongTheoMucTien * (phamTramHuongLuong + phuCapThamNienVuotKhung));
+    }
+
     private SoYeuLyLich get_Info_SoYeuLyLich() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
@@ -238,7 +259,7 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
                 .trinhDoChuyenMon(Optional.ofNullable(soYeuLyLich.getTrinhDoChuyenMon()).map(TrinhDoChuyenMon::getName).orElse(""))
                 .hocHam(Optional.ofNullable(soYeuLyLich.getHocHam()).map(HocHam::getName).orElse(""))
                 .danhHieuNhaNuocPhongTang(Optional.ofNullable(soYeuLyLich.getDanhHieuNhaNuocPhongTang()).map(DanhHieuNhaNuocPhongTang::getName).orElse(""))
-                .chucVuHienTai(soYeuLyLich.getChucVuHienTai())
+                .chucVuHienTai(Optional.ofNullable(soYeuLyLich.getChucVuHienTai()).map(ChucVu::getName).orElse(null))
                 .ngayBoNhiem(soYeuLyLich.getNgayBoNhiem())
                 .ngayBoNhiemLai(soYeuLyLich.getNgayBoNhiemLai())
                 .duocQuyHoacChucDanh(soYeuLyLich.getDuocQuyHoacChucDanh())
@@ -249,11 +270,11 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
                 .soTruongCongTac(soYeuLyLich.getSoTruongCongTac())
                 .congViecLamLauNhat(soYeuLyLich.getCongViecLamLauNhat())
                 .tienLuong(soYeuLyLich.getTienLuong())
-                .ngachNgheNghiep(soYeuLyLich.getNgachNgheNghiep())
-                .maSoNgachNgheNghiep(soYeuLyLich.getMaSoNgachNgheNghiep())
+                .ngachNgheNghiep(soYeuLyLich.getNgachCongChuc() != null ? soYeuLyLich.getNgachCongChuc().getName() : (Optional.ofNullable(soYeuLyLich.getNgachVienChuc()).map(NgachVienChuc::getName).orElse(null)))
+                .maSoNgachNgheNghiep(soYeuLyLich.getNgachCongChuc() != null ? soYeuLyLich.getNgachCongChuc().getId() : (Optional.ofNullable(soYeuLyLich.getNgachVienChuc()).map(NgachVienChuc::getId).orElse(null)))
                 .ngayBoNhiemNgachNgheNghiep(soYeuLyLich.getNgayBoNhiemNgachNgheNghiep())
-                .bacLuong(Optional.ofNullable(soYeuLyLich.getBacLuong()).map(BacLuong::getName).orElse(""))
-                .heSoLuongNgachNgheNghiep(soYeuLyLich.getHeSoLuongNgachNgheNghiep())
+                .bacLuong(soYeuLyLich.getNgachCongChuc() != null ? soYeuLyLich.getNgachCongChuc().getHeSoLuongCongChuc().getBacLuong().getName() : (Optional.ofNullable(soYeuLyLich.getNgachVienChuc()).map(NgachVienChuc::getId).orElse(null)))
+                .heSoLuongNgachNgheNghiep(soYeuLyLich.getNgachCongChuc() != null ? soYeuLyLich.getNgachCongChuc().getHeSoLuongCongChuc().getHeSo() : 0)
                 .ngayHuongLuongNgachNgheNghiep(soYeuLyLich.getNgayHuongLuongNgachNgheNghiep())
                 .phanTramHuongLuongNgachNgheNghiep(soYeuLyLich.getPhanTramHuongLuongNgachNgheNghiep())
                 .phuCapThamNienVuotKhungNgachNgheNghiep(soYeuLyLich.getPhuCapThamNienVuotKhungNgachNgheNghiep())
@@ -261,10 +282,10 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
                 .phuCapChucVu(soYeuLyLich.getPhuCapChucVu())
                 .phuCapKiemNhiem(soYeuLyLich.getPhuCapKiemNhiem())
                 .phuCapKhac(soYeuLyLich.getPhuCapKhac())
-                .viTriViecLam(soYeuLyLich.getViTriViecLam())
-                .maSoViTriViecLam(soYeuLyLich.getMaSoViTriViecLam())
-                .bacLuongTriViecLam(soYeuLyLich.getBacLuongTriViecLam())
-                .luongTheoMucTien(soYeuLyLich.getLuongTheoMucTien())
+                .viTriViecLam(Optional.ofNullable(soYeuLyLich.getViTriViecLam()).map(ViTriViecLam::getName).orElse(null))
+                .maSoViTriViecLam(String.valueOf(Optional.ofNullable(soYeuLyLich.getViTriViecLam()).map(ViTriViecLam::getId).orElse(null)))
+                .bacLuongTriViecLam(Optional.ofNullable(soYeuLyLich.getViTriViecLam()).map(ViTriViecLam::getBacLuong).orElse(0))
+                .luongTheoMucTien(Optional.ofNullable(soYeuLyLich.getViTriViecLam()).map(ViTriViecLam::getTienLuong).orElse(0.0))
                 .ngayHuongLuongTheoViTriViecLam(soYeuLyLich.getNgayHuongLuongTheoViTriViecLam())
                 .phamTramHuongLuong(soYeuLyLich.getPhamTramHuongLuong())
                 .phuCapThamNienVuotKhung(soYeuLyLich.getPhuCapThamNienVuotKhung())
@@ -273,6 +294,9 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
                 .chieuCao(soYeuLyLich.getChieuCao())
                 .canNang(soYeuLyLich.getCanNang())
                 .nhomMau(Optional.ofNullable(soYeuLyLich.getNhomMau()).map(NhomMau::getName).orElse(""))
+                .luongThucNhan(tinhLuongThucNhan(soYeuLyLich.getTienLuong(), soYeuLyLich.getNgachCongChuc().getHeSoLuongCongChuc().getHeSo(), soYeuLyLich.getPhanTramHuongLuongNgachNgheNghiep(), soYeuLyLich.getPhuCapThamNienVuotKhungNgachNgheNghiep(),
+                        soYeuLyLich.getPhuCapChucVu(), soYeuLyLich.getPhuCapKiemNhiem(), soYeuLyLich.getPhuCapKhac(),
+                        soYeuLyLich.getViTriViecLam().getTienLuong(), soYeuLyLich.getPhamTramHuongLuong(), soYeuLyLich.getPhuCapThamNienVuotKhung()))
                 .build();
     }
 
@@ -290,6 +314,10 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
         BacLuong bacLuong = bacLuongRepository.findByName(reqSoYeuLyLich.bacLuong());
         TinhTrangSucKhoe tinhTrangSucKhoe = tinhTrangSucKhoeRepository.findByTitle(reqSoYeuLyLich.tinhTrangSucKhoe());
         NhomMau nhomMau = nhomMauRepository.findByName(reqSoYeuLyLich.nhomMau());
+        ChucVu chucVu = chucVuRepository.findByName(reqSoYeuLyLich.chucVuHienTai());
+        NgachCongChuc ngachCongChuc = ngachCongChucRepository.findByName(reqSoYeuLyLich.ngachNgheNghiep());
+        NgachVienChuc ngachVienChuc = ngachVienChucRepository.findByName(reqSoYeuLyLich.ngachNgheNghiep());
+        ViTriViecLam viTriViecLam = viTriViecLamRepository.findByName(reqSoYeuLyLich.viTriViecLam());
         SoYeuLyLich soYeuLyLich = SoYeuLyLich.builder()
                 .hovaten(reqSoYeuLyLich.hovaten())
                 .gioiTinh(gioiTinh)
@@ -320,7 +348,7 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
                 .trinhDoChuyenMon(trinhDoChuyenMon)
                 .hocHam(hocHam)
                 .danhHieuNhaNuocPhongTang(danhHieuNhaNuocPhongTang)
-                .chucVuHienTai(reqSoYeuLyLich.chucVuHienTai())
+                .chucVuHienTai(chucVu)
                 .ngayBoNhiem(reqSoYeuLyLich.ngayBoNhiem())
                 .ngayBoNhiemLai(reqSoYeuLyLich.ngayBoNhiemLai())
                 .duocQuyHoacChucDanh(reqSoYeuLyLich.duocQuyHoacChucDanh())
@@ -331,7 +359,8 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
                 .soTruongCongTac(reqSoYeuLyLich.soTruongCongTac())
                 .congViecLamLauNhat(reqSoYeuLyLich.congViecLamLauNhat())
                 .tienLuong(reqSoYeuLyLich.tienLuong())
-                .ngachNgheNghiep(reqSoYeuLyLich.ngachNgheNghiep())
+                .ngachVienChuc(ngachVienChuc)
+                .ngachCongChuc(ngachCongChuc)
                 .maSoNgachNgheNghiep(reqSoYeuLyLich.maSoNgachNgheNghiep())
                 .ngayBoNhiemNgachNgheNghiep(reqSoYeuLyLich.ngayBoNhiemNgachNgheNghiep())
                 .bacLuong(bacLuong)
@@ -343,7 +372,7 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
                 .phuCapChucVu(reqSoYeuLyLich.phuCapChucVu())
                 .phuCapKiemNhiem(reqSoYeuLyLich.phuCapKiemNhiem())
                 .phuCapKhac(reqSoYeuLyLich.phuCapKhac())
-                .viTriViecLam(reqSoYeuLyLich.viTriViecLam())
+                .viTriViecLam(viTriViecLam)
                 .maSoViTriViecLam(reqSoYeuLyLich.maSoViTriViecLam())
                 .bacLuongTriViecLam(reqSoYeuLyLich.bacLuongTriViecLam())
                 .luongTheoMucTien(reqSoYeuLyLich.luongTheoMucTien())

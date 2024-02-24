@@ -6,6 +6,7 @@ public record ReqKhenThuong(LocalDateTime nam,
                             String xepLoaiChuyenMon,
                             String xepLoaiThiDua,
                             String hinhThucKhenThuong,
+                            String lyDo,
                             String loaiSoYeuLyLichChiTiet,
                             String soYeuLyLich,
                             LocalDateTime create_at

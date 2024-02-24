@@ -133,5 +133,8 @@ public record ResSoYeuLyLich(
 
         double canNang,
 
-        String nhomMau //NhomMau nhomMau
-){}
+        String nhomMau, //NhomMau nhomMau,
+
+        double luongThucNhan
+) {
+}

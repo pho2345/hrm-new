@@ -6,5 +6,5 @@ import sgu.hrm.module_heso_luong.models.HeSoLuongCongChuc;
 import sgu.hrm.module_heso_luong.models.HeSoLuongCongChucId;
 
 @Repository
-public interface HeSoLuongCongChucRepository extends JpaRepository<HeSoLuongCongChuc, HeSoLuongCongChucId> {
+public interface HeSoLuongCongChucRepository extends JpaRepository<HeSoLuongCongChuc, Integer> {
 }
