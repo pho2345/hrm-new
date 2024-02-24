@@ -193,12 +193,6 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
                     ResEnum.HONG_TIM_THAY,
                     null
             );
-        } catch (IllegalArgumentException e) {
-            return new ResDTO<>(
-                    ResEnum.HONG_TIM_THAY.getStatusCode(),
-                    ResEnum.HONG_TIM_THAY,
-                    null
-            );
         } catch (RuntimeException e) {
             throw new RuntimeException(e.getCause());
         }

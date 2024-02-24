@@ -8,6 +8,7 @@ class HrmApplicationTests {
 
     @Test
     void contextLoads() {
+        System.out.println("TEST TEST TEST");
     }
 
 }

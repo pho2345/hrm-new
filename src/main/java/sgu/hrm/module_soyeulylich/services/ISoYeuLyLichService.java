@@ -28,6 +28,7 @@ public interface ISoYeuLyLichService {
                 soYeuLyLich.getChucVuHienTai() != null ? soYeuLyLich.getChucVuHienTai() : null,
                 soYeuLyLich.getTrinhDoChuyenMon() != null ? soYeuLyLich.getTrinhDoChuyenMon().getName() : null,
                 soYeuLyLich.getNgachNgheNghiep() != null ? soYeuLyLich.getNgachNgheNghiep() : null,
+                soYeuLyLich.getDanToc() != null ? soYeuLyLich.getDanToc().getName() : null,
                 soYeuLyLich.getCreate_at(),
                 soYeuLyLich.getUpdate_at(),
                 soYeuLyLich.isTrangThai()
