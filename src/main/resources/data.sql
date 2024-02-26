@@ -322,25 +322,35 @@ values (1, 1, 6.2),
        (8, 10, 3.27),
        (8, 11, 3.45),
        (8, 12, 3.63);
+-- hinh_thuc_khen_thuong
+INSERT INTO hinh_thuc_khen_thuong (name, trang_thai) VALUES
+                                                         ('Huân chương', 1),
+                                                         ('Huy chương', 1),
+                                                         ('Danh hiệu vinh dự nhà nước', 1),
+                                                         ('Giải thưởng Hồ Chí Minh', 1),
+                                                         ('Giải thưởng Nhà nước', 1),
+                                                         ('Kỷ niệm chương', 1),
+                                                         ('Bằng khen', 1),
+                                                         ('Giấy khen', 1);
 -- nhom_chuc_danh_dang
-INSERT INTO nhom_chuc_danh_dang (id, name)
-values (0, 'Các chức danh lãnh đạo chủ chốt và lãnh đạo cấp cao của Đảng và Nhà nước'),
-       (1, 'Chức danh cán bộ thuộc diện Bộ Chính trị, Ban Bí thư quản lý'),
-       (2, 'Khung chức danh, chức vụ thuộc diện cấp ủy, tổ chức đảng, lãnh đạo cơ quan, đơn vị quản lý');
+INSERT INTO nhom_chuc_danh_dang (name)
+values ('Các chức danh lãnh đạo chủ chốt và lãnh đạo cấp cao của Đảng và Nhà nước'),
+       ('Chức danh cán bộ thuộc diện Bộ Chính trị, Ban Bí thư quản lý'),
+       ('Khung chức danh, chức vụ thuộc diện cấp ủy, tổ chức đảng, lãnh đạo cơ quan, đơn vị quản lý');
 
--- INSERT INTO cap_nhom_chuc_danh_dang (name, nhom_chuc_danh_dang)
--- VALUES ('Lãnh đạo chủ chốt của Đảng và Nhà nước', 0),
---        ('Lãnh đạo cấp cao của Đảng, Nhà nước và Mặt trận Tổ quốc Việt Nam', 0),
---        ('Các chức danh thuộc diện Bộ Chính trị quản lý', 1),
---        ('Các chức danh diện Ban Bí thư quản lý', 1),
---        ('Tổng cục trưởng và tương đương', 2),
---        ('Phó Tổng cục trưởng và tương đương', 2),
---        ('Vụ trưởng và tương đương', 2),
---        ('Phó vụ trưởng và tương đương', 2),
---        ('Trưởng phòng và tương đương', 2),
---        ('Phó trưởng phòng và tương đương', 2),
---        ('Cán bộ xã, phường, thị trấn', 2);
---
+INSERT INTO cap_nhom_chuc_danh_dang (name, nhom_chuc_danh_dang)
+VALUES ('Lãnh đạo chủ chốt của Đảng và Nhà nước', 1),
+       ('Lãnh đạo cấp cao của Đảng, Nhà nước và Mặt trận Tổ quốc Việt Nam', 1),
+       ('Các chức danh thuộc diện Bộ Chính trị quản lý', 2),
+       ('Các chức danh diện Ban Bí thư quản lý', 2),
+       ('Tổng cục trưởng và tương đương', 3),
+       ('Phó Tổng cục trưởng và tương đương', 3),
+       ('Vụ trưởng và tương đương', 3),
+       ('Phó vụ trưởng và tương đương', 3),
+       ('Trưởng phòng và tương đương', 3),
+       ('Phó trưởng phòng và tương đương', 3),
+       ('Cán bộ xã, phường, thị trấn', 3);
+-- chuc_danh_dang
 -- INSERT INTO chuc_danh_dang (name, cap_nhom_chuc_danh_dang)
 -- VALUES ('Tổng Bí thư', 1),
 --        ('Chủ tịch nước', 1),
@@ -370,7 +380,6 @@ values (0, 'Các chức danh lãnh đạo chủ chốt và lãnh đạo cấp ca
 --        ('Phó Bí thư Thành ủy Hà Nội', 3),
 --        ('Phó Bí thư Thành ủy Thành phố Hồ Chí Minh', 3),
 --        ('Chủ tịch Hội đồng nhân dân, Ủy ban nhân dân thành phố Hà Nội', 3),
---        ('Thành phố Hồ Chí Minh', 3),
 --        ('Phó Chủ nhiệm Ủy ban Kiểm tra Trung ương', 3),
 --        ('Chủ tịch Viện Hàn lâm Khoa học xã hội Việt Nam', 3),
 --        ('Chủ tịch Viện Hàn lâm Khoa học công nghệ Việt Nam', 3),
@@ -421,9 +430,7 @@ values (0, 'Các chức danh lãnh đạo chủ chốt và lãnh đạo cấp ca
 --        ('Thành ủy Thành phố Hồ Chí Minh', 5),
 --        ('Ủy viên Thường trực Tiểu ban Bảo vệ chính trị nội bộ Trung ương', 5),
 --        ('Trưởng đoàn đại biểu Quốc hội chuyên trách tỉnh', 5),
---        ('Phó Chủ tịch Hội đồng nhân dân', 5),
 --        ('Ủy ban nhân dân thành phố Hà Nội', 5),
---        ('Thành phố Hồ Chí Minh', 5),
 --        ('Ủy viên Ban Biên tập Báo Nhân dân', 5),
 --        ('Ủy viên Ban Biên tập Tạp chí Cộng sản', 5),
 --        ('Phó trưởng ban chuyên trách hoặc ủy viên chuyên trách các ban chỉ đạo ở Trung ương', 5),

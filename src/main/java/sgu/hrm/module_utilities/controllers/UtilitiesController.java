@@ -3,6 +3,7 @@ package sgu.hrm.module_utilities.controllers;
 import lombok.RequiredArgsConstructor;
 
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,39 +14,52 @@ import sgu.hrm.module_response.ResDTO;
 
 import sgu.hrm.module_utilities.models.BacLuong;
 import sgu.hrm.module_utilities.models.CapBacLoaiQuanHamQuanDoi;
+import sgu.hrm.module_utilities.models.CapNhomChucDanhDang;
+import sgu.hrm.module_utilities.models.ChucDanhDang;
+import sgu.hrm.module_utilities.models.ChucVu;
 import sgu.hrm.module_utilities.models.DanToc;
 import sgu.hrm.module_utilities.models.DanhHieuNhaNuocPhongTang;
 import sgu.hrm.module_utilities.models.DoiTuongChinhSach;
 import sgu.hrm.module_utilities.models.GioiTinh;
+import sgu.hrm.module_utilities.models.HinhThucKhenThuong;
 import sgu.hrm.module_utilities.models.HocHam;
 import sgu.hrm.module_utilities.models.LoaiQuanHamQuanDoi;
+import sgu.hrm.module_utilities.models.NhomChucDanhDang;
 import sgu.hrm.module_utilities.models.NhomMau;
 import sgu.hrm.module_utilities.models.ThanhPhanGiaDinh;
 import sgu.hrm.module_utilities.models.TinhTrangSucKhoe;
 import sgu.hrm.module_utilities.models.TonGiao;
 import sgu.hrm.module_utilities.models.TrinhDoChuyenMon;
 import sgu.hrm.module_utilities.models.TrinhDoGiaoDucPhoThong;
+import sgu.hrm.module_utilities.models.ViTriViecLam;
 import sgu.hrm.module_utilities.models.request.ReqCapBacQuanHamQuanDoi;
 import sgu.hrm.module_utilities.models.request.ReqUtilities;
 import sgu.hrm.module_utilities.services.IUtilitiesService;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class UtilitiesController {
     private final IUtilitiesService<BacLuong> bacLuongService;
-    private final IUtilitiesService<LoaiQuanHamQuanDoi> loaiQuanHamQuanDoiService;
     private final IUtilitiesService<CapBacLoaiQuanHamQuanDoi> capBacLoaiQuanHamQuanDoiService;
+    private final IUtilitiesService<CapNhomChucDanhDang> capNhomChucDanhDangService;
+    private final IUtilitiesService<ChucDanhDang> chucDanhDangService;
+    private final IUtilitiesService<ChucVu> chucVuService;
     private final IUtilitiesService<DanhHieuNhaNuocPhongTang> danhHieuNhaNuocPhongTangService;
     private final IUtilitiesService<DanToc> danTocService;
     private final IUtilitiesService<DoiTuongChinhSach> doiTuongChinhSachService;
     private final IUtilitiesService<GioiTinh> gioiTinhService;
+    private final IUtilitiesService<HinhThucKhenThuong> hinhThucKhenThuongService;
     private final IUtilitiesService<HocHam> hocHamService;
+    private final IUtilitiesService<LoaiQuanHamQuanDoi> loaiQuanHamQuanDoiService;
+    private final IUtilitiesService<NhomChucDanhDang> nhomChucDanhDangService;
     private final IUtilitiesService<NhomMau> nhomMauService;
     private final IUtilitiesService<ThanhPhanGiaDinh> thanhPhanGiaDinhService;
     private final IUtilitiesService<TinhTrangSucKhoe> tinhTrangSucKhoeService;
     private final IUtilitiesService<TonGiao> tonGiaoService;
     private final IUtilitiesService<TrinhDoChuyenMon> trinhDoChuyenMonService;
     private final IUtilitiesService<TrinhDoGiaoDucPhoThong> trinhDoGiaoDucPhoThongService;
+    private final IUtilitiesService<ViTriViecLam> viTriViecLamService;
+
 
     @RestController
     class BacLuongController {
@@ -67,24 +81,6 @@ public class UtilitiesController {
     }
 
     @RestController
-    class LoaiQuanHamQuanDoiController {
-        @GetMapping("/loai-quan-ham-quan-doi")
-        public ResDTO<?> getAllLoaiQuanHamQuanDoi() {
-            return loaiQuanHamQuanDoiService.xemDS();
-        }
-
-        @PostMapping("/loai-quan-ham-quan-doi/them")
-        public ResDTO<?> addLoaiQuanHamQuanDoi(@RequestBody ReqUtilities utilities) {
-            return loaiQuanHamQuanDoiService.them(utilities.name());
-        }
-
-        @PatchMapping("/loai-quan-ham-quan-doi/sua")
-        public ResDTO<?> editLoaiQuanHamQuanDoi(@RequestBody LoaiQuanHamQuanDoi loaiQuanHamQuanDoi) {
-            return loaiQuanHamQuanDoiService.sua(loaiQuanHamQuanDoi);
-        }
-    }
-
-    @RestController
     class CapBacLoaiQuanHamQuanDoiController {
         @GetMapping("/cap-bac-loai-quan-ham-quan-doi")
         public ResDTO<?> getAllCapBacLoaiQuanHamQuanDoi() {
@@ -100,6 +96,60 @@ public class UtilitiesController {
         @PatchMapping("/cap-bac-loai-quan-ham-quan-doi/sua")
         public ResDTO<?> editCapBacLoaiQuanHamQuanDoi(CapBacLoaiQuanHamQuanDoi capBacLoaiQuanHamQuanDoi) {
             return capBacLoaiQuanHamQuanDoiService.sua(capBacLoaiQuanHamQuanDoi);
+        }
+    }
+
+    @RestController
+    class CapNhomChucDanhDangController {
+        @GetMapping("/cap-nhom-chuc-danh-dang")
+        public ResDTO<?> getCapNhomChucDanhDang() {
+            return capNhomChucDanhDangService.xemDS();
+        }
+
+        @PostMapping("/cap-nhom-chuc-danh-dang/them")
+        public ResDTO<?> addCapNhomChucDanhDang(@RequestBody ReqUtilities utilities) {
+            return capNhomChucDanhDangService.them(utilities.name());
+        }
+
+        @PatchMapping("/cap-nhom-chuc-danh-dang/sua")
+        public ResDTO<?> editCapNhomChucDanhDang(@RequestBody CapNhomChucDanhDang luong) {
+            return capNhomChucDanhDangService.sua(luong);
+        }
+    }
+
+    @RestController
+    class ChucDanhDangController {
+        @GetMapping("/chuc-danh-dang")
+        public ResDTO<?> getChucDanhDang() {
+            return chucDanhDangService.xemDS();
+        }
+
+        @PostMapping("/chuc-danh-dang/them")
+        public ResDTO<?> addChucDanhDang(@RequestBody ReqUtilities utilities) {
+            return chucDanhDangService.them(utilities.name());
+        }
+
+        @PatchMapping("/chuc-danh-dang/sua")
+        public ResDTO<?> editChucDanhDang(@RequestBody ChucDanhDang luong) {
+            return chucDanhDangService.sua(luong);
+        }
+    }
+
+    @RestController
+    class ChucVuController {
+        @GetMapping("/chuc-vu")
+        public ResDTO<?> getChucVu() {
+            return chucVuService.xemDS();
+        }
+
+        @PostMapping("/chuc-vu/them")
+        public ResDTO<?> addChucVu(@RequestBody ReqUtilities utilities) {
+            return chucVuService.them(utilities.name());
+        }
+
+        @PatchMapping("/chuc-vu/sua")
+        public ResDTO<?> editChucVu(@RequestBody ChucVu vu) {
+            return chucVuService.sua(vu);
         }
     }
 
@@ -169,6 +219,25 @@ public class UtilitiesController {
     }
 
     @RestController
+    class HinhThucKhenThuongController {
+        @GetMapping("/hinh-thuc-khen-thuong")
+        public ResDTO<?> getAllHinhThucKhenThuong() {
+            return hinhThucKhenThuongService.xemDS();
+        }
+
+        @PostMapping("/hinh-thuc-khen-thuong/them")
+        public ResDTO<?> addHinhThucKhenThuong(@RequestBody ReqUtilities utilities) {
+            return hinhThucKhenThuongService.them(utilities.name());
+        }
+
+        @PatchMapping("/hinh-thuc-khen-thuong/sua")
+        public ResDTO<?> editHinhThucKhenThuong(HinhThucKhenThuong thuong) {
+            return hinhThucKhenThuongService.sua(thuong);
+        }
+
+    }
+
+    @RestController
     class HocHamController {
         @GetMapping("/hoc-ham")
         public ResDTO<?> getAllHocHam() {
@@ -183,6 +252,43 @@ public class UtilitiesController {
         @PatchMapping("/hoc-ham/sua")
         public ResDTO<?> editHocHam(HocHam ham) {
             return hocHamService.sua(ham);
+        }
+
+    }
+
+    @RestController
+    class LoaiQuanHamQuanDoiController {
+        @GetMapping("/loai-quan-ham-quan-doi")
+        public ResDTO<?> getAllLoaiQuanHamQuanDoi() {
+            return loaiQuanHamQuanDoiService.xemDS();
+        }
+
+        @PostMapping("/loai-quan-ham-quan-doi/them")
+        public ResDTO<?> addLoaiQuanHamQuanDoi(@RequestBody ReqUtilities utilities) {
+            return loaiQuanHamQuanDoiService.them(utilities.name());
+        }
+
+        @PatchMapping("/loai-quan-ham-quan-doi/sua")
+        public ResDTO<?> editLoaiQuanHamQuanDoi(@RequestBody LoaiQuanHamQuanDoi loaiQuanHamQuanDoi) {
+            return loaiQuanHamQuanDoiService.sua(loaiQuanHamQuanDoi);
+        }
+    }
+
+    @RestController
+    class NhomChucDanhDangController {
+        @GetMapping("/nhom-chuc-danh-dang")
+        public ResDTO<?> getAllNhomChucDanhDang() {
+            return nhomChucDanhDangService.xemDS();
+        }
+
+        @PostMapping("/nhom-chuc-danh-dang/them")
+        public ResDTO<?> addNhomChucDanhDang(@RequestBody ReqUtilities utilities) {
+            return nhomChucDanhDangService.them(utilities.name());
+        }
+
+        @PatchMapping("/nhom-chuc-danh-dang/sua")
+        public ResDTO<?> editNhomChucDanhDang(NhomChucDanhDang ham) {
+            return nhomChucDanhDangService.sua(ham);
         }
 
     }
@@ -296,6 +402,24 @@ public class UtilitiesController {
         @PatchMapping("/trinh-do-giao-duc-pho-thong/sua")
         public ResDTO<?> editTrinhDoGiaoDucPhoThong(@RequestBody TrinhDoGiaoDucPhoThong thong) {
             return trinhDoGiaoDucPhoThongService.sua(thong);
+        }
+    }
+
+    @RestController
+    class ViTriViecLamController {
+        @GetMapping("/vi-tri-viec-lam")
+        public ResDTO<?> getAllViTriViecLam() {
+            return viTriViecLamService.xemDS();
+        }
+
+        @PostMapping("/vi-tri-viec-lam/them")
+        public ResDTO<?> addViTriViecLam(@RequestBody ReqUtilities utilities) {
+            return viTriViecLamService.them(utilities.name());
+        }
+
+        @PatchMapping("/vi-tri-viec-lam/sua")
+        public ResDTO<?> editViTriViecLam(@RequestBody ViTriViecLam lam) {
+            return viTriViecLamService.sua(lam);
         }
     }
 }

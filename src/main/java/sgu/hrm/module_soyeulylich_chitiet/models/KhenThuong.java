@@ -17,6 +17,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import sgu.hrm.models.DateTimeObject;
 import sgu.hrm.module_soyeulylich.models.SoYeuLyLich;
+import sgu.hrm.module_utilities.models.HinhThucKhenThuong;
 
 import java.time.LocalDateTime;
 
@@ -43,8 +44,12 @@ public class KhenThuong extends DateTimeObject {
     @Column(name = "xep_loai_thi_dua", columnDefinition = "varchar(20)")
     String xepLoaiThiDua;
 
-    @Column(name = "hinh_thuc_khen_thuong", columnDefinition = "varchar(20)")
-    String hinhThucKhenThuong;
+    @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "hinh_thuc_khen_thuong_fk"), name = "hinh_thuc_khen_thuong", referencedColumnName = "id", columnDefinition = "integer")
+    HinhThucKhenThuong hinhThucKhenThuong;
+
+    @Column(name = "ly_do", columnDefinition = "text default ''")
+    String lyDo;
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "loai_so_yeu_ly_lich_chitiet_khthuong_fk"), name = "loai_so_yeu_ly_lich_chitiet", referencedColumnName = "id", columnDefinition = "INTEGER")
@@ -54,12 +59,13 @@ public class KhenThuong extends DateTimeObject {
     @JoinColumn(foreignKey = @ForeignKey(name = "so_yeu_ly_lich_khthuong_fk"), name = "so_yeu_ly_lich", referencedColumnName = "id", columnDefinition = "binary(16)")
     SoYeuLyLich soYeuLyLich;
 
-    public KhenThuong(LocalDateTime nam, String xepLoaiChuyenMon, String xepLoaiThiDua, String hinhThucKhenThuong, LoaiSoYeuLyLichChiTiet loaiSoYeuLyLichChiTiet, SoYeuLyLich soYeuLyLich) {
+    public KhenThuong(LocalDateTime nam, String xepLoaiChuyenMon, String xepLoaiThiDua, HinhThucKhenThuong hinhThucKhenThuong, String lyDo, LoaiSoYeuLyLichChiTiet loaiSoYeuLyLichChiTiet, SoYeuLyLich soYeuLyLich) {
         super();
         this.nam = nam;
         this.xepLoaiChuyenMon = xepLoaiChuyenMon;
         this.xepLoaiThiDua = xepLoaiThiDua;
         this.hinhThucKhenThuong = hinhThucKhenThuong;
+        this.lyDo = lyDo;
         this.loaiSoYeuLyLichChiTiet = loaiSoYeuLyLichChiTiet;
         this.soYeuLyLich = soYeuLyLich;
     }

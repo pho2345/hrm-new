@@ -9,6 +9,7 @@ public record ResDSSoYeuLyLich(
         String chucVuHienTai,
         String trinhDoChuyenMon,
         String ngachNgheNghiep,
+        String danToc,
         LocalDateTime create_at,
         LocalDateTime update_at,
         boolean trang_thai

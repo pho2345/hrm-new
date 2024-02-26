@@ -3,6 +3,7 @@ package sgu.hrm.module_congchuc_vienchuc.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -14,6 +15,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import sgu.hrm.models.DateTimeObject;
+import sgu.hrm.module_heso_luong.models.HeSoLuongCongChuc;
+import sgu.hrm.module_heso_luong.models.HeSoLuongVienChuc;
 
 @Entity
 @Table(name = "ngach_vien_chuc")
@@ -34,4 +37,8 @@ public class NgachVienChuc extends DateTimeObject {
     @ManyToOne
     @JoinColumn(name = "bac_ngach_vien_chuc", referencedColumnName = "id", columnDefinition = "TINYINT")
     BacNgachVienChuc bacNgachVienChuc;
+
+    @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "he_so_luong_vien_chuc_fk"), name = "he_so_luong_vien_chuc", referencedColumnName = "id", columnDefinition = "integer")
+    HeSoLuongVienChuc heSoLuongVienChuc;
 }

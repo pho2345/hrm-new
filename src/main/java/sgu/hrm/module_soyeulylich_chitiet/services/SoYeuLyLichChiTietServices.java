@@ -66,6 +66,7 @@ import sgu.hrm.module_soyeulylich_chitiet.repositories.QuaTrinhCongTacRepository
 import sgu.hrm.module_soyeulylich_chitiet.repositories.QuanHeGiaDinhRepository;
 import sgu.hrm.module_soyeulylich_chitiet.repositories.TinHocRepository;
 import sgu.hrm.module_taikhoan.models.TaiKhoan;
+import sgu.hrm.module_utilities.models.HinhThucKhenThuong;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -322,7 +323,7 @@ public class SoYeuLyLichChiTietServices {
                     thuong.getNam(),
                     thuong.getXepLoaiChuyenMon(),
                     thuong.getXepLoaiThiDua(),
-                    thuong.getHinhThucKhenThuong(),
+                    Optional.ofNullable(thuong.getHinhThucKhenThuong()).map(HinhThucKhenThuong::getName).orElse(null),
                     thuong.getCreate_at(),
                     thuong.getUpdate_at()
             );
@@ -333,7 +334,7 @@ public class SoYeuLyLichChiTietServices {
                     .nam(cu.nam())
                     .xepLoaiChuyenMon(cu.xepLoaiChuyenMon())
                     .xepLoaiThiDua(cu.xepLoaiThiDua())
-                    .hinhThucKhenThuong(cu.hinhThucKhenThuong())
+                    .hinhThucKhenThuong(null)
                     .soYeuLyLich(syll)
                     .create_at(cu.create_at())
                     .update_at(LocalDateTime.now())
@@ -342,7 +343,8 @@ public class SoYeuLyLichChiTietServices {
                             cu.nam(),
                             cu.xepLoaiChuyenMon(),
                             cu.xepLoaiThiDua(),
-                            cu.hinhThucKhenThuong(),
+                            null,
+                            cu.lyDo(),
                             null,
                             syll);
         }
