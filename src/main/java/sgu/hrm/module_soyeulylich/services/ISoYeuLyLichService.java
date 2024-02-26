@@ -8,6 +8,7 @@ import sgu.hrm.module_soyeulylich.models.response.ResDSSoYeuLyLich;
 import sgu.hrm.module_soyeulylich.models.SoYeuLyLich;
 import sgu.hrm.module_soyeulylich.models.response.ResSoYeuLyLich;
 import sgu.hrm.module_utilities.models.CapBacLoaiQuanHamQuanDoi;
+import sgu.hrm.module_utilities.models.ChucDanhDang;
 import sgu.hrm.module_utilities.models.ChucVu;
 import sgu.hrm.module_utilities.models.DanToc;
 import sgu.hrm.module_utilities.models.DanhHieuNhaNuocPhongTang;
@@ -65,21 +66,21 @@ public interface ISoYeuLyLichService {
                 .trinhDoChuyenMon(Optional.ofNullable(soYeuLyLich.getTrinhDoChuyenMon()).map(TrinhDoChuyenMon::getName).orElse(""))
                 .hocHam(Optional.ofNullable(soYeuLyLich.getHocHam()).map(HocHam::getName).orElse(""))
                 .danhHieuNhaNuocPhongTang(Optional.ofNullable(soYeuLyLich.getDanhHieuNhaNuocPhongTang()).map(DanhHieuNhaNuocPhongTang::getName).orElse(""))
-                .chucVuHienTai(Optional.ofNullable(soYeuLyLich.getChucVuHienTai()).map(ChucVu::getName).orElse(null))
+                .chucVuHienTai(Optional.ofNullable(soYeuLyLich.getChucVuHienTai()).map(ChucVu::getName).orElse(""))
                 .ngayBoNhiem(soYeuLyLich.getNgayBoNhiem())
                 .ngayBoNhiemLai(soYeuLyLich.getNgayBoNhiemLai())
                 .duocQuyHoacChucDanh(soYeuLyLich.getDuocQuyHoacChucDanh())
                 .chucVuKiemNhiem(soYeuLyLich.getChucVuKiemNhiem())
-                .chucVuDangHienTai(soYeuLyLich.getChucVuDangHienTai())
-                .chucVuDangKiemNhiem(soYeuLyLich.getChucVuDangKiemNhiem())
+                .chucVuDangHienTai(Optional.ofNullable(soYeuLyLich.getChucVuDangHienTai()).map(ChucDanhDang::getName).orElse(""))
+                .chucVuDangKiemNhiem(Optional.ofNullable(soYeuLyLich.getChucVuDangKiemNhiem()).map(ChucDanhDang::getName).orElse(""))
                 .congVienChinhDuocGiao(soYeuLyLich.getCongVienChinhDuocGiao())
                 .soTruongCongTac(soYeuLyLich.getSoTruongCongTac())
                 .congViecLamLauNhat(soYeuLyLich.getCongViecLamLauNhat())
                 .tienLuong(soYeuLyLich.getTienLuong())
-                .ngachNgheNghiep(soYeuLyLich.getNgachCongChuc() != null ? soYeuLyLich.getNgachCongChuc().getName() : (Optional.ofNullable(soYeuLyLich.getNgachVienChuc()).map(NgachVienChuc::getName).orElse(null)))
-                .maSoNgachNgheNghiep(soYeuLyLich.getNgachCongChuc() != null ? soYeuLyLich.getNgachCongChuc().getId() : (Optional.ofNullable(soYeuLyLich.getNgachVienChuc()).map(NgachVienChuc::getId).orElse(null)))
+                .ngachNgheNghiep(soYeuLyLich.getNgachCongChuc() != null ? soYeuLyLich.getNgachCongChuc().getName() : (Optional.ofNullable(soYeuLyLich.getNgachVienChuc()).map(NgachVienChuc::getName).orElse("")))
+                .maSoNgachNgheNghiep(soYeuLyLich.getNgachCongChuc() != null ? soYeuLyLich.getNgachCongChuc().getId() : (Optional.ofNullable(soYeuLyLich.getNgachVienChuc()).map(NgachVienChuc::getId).orElse("")))
                 .ngayBoNhiemNgachNgheNghiep(soYeuLyLich.getNgayBoNhiemNgachNgheNghiep())
-                .bacLuong(soYeuLyLich.getNgachCongChuc() != null ? soYeuLyLich.getNgachCongChuc().getHeSoLuongCongChuc().getBacLuong().getName() : (Optional.ofNullable(soYeuLyLich.getNgachVienChuc()).map(ngachVienChuc -> ngachVienChuc.getHeSoLuongVienChuc().getBacLuong().getName()).orElse(null)))
+                .bacLuong(soYeuLyLich.getNgachCongChuc() != null ? soYeuLyLich.getNgachCongChuc().getHeSoLuongCongChuc().getBacLuong().getName() : (Optional.ofNullable(soYeuLyLich.getNgachVienChuc()).map(ngachVienChuc -> ngachVienChuc.getHeSoLuongVienChuc().getBacLuong().getName()).orElse("")))
                 .heSoLuongNgachNgheNghiep(soYeuLyLich.getNgachCongChuc() != null ? soYeuLyLich.getNgachCongChuc().getHeSoLuongCongChuc().getHeSo() : (Optional.ofNullable(soYeuLyLich.getNgachVienChuc()).map(ngachVienChuc -> ngachVienChuc.getHeSoLuongVienChuc().getHeSo()).orElse(0.0f)))
                 .ngayHuongLuongNgachNgheNghiep(soYeuLyLich.getNgayHuongLuongNgachNgheNghiep())
                 .phanTramHuongLuongNgachNgheNghiep(soYeuLyLich.getPhanTramHuongLuongNgachNgheNghiep())
@@ -88,7 +89,7 @@ public interface ISoYeuLyLichService {
                 .phuCapChucVu(soYeuLyLich.getPhuCapChucVu())
                 .phuCapKiemNhiem(soYeuLyLich.getPhuCapKiemNhiem())
                 .phuCapKhac(soYeuLyLich.getPhuCapKhac())
-                .viTriViecLam(Optional.ofNullable(soYeuLyLich.getViTriViecLam()).map(ViTriViecLam::getName).orElse(null))
+                .viTriViecLam(Optional.ofNullable(soYeuLyLich.getViTriViecLam()).map(ViTriViecLam::getName).orElse(""))
                 .maSoViTriViecLam(String.valueOf(Optional.ofNullable(soYeuLyLich.getViTriViecLam()).map(ViTriViecLam::getId).orElse(null)))
                 .bacLuongTriViecLam(Optional.ofNullable(soYeuLyLich.getViTriViecLam()).map(ViTriViecLam::getBacLuong).orElse(0))
                 .luongTheoMucTien(Optional.ofNullable(soYeuLyLich.getViTriViecLam()).map(ViTriViecLam::getTienLuong).orElse(0.0))

@@ -1,8 +1,11 @@
 package sgu.hrm.module_utilities.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -24,9 +27,11 @@ import sgu.hrm.models.DateTimeObject;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@JsonIgnoreProperties({"capNhomChucDanhDang"})
 public class ChucDanhDang extends DateTimeObject {
     @Id
-    @Column(columnDefinition = "INTEGER AUTO_INCREMENT")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", columnDefinition = "INTEGER")
     int id;
 
     @Column(columnDefinition = "varchar(250) unique")

@@ -31,6 +31,7 @@ import sgu.hrm.module_soyeulylich_chitiet.models.BanThanCoLamViecChoCheDoCu;
 import sgu.hrm.module_taikhoan.models.TaiKhoan;
 import sgu.hrm.module_utilities.models.CapBacLoaiQuanHamQuanDoi;
 // import sgu.hrm.models.CoQuanToChucDonViTuyenDung;
+import sgu.hrm.module_utilities.models.ChucDanhDang;
 import sgu.hrm.module_utilities.models.ChucVu;
 import sgu.hrm.module_utilities.models.DanToc;
 import sgu.hrm.module_utilities.models.DanhHieuNhaNuocPhongTang;
@@ -59,6 +60,7 @@ import sgu.hrm.module_utilities.models.TrinhDoGiaoDucPhoThong;
 import sgu.hrm.module_utilities.models.ViTriViecLam;
 
 import java.time.LocalDateTime;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -200,11 +202,13 @@ public class SoYeuLyLich extends DateTimeObject {
     @Column(name = "chuc_vu_kiem_nhiem", columnDefinition = "varchar(150) default ''")
     String chucVuKiemNhiem;
 
-    @Column(name = "chuc_vu_dang_hien_tai", columnDefinition = "varchar(100)")
-    String chucVuDangHienTai;
+    @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "chuc_vu_dang_hien_tai_fk"), referencedColumnName = "id", name = "chuc_vu_dang_hien_tai", columnDefinition = "integer")
+    ChucDanhDang chucVuDangHienTai;
 
-    @Column(name = "chuc_vu_dang_kiem_nhiem", columnDefinition = "varchar(100)")
-    String chucVuDangKiemNhiem;
+    @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "chuc_vu_dang_kiem_nhiem_fk"), referencedColumnName = "id", name = "chuc_vu_dang_kiem_nhiem", columnDefinition = "integer")
+    ChucDanhDang chucVuDangKiemNhiem;
 
     @Column(name = "cong_viec_chinh_duoc_giao", columnDefinition = "varchar(150) default ''")
     String congVienChinhDuocGiao;
@@ -217,6 +221,8 @@ public class SoYeuLyLich extends DateTimeObject {
 
     @Column(name = "tien_luong", columnDefinition = "double default 1.0")
     double tienLuong;
+
+    //NgachNgheNghiep ngachNgheNghiep;
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "ngach_cong_chuc_fk"), name = "ngach_cong_chuc", referencedColumnName = "id", columnDefinition = "varchar(6)")

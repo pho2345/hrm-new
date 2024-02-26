@@ -78,7 +78,10 @@ public class TaiKhoanService implements ITaiKhoanService {
                 taiKhoan.getEmail(),
                 Optional.ofNullable(taiKhoan.getSoYeuLyLich()).map(SoYeuLyLich::getId).orElse(null),
                 (taiKhoan.getRoleTaiKhoan().getId() == 1) ? "EMPLOYEE" : "ADMIN",
-                taiKhoan.isTrangThai());
+                taiKhoan.isTrangThai(),
+                taiKhoan.getCreate_at(),
+                taiKhoan.getUpdate_at()
+        );
     }
 
     private TaiKhoan crush_em_t() {
@@ -93,6 +96,7 @@ public class TaiKhoanService implements ITaiKhoanService {
         try {
             TaiKhoan taiKhoan = crush_em_t();
             if (taiKhoan != null) {
+                taiKhoan.setUpdate_at();
                 taiKhoan.setPassword(matkhau);
                 taiKhoanRepository.save(taiKhoan);
             }

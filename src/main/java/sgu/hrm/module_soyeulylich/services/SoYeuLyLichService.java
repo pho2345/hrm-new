@@ -25,6 +25,7 @@ import sgu.hrm.module_taikhoan.models.TaiKhoan;
 import sgu.hrm.module_utilities.models.BacLuong;
 import sgu.hrm.module_utilities.models.CapBacLoaiQuanHamQuanDoi;
 // import sgu.hrm.models.CoQuanToChucDonViTuyenDung;
+import sgu.hrm.module_utilities.models.ChucDanhDang;
 import sgu.hrm.module_utilities.models.ChucVu;
 import sgu.hrm.module_utilities.models.DanToc;
 import sgu.hrm.module_utilities.models.DanhHieuNhaNuocPhongTang;
@@ -40,6 +41,7 @@ import sgu.hrm.module_utilities.models.ViTriViecLam;
 import sgu.hrm.module_utilities.repositories.BacLuongRepository;
 import sgu.hrm.module_utilities.repositories.CapBacLoaiQuanHamQuanDoiRepository;
 //import sgu.hrm.repository.CoQuanToChucDonViTuyenDungRepository;
+import sgu.hrm.module_utilities.repositories.ChucDanhDangRepository;
 import sgu.hrm.module_utilities.repositories.ChucVuRepository;
 import sgu.hrm.module_utilities.repositories.DanTocRepository;
 import sgu.hrm.module_utilities.repositories.DanhHieuNhaNuocPhongTangRepository;
@@ -77,6 +79,7 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
     final TinhTrangSucKhoeRepository tinhTrangSucKhoeRepository;
     final NhomMauRepository nhomMauRepository;
     final ChucVuRepository chucVuRepository;
+    final ChucDanhDangRepository chucDanhDangRepository;
     final NgachCongChucRepository ngachCongChucRepository;
     final NgachVienChucRepository ngachVienChucRepository;
     final ViTriViecLamRepository viTriViecLamRepository;
@@ -233,6 +236,8 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
         NgachCongChuc ngachCongChuc = ngachCongChucRepository.findByName(reqSoYeuLyLich.ngachNgheNghiep());
         NgachVienChuc ngachVienChuc = ngachVienChucRepository.findByName(reqSoYeuLyLich.ngachNgheNghiep());
         ViTriViecLam viTriViecLam = viTriViecLamRepository.findByName(reqSoYeuLyLich.viTriViecLam());
+        ChucDanhDang chucDanhDangHienTai = chucDanhDangRepository.findByName(reqSoYeuLyLich.chucVuDangHienTai());
+        ChucDanhDang chucDanhDangKiemNhiem = chucDanhDangRepository.findByName(reqSoYeuLyLich.chucVuDangKiemNhiem());
         SoYeuLyLich soYeuLyLich = SoYeuLyLich.builder()
                 .hovaten(reqSoYeuLyLich.hovaten())
                 .gioiTinh(gioiTinh)
@@ -268,8 +273,8 @@ public class SoYeuLyLichService implements ISoYeuLyLichService {
                 .ngayBoNhiemLai(reqSoYeuLyLich.ngayBoNhiemLai())
                 .duocQuyHoacChucDanh(reqSoYeuLyLich.duocQuyHoacChucDanh())
                 .chucVuKiemNhiem(reqSoYeuLyLich.chucVuKiemNhiem())
-                .chucVuDangHienTai(reqSoYeuLyLich.chucVuDangHienTai())
-                .chucVuDangKiemNhiem(reqSoYeuLyLich.chucVuDangKiemNhiem())
+                .chucVuDangHienTai(chucDanhDangHienTai)
+                .chucVuDangKiemNhiem(chucDanhDangKiemNhiem)
                 .congVienChinhDuocGiao(reqSoYeuLyLich.congVienChinhDuocGiao())
                 .soTruongCongTac(reqSoYeuLyLich.soTruongCongTac())
                 .congViecLamLauNhat(reqSoYeuLyLich.congViecLamLauNhat())
