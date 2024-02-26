@@ -10,12 +10,16 @@ import sgu.hrm.module_response.ResEnum;
 import sgu.hrm.module_utilities.models.BacLuong;
 import sgu.hrm.module_utilities.models.CapBacLoaiQuanHamQuanDoi;
 import sgu.hrm.module_utilities.models.CapNhomChucDanhDang;
+import sgu.hrm.module_utilities.models.ChucDanhDang;
+import sgu.hrm.module_utilities.models.ChucVu;
 import sgu.hrm.module_utilities.models.DanToc;
 import sgu.hrm.module_utilities.models.DanhHieuNhaNuocPhongTang;
 import sgu.hrm.module_utilities.models.DoiTuongChinhSach;
 import sgu.hrm.module_utilities.models.GioiTinh;
+import sgu.hrm.module_utilities.models.HinhThucKhenThuong;
 import sgu.hrm.module_utilities.models.HocHam;
 import sgu.hrm.module_utilities.models.LoaiQuanHamQuanDoi;
+import sgu.hrm.module_utilities.models.NhomChucDanhDang;
 import sgu.hrm.module_utilities.models.NhomMau;
 import sgu.hrm.module_utilities.models.ThanhPhanGiaDinh;
 import sgu.hrm.module_utilities.models.TinhTrangSucKhoe;
@@ -23,6 +27,7 @@ import sgu.hrm.module_utilities.models.TonGiao;
 import sgu.hrm.module_utilities.models.TrinhDoChuyenMon;
 import sgu.hrm.module_utilities.models.TrinhDoGiaoDucPhoThong;
 
+import sgu.hrm.module_utilities.models.ViTriViecLam;
 import sgu.hrm.module_utilities.repositories.BacLuongRepository;
 import sgu.hrm.module_utilities.repositories.CapBacLoaiQuanHamQuanDoiRepository;
 import sgu.hrm.module_utilities.repositories.CapNhomChucDanhDangRepository;
@@ -70,6 +75,7 @@ public class UtilitiesService {
     private final TrinhDoChuyenMonRepository trinhDoChuyenMonRepository;
     private final TrinhDoGiaoDucPhoThongRepository trinhDoGiaoDucPhoThongRepository;
     private final ViTriViecLamRepository viTriViecLamRepository;
+
 
     @Service
     public class BacLuongService implements IUtilitiesService<BacLuong> {
@@ -125,60 +131,6 @@ public class UtilitiesService {
     }
 
     @Service
-    public class LoaiQuanHamQuanDoiService implements IUtilitiesService<LoaiQuanHamQuanDoi> {
-        @Override
-        public ResDTO<List<LoaiQuanHamQuanDoi>> xemDS() {
-            return new ResDTO<>(
-                    ResEnum.THANH_CONG.getStatusCode(),
-                    ResEnum.THANH_CONG,
-                    loaiQuanHamQuanDoiRepository.findAll()
-            );
-        }
-
-        @Override
-        public ResDTO<LoaiQuanHamQuanDoi> them(String name) {
-            LoaiQuanHamQuanDoi loaiQuanHamQuanDoi = new LoaiQuanHamQuanDoi(name);
-            try {
-                return new ResDTO<>(
-                        ResEnum.TAO_THANH_CONG.getStatusCode(),
-                        ResEnum.TAO_THANH_CONG,
-                        loaiQuanHamQuanDoiRepository.save(loaiQuanHamQuanDoi)
-                );
-            } catch (RuntimeException e) {
-                return new ResDTO<>(
-                        ResEnum.KHONG_HOP_LE.getStatusCode(),
-                        ResEnum.KHONG_HOP_LE,
-                        null
-                );
-            }
-        }
-
-        @Override
-        public ResDTO<LoaiQuanHamQuanDoi> sua(LoaiQuanHamQuanDoi loaiQuanHamQuanDoi) {
-            Optional<LoaiQuanHamQuanDoi> loaiQuanHamQuanDoi1 = loaiQuanHamQuanDoiRepository.findById(loaiQuanHamQuanDoi.getId());
-            try {
-                if (loaiQuanHamQuanDoi1.isPresent()) {
-                    loaiQuanHamQuanDoi.setUpdate_at();
-                    return new ResDTO<>(
-                            ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
-                            ResEnum.CAP_NHAT_THANH_CONG,
-                            loaiQuanHamQuanDoiRepository.save(loaiQuanHamQuanDoi));
-                }
-                return new ResDTO<>(
-                        ResEnum.HONG_TIM_THAY.getStatusCode(),
-                        ResEnum.HONG_TIM_THAY,
-                        null);
-            } catch (RuntimeException e) {
-                return new ResDTO<>(
-                        ResEnum.KHONG_HOP_LE.getStatusCode(),
-                        ResEnum.KHONG_HOP_LE,
-                        null
-                );
-            }
-        }
-    }
-
-    @Service
     public class CapBacLoaiQuanHamQuanDoiService implements IUtilitiesService<CapBacLoaiQuanHamQuanDoi> {
         @Override
         public ResDTO<List<CapBacLoaiQuanHamQuanDoi>> xemDS() {
@@ -218,6 +170,168 @@ public class UtilitiesService {
                             ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
                             ResEnum.CAP_NHAT_THANH_CONG,
                             capBacLoaiQuanHamQuanDoiRepository.save(capBacLoaiQuanHamQuanDoi));
+                }
+                return new ResDTO<>(
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null);
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
+                );
+            }
+        }
+    }
+
+    @Service
+    public class CapNhomChucDanhDangService implements IUtilitiesService<CapNhomChucDanhDang> {
+        @Override
+        public ResDTO<List<CapNhomChucDanhDang>> xemDS() {
+            return new ResDTO<>(
+                    ResEnum.THANH_CONG.getStatusCode(),
+                    ResEnum.THANH_CONG,
+                    capNhomChucDanhDangRepository.findAll()
+            );
+        }
+
+        @Override
+        public ResDTO<CapNhomChucDanhDang> them(String name) {
+            CapNhomChucDanhDang capNhomChucDanhDang = new CapNhomChucDanhDang(name);
+            try {
+                return new ResDTO<>(
+                        ResEnum.THANH_CONG.getStatusCode(),
+                        ResEnum.THANH_CONG,
+                        capNhomChucDanhDangRepository.save(capNhomChucDanhDang)
+                );
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.THANH_CONG.getStatusCode(),
+                        ResEnum.THANH_CONG,
+                        null
+                );
+            }
+        }
+
+        @Override
+        public ResDTO<CapNhomChucDanhDang> sua(CapNhomChucDanhDang dang) {
+            CapNhomChucDanhDang capNhomChucDanhDang = capNhomChucDanhDangRepository.findById(dang.getId()).orElse(null);
+            try {
+                if (capNhomChucDanhDang != null) {
+                    dang.setUpdate_at();
+                    return new ResDTO<>(
+                            ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
+                            ResEnum.CAP_NHAT_THANH_CONG,
+                            capNhomChucDanhDangRepository.save(dang));
+                }
+                return new ResDTO<>(
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null);
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
+                );
+            }
+        }
+    }
+
+    @Service
+    public class ChucDanhDangService implements IUtilitiesService<ChucDanhDang> {
+        @Override
+        public ResDTO<List<ChucDanhDang>> xemDS() {
+            return new ResDTO<>(
+                    ResEnum.THANH_CONG.getStatusCode(),
+                    ResEnum.THANH_CONG,
+                    chucDanhDangRepository.findAll()
+            );
+        }
+
+        @Override
+        public ResDTO<ChucDanhDang> them(String name) {
+            ChucDanhDang chucDanhDang = new ChucDanhDang(name);
+            try {
+                return new ResDTO<>(
+                        ResEnum.THANH_CONG.getStatusCode(),
+                        ResEnum.THANH_CONG,
+                        chucDanhDangRepository.save(chucDanhDang)
+                );
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.THANH_CONG.getStatusCode(),
+                        ResEnum.THANH_CONG,
+                        null
+                );
+            }
+        }
+
+        @Override
+        public ResDTO<ChucDanhDang> sua(ChucDanhDang chuc) {
+            ChucDanhDang chucDanhDang = chucDanhDangRepository.findById(chuc.getId()).orElse(null);
+            try {
+                if (chucDanhDang != null) {
+                    chuc.setUpdate_at();
+                    return new ResDTO<>(
+                            ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
+                            ResEnum.CAP_NHAT_THANH_CONG,
+                            chucDanhDangRepository.save(chuc));
+                }
+                return new ResDTO<>(
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null);
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
+                );
+            }
+        }
+    }
+
+    @Service
+    public class ChucVuService implements IUtilitiesService<ChucVu> {
+        @Override
+        public ResDTO<List<ChucVu>> xemDS() {
+            return new ResDTO<>(
+                    ResEnum.THANH_CONG.getStatusCode(),
+                    ResEnum.THANH_CONG,
+                    chucVuRepository.findAll()
+            );
+        }
+
+        @Override
+        public ResDTO<ChucVu> them(String name) {
+            ChucVu vu = new ChucVu(name);
+            try {
+                return new ResDTO<>(
+                        ResEnum.THANH_CONG.getStatusCode(),
+                        ResEnum.THANH_CONG,
+                        chucVuRepository.save(vu)
+                );
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.THANH_CONG.getStatusCode(),
+                        ResEnum.THANH_CONG,
+                        null
+                );
+            }
+        }
+
+        @Override
+        public ResDTO<ChucVu> sua(ChucVu vu) {
+            ChucVu chucVu = chucVuRepository.findById(vu.getId()).orElse(null);
+            try {
+                if (chucVu != null) {
+                    chucVu.setUpdate_at();
+                    return new ResDTO<>(
+                            ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
+                            ResEnum.CAP_NHAT_THANH_CONG,
+                            chucVuRepository.save(chucVu));
                 }
                 return new ResDTO<>(
                         ResEnum.HONG_TIM_THAY.getStatusCode(),
@@ -418,6 +532,60 @@ public class UtilitiesService {
     }
 
     @Service
+    public class HinhThucKhenThuongService implements IUtilitiesService<HinhThucKhenThuong> {
+        @Override
+        public ResDTO<List<HinhThucKhenThuong>> xemDS() {
+            return new ResDTO<>(
+                    ResEnum.THANH_CONG.getStatusCode(),
+                    ResEnum.THANH_CONG,
+                    hinhThucKhenThuongRepository.findAll()
+            );
+        }
+
+        @Override
+        public ResDTO<HinhThucKhenThuong> them(String name) {
+            HinhThucKhenThuong thuc = new HinhThucKhenThuong(name);
+            try {
+                return new ResDTO<>(
+                        ResEnum.TAO_THANH_CONG.getStatusCode(),
+                        ResEnum.TAO_THANH_CONG,
+                        hinhThucKhenThuongRepository.save(thuc)
+                );
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
+                );
+            }
+        }
+
+        @Override
+        public ResDTO<HinhThucKhenThuong> sua(HinhThucKhenThuong thuc) {
+            Optional<HinhThucKhenThuong> hinhThucKhenThuong = hinhThucKhenThuongRepository.findById(thuc.getId());
+            try {
+                if (hinhThucKhenThuong.isPresent()) {
+                    thuc.setUpdate_at();
+                    return new ResDTO<>(
+                            ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
+                            ResEnum.CAP_NHAT_THANH_CONG,
+                            hinhThucKhenThuongRepository.save(thuc));
+                }
+                return new ResDTO<>(
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null);
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
+                );
+            }
+        }
+    }
+
+    @Service
     public class HocHamService implements IUtilitiesService<HocHam> {
         @Override
         public ResDTO<List<HocHam>> xemDS() {
@@ -470,6 +638,115 @@ public class UtilitiesService {
             }
         }
     }
+
+    @Service
+    public class LoaiQuanHamQuanDoiService implements IUtilitiesService<LoaiQuanHamQuanDoi> {
+        @Override
+        public ResDTO<List<LoaiQuanHamQuanDoi>> xemDS() {
+            return new ResDTO<>(
+                    ResEnum.THANH_CONG.getStatusCode(),
+                    ResEnum.THANH_CONG,
+                    loaiQuanHamQuanDoiRepository.findAll()
+            );
+        }
+
+        @Override
+        public ResDTO<LoaiQuanHamQuanDoi> them(String name) {
+            LoaiQuanHamQuanDoi loaiQuanHamQuanDoi = new LoaiQuanHamQuanDoi(name);
+            try {
+                return new ResDTO<>(
+                        ResEnum.TAO_THANH_CONG.getStatusCode(),
+                        ResEnum.TAO_THANH_CONG,
+                        loaiQuanHamQuanDoiRepository.save(loaiQuanHamQuanDoi)
+                );
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
+                );
+            }
+        }
+
+        @Override
+        public ResDTO<LoaiQuanHamQuanDoi> sua(LoaiQuanHamQuanDoi loaiQuanHamQuanDoi) {
+            Optional<LoaiQuanHamQuanDoi> loaiQuanHamQuanDoi1 = loaiQuanHamQuanDoiRepository.findById(loaiQuanHamQuanDoi.getId());
+            try {
+                if (loaiQuanHamQuanDoi1.isPresent()) {
+                    loaiQuanHamQuanDoi.setUpdate_at();
+                    return new ResDTO<>(
+                            ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
+                            ResEnum.CAP_NHAT_THANH_CONG,
+                            loaiQuanHamQuanDoiRepository.save(loaiQuanHamQuanDoi));
+                }
+                return new ResDTO<>(
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null);
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
+                );
+            }
+        }
+    }
+
+    @Service
+    public class NhomChucDanhDangService implements IUtilitiesService<NhomChucDanhDang> {
+        @Override
+        public ResDTO<List<NhomChucDanhDang>> xemDS() {
+            return new ResDTO<>(
+                    ResEnum.THANH_CONG.getStatusCode(),
+                    ResEnum.THANH_CONG,
+                    nhomChucDanhDangRepository.findAll()
+            );
+        }
+
+        @Override
+        public ResDTO<NhomChucDanhDang> them(String name) {
+            NhomChucDanhDang dang = new NhomChucDanhDang(name);
+            try {
+                return new ResDTO<>(
+                        ResEnum.TAO_THANH_CONG.getStatusCode(),
+                        ResEnum.TAO_THANH_CONG,
+                        nhomChucDanhDangRepository.save(dang)
+                );
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
+                );
+            }
+        }
+
+        @Override
+        public ResDTO<NhomChucDanhDang> sua(NhomChucDanhDang dang) {
+            Optional<NhomChucDanhDang> nhomChucDanhDang = nhomChucDanhDangRepository.findById(dang.getId());
+            try {
+                if (nhomChucDanhDang.isPresent()) {
+                    dang.setUpdate_at();
+                    return new ResDTO<>(
+                            ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
+                            ResEnum.CAP_NHAT_THANH_CONG,
+                            nhomChucDanhDangRepository.save(dang));
+                }
+                return new ResDTO<>(
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null);
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
+                );
+            }
+        }
+    }
+
 
     @Service
     public class NhomMauService implements IUtilitiesService<NhomMau> {
@@ -780,6 +1057,60 @@ public class UtilitiesService {
                             ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
                             ResEnum.CAP_NHAT_THANH_CONG,
                             trinhDoGiaoDucPhoThongRepository.save(trinhDoGiaoDucPhoThong));
+                }
+                return new ResDTO<>(
+                        ResEnum.HONG_TIM_THAY.getStatusCode(),
+                        ResEnum.HONG_TIM_THAY,
+                        null);
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
+                );
+            }
+        }
+    }
+
+    @Service
+    public class ViTriViecLamService implements IUtilitiesService<ViTriViecLam> {
+        @Override
+        public ResDTO<List<ViTriViecLam>> xemDS() {
+            return new ResDTO<>(
+                    ResEnum.THANH_CONG.getStatusCode(),
+                    ResEnum.THANH_CONG,
+                    viTriViecLamRepository.findAll()
+            );
+        }
+
+        @Override
+        public ResDTO<ViTriViecLam> them(String name) {
+            ViTriViecLam lam = new ViTriViecLam(name);
+            try {
+                return new ResDTO<>(
+                        ResEnum.TAO_THANH_CONG.getStatusCode(),
+                        ResEnum.TAO_THANH_CONG,
+                        viTriViecLamRepository.save(lam)
+                );
+            } catch (RuntimeException e) {
+                return new ResDTO<>(
+                        ResEnum.KHONG_HOP_LE.getStatusCode(),
+                        ResEnum.KHONG_HOP_LE,
+                        null
+                );
+            }
+        }
+
+        @Override
+        public ResDTO<ViTriViecLam> sua(ViTriViecLam lam) {
+            Optional<ViTriViecLam> viTriViecLam = viTriViecLamRepository.findById(lam.getId());
+            try {
+                if (viTriViecLam.isPresent()) {
+                    lam.setUpdate_at();
+                    return new ResDTO<>(
+                            ResEnum.CAP_NHAT_THANH_CONG.getStatusCode(),
+                            ResEnum.CAP_NHAT_THANH_CONG,
+                            viTriViecLamRepository.save(lam));
                 }
                 return new ResDTO<>(
                         ResEnum.HONG_TIM_THAY.getStatusCode(),

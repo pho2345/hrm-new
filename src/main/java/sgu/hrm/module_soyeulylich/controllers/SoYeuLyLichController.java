@@ -12,6 +12,7 @@ import sgu.hrm.module_response.ResDTO;
 import sgu.hrm.module_soyeulylich.models.request.ReqDSSoYeuLyLich;
 import sgu.hrm.module_soyeulylich.models.request.ReqSoYeuLyLich;
 import sgu.hrm.module_soyeulylich.models.response.ResDSSoYeuLyLich;
+import sgu.hrm.module_soyeulylich.models.response.ResSoYeuLyLich;
 import sgu.hrm.module_soyeulylich.services.ISoYeuLyLichService;
 
 
@@ -24,7 +25,7 @@ public class SoYeuLyLichController {
     public SoYeuLyLichController(ISoYeuLyLichService soYeuLyLichService) {
         this.soYeuLyLichService = soYeuLyLichService;
     }
-
+    //EMPLOYEE --- EMPLOYEE --- EMPLOYEE
     @GetMapping("/ca-nhan/so-yeu-ly-lich")
     public ResDTO<?> so_yeu_ly_lich() {
         return soYeuLyLichService.xemThongTinSoYeuLyLich();
@@ -41,9 +42,8 @@ public class SoYeuLyLichController {
         return soYeuLyLichService.xemDanhSachSoYeuLyLich();
     }
 
-    //find by String soCCCD and UUID id
     @GetMapping("/nhan-vien/so-yeu-ly-lich/tim-kiem")
-    public ResDTO<ResDSSoYeuLyLich> getSoYeuLyLichSoCCCDOrId(@RequestParam(name = "q") String q) {
+    public ResDTO<ResSoYeuLyLich> getSoYeuLyLichSoCCCDOrId(@RequestParam(name = "q") String q) {
         return soYeuLyLichService.xemSoYeuLyLichTheoSoCCCDHoacID(q);
     }
 
@@ -58,21 +58,4 @@ public class SoYeuLyLichController {
                                      @RequestBody ReqDSSoYeuLyLich reqDSSoYeuLyLich) {
         return soYeuLyLichService.pheDuyetSoYeuLyLich(id, reqDSSoYeuLyLich);
     }
-
-    //can sua
-//    @PatchMapping("/nhan-vien/so-yeu-ly-lich/{id}/phe-duyet")
-//    public ResDTO<?> updateTrangThaiSoYeuLyLich(@PathVariable(name = "id") UUID id) {
-//        return soYeuLyLichService.xemSoYeuLyLichTheoId(id);
-//    }
-
-
-//    @PatchMapping("/cap-nhat")
-//    public void editSoYeuLyLich(@RequestBody SoYeuLyLichDTO soYeuLyLichDTO) {
-//        soYeuLyLichService.themSoYeuLyLich(soYeuLyLichDTO);
-//    }
-
-//    @PostMapping("/them")
-//    public void themSoYeuLyLich(@RequestBody SoYeuLyLichDTO soYeuLyLichDTO) {
-//        soYeuLyLichService.themSoYeuLyLich(soYeuLyLichDTO);
-//    }
 }

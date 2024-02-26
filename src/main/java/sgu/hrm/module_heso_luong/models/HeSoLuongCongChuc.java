@@ -46,7 +46,7 @@ public class HeSoLuongCongChuc extends DateTimeObject {
 //    @Id
     @ManyToOne
 ////    @MapsId("bac_luong")
-    @JoinColumn(foreignKey = @ForeignKey(name = "bac_luong_fk"), name = "bac_luong", columnDefinition = "INTEGER", referencedColumnName = "id")
+    @JoinColumn(foreignKey = @ForeignKey(name = "bac_luong_cong_chuc_fk"), name = "bac_luong", columnDefinition = "INTEGER", referencedColumnName = "id")
 ////    @JsonIgnore
 //    @JsonIgnoreProperties({"trangThai", "id"})
     BacLuong bacLuong;
